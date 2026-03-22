@@ -1,147 +1,92 @@
-<!doctype html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Makkuk Digital Industries</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
-    <link rel="stylesheet" href="css/foundation.min.css">
-    <link rel="stylesheet" href="css/tippy.css">
+    <title>موقعي الشخصي</title>
     <style>
-    body { font-family: 'Roboto Condensed', sans-serif;}
-    a.text, .articles a { text-decoration: none; color: rgb(25, 108, 150);}
-    .articles a { text-decoration-line: underline; text-decoration-style: solid; text-decoration-color: rgb(202, 23, 154); transition: all 0.1s ease; text-overflow: ellipsis; white-space: nowrap;
-  overflow: hidden; padding-right: 1rem; }
-    .articles a:hover { text-decoration-style: wavy; background-color: black; color: #fff;  }
-    #all { padding: 2em 0 0 0; }
-      #makkuk {  padding: 1rem 1.5rem; text-transform: uppercase; font-variant: small-caps; text-align: center; padding-bottom: 2rem;}
-      #network { font-size: 0.8rem;  margin: 0 0 0.3rem 0; color: #879298; padding-top: 1rem; text-align: center; }
-      #things { color: #9FA7AB; margin: 0; text-align: center; }
-        #makkuk-logo{ display: inline-block; vertical-align: middle; width:184px; }
-      .social-icon { width: 16px; } 
-
-    .projects { font-family: 'Roboto Condensed', sans-serif;}
-      .project-cell { display: inline-block; padding-top: 4rem; margin-right: 1rem;  }
-      .project { display: inline-block; min-height: 120px;  }
-          .project img { image-rendering: -webkit-optimize-contrast; display: inline-block; width: 120px; padding-bottom: 1rem; margin: 0 auto 3em auto; vertical-align: middle; visibility: visible;
-    transition: transform 0.15s cubic-bezier(0.6, 0.2, 0.1, 1) 0s, opacity 0.5s cubic-bezier(0.6, 0.2, 0.1, 1) 0s;}
-      .section-label { font-variant: small-caps; text-transform: uppercase; margin-bottom: 0; background-color: #252525; color: #fff;  letter-spacing: 1px;    padding: 0.4rem 0 0.3rem 0.8rem; border-radius: 6px; }
-      .label-proper { display: inline-block; }  
-
-      .articles { list-style-type: none; margin: 0.325rem 0 0 0; padding: 0; text-align: left; font-size: 0.9rem; text-transform: none; font-variant: normal; }
-      .articles li { display: flex; margin-bottom: 0.6rem;  }
-      .articles li:before { content: "☞"; text-shadow: 3px 3px 0px yellow, -3px -1px 0px magenta; display: inline-block; margin-right: 1rem; margin-left: 0.5rem; font-size: 1rem; transform: scale(1.5) rotate(20deg); color: cyan /*rgb(57, 191, 155)*/;}
-      .articles li span { text-transform: uppercase; font-variant: small-caps; font-size: 0.7rem; color: #555; margin-left: auto; display: inline-block; min-width: 70px;
-    text-align: right; }
- 
-
-      @media only screen and (min-width: 40.063em) {
-        #makkuk { margin-top: 5rem; }
-        .projects { border-left: 1px solid #6a8080; border-radius: 50%; }
-          .project-cell { display: block; }
-            .project { display: block; }
-              .project img { display: block; width: 65%; transform: translate(30px); }
-              .app-projects .project img { display: block; width: 50%; transform: translate(30px); }
-              .project img:hover { transform: translate(30px) scale(1.1); }
-          .section-label { padding: 0.4rem 1rem 0.4rem 1rem; margin-left: 50px; display: inline-block; }
-          .app-projects  .layerwhale img { transform: translate(30px) scale(0.9);}
-          .app-projects  .layerwhale img:hover { transform: translate(30px) scale(1.0);}
-          .kawkab img { transform: translate(30px) scale(1.4); margin-bottom: 2em; }
-          .kawkab img:hover { transform: translate(30px) scale(1.5); }  
-          .solar6 img { width: 70% }
-          .app-projects .stillcolor img { width: 70% }
-      }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #1e3c72;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        h2 {
+            color: #1e3c72;
+            border-bottom: 2px solid #1e3c72;
+            display: inline-block;
+            margin-top: 0;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #1e3c72;
+            color: white;
+            margin-top: 2rem;
+        }
+        a {
+            color: #1e3c72;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="256x256" href="/favicon-256x256.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  </head>
-  <body>
-  <div id="all" class="grid-container">
-      <div class="grid-x grid-margin-x medium-padding-collapse grid-padding-x">
-        <div id="makkuk" class="cell medium-6">
-           <div><img id="makkuk-logo" src="./img/makkuk-globe.png" alt="مكوك"></div>
-           <p id="network">Makkuk Digital Industries</p>
-           <p id="things"><a class="text" href="https://twitter.com/abdullaharif">Abdullah Arif</a></p>
-           <p id="links"><a title="GitHub Profile" href="https://github.com/aiaf" target="_blank"><img class="social-icon" src="./img/GitHub-Mark-32px.png"></a></p>
+</head>
+<body>
+    <header>
+        <h1>مرحباً، أنا عبدالله]</h1>
+        <p>أهلاً بك في اول موقع لي </p>
+    </header>
 
-          <div class="section-label" style="text-align: left; display: block; margin-left: 0; margin-top: 3.5rem; margin-bottom: 1.5rem;"><span class="label-proper">Blog + Things</span></div>
-           <ul class="articles">
-            <li><a href="https://medium.com/@abdullaharif/water-fasting-as-a-muslim-db1437046310">Water Fasting as a Muslim</a> <span>Mar 13, 2019</span></li>
-            <li><a href="/lab/superfont">[TYPE LAB] Arabic Superfont</a> <span>Apr 5, 2018</span></li>
-            <li><a href="/nimra">Designing Arabic MICR Numerals: Nimra</a> <span>Mar 11, 2018</span></li>
-            <li><a href="/lab/qutb/kshdaxis.html">[TYPE LAB] Arabic variable font: Kashida axis</a> <span>Dec 26, 2017</li>
-            <li><a href="https://www.instagram.com/p/BbB3N1clcMl/">Perfume design: FLACON 001</a> <span>Nov 3, 2017</li>
-            <li><a href="/fragrant/sandalwood-amberina.html">Sandalwood Amberina</a> <span>Apr 17, 2017</li>
-           </ul>
-         </div>
-
-        <div class="cell medium-2 projects app-projects">
-          <div class="section-label"><span class="label-proper">Apps</span></div>
-          <div class="project-cell">
-            <a class="project stillcolor" href="https://github.com/aiaf/Stillcolor"><img title="Stillcolor - Reduce eyestrain from your Mac by disabling temporal dithering" src="./img/stillcolor.png"></a>
-          </div>
-            <div class="project-cell">
-            <a class="project layerwhale" href="https://makkuk.com/layerwhale/"><img title="Layer Whale - A workflow plugin for Glyphs 2" src="./img/layerwhale@2x.png"></a>
-          </div>
-          <div class="project-cell">
-            <a class="project" href="https://katibapp.com/"><img title="Katib - A lovely Arabic text editor for macOS" src="./img/Katib512@1x.png"></a>
-          </div>
+    <div class="container">
+        <div class="card">
+            <h2>من أنا</h2>
+            <p>أنا طالب طب بشري. هذا الموقع هو أول تجربة لي، وأنا هنا لمشاركة رحلتي مع العالم.</p>
         </div>
 
-        <div class="cell medium-2 projects">
-          <div class="section-label"><span class="label-proper">Typefaces</span></div>
-          <div class="project-cell">
-            <a class="project solar6" href="https://makkuk.com/solar6">
-              <img title="Solar 6 - A variable Arabic pixel font" src="./img/solar6.png">
-            </a>
-          </div>
-          <div class="project-cell">
-            <a class="project kawkab" href="https://makkuk.com/kawkab-mono">
-              <img title="Kawkab Mono - A monospaced Arabic typeface" src="./img/kawkab-mono-logo-inverse.png">
-            </a>
-          </div>
-           <div class="project-cell">
-            <a class="project">
-              <img src="./img/qutb-missing.png" title="Qutb (WIP) - an Arabic typeface for running text">
-            </a>
-          </div>
+        <div class="card">
+            <h2>ماذا ستجد هنا؟</h2>
+            <p>سأقوم بنشر محتوى عن:</p>
+            <ul>
+                <li>مشاريعي الصغيرة</li>
+                <li>بحوثاتي</li>
+                <li>بعض ما يجول بخاطري</li>
+            </ul>
         </div>
 
-        <div class="cell medium-2 projects">
-          <div class="section-label"><span class="label-proper">Web</span></div>
-          <div class="project-cell">
-            <a class="project" href="https://ar.mo3jam.com/">
-              <img title="Mo3jam - a user-generated dictionary of colloquial Arabic" src="./img/mo3jam.png">
-            </a>
-          </div>
-          <div class="project-cell">
-            <a class="project" href="https://twitter.com/everyarabicword">
-              <img title="@everyarabicword - digital art that documents every Arabic word" src="./img/everyarabicword-trim.png"></a>
-          </div>
+        <div class="card">
+            <h2>تواصل معي</h2>
+            <p>يمكنك التواصل عبر مواقع التواصل الاجتماعي: <a href="mailto:t.me/AL_RAWL">example@example.com</a></p>
         </div>
+    </div>
 
-      </div> <!-- grid-x -->
-  </div> <!-- container -->
-
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-55601404-2', 'auto');
-  ga('send', 'pageview');
-</script>
-    <script src="js/tippy.min.js"></script>
-    <script>
-tippy('.project img', {
-   position: 'bottom',
-   theme: 'light',
-   inertia: true
-});
-    </script>
-  </body>
+    <footer>
+        <p>© 2026 - موقعي الشخصي</p>
+    </footer>
+</body>
 </html>
