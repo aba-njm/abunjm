@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f1ea" id="meta-theme-color">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>تنظيم الدروس</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c2825'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23f4f1ea' font-family='serif'>D</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f1ea;
+            --text-color: #2c2825;
+            --border-color: #d3cbb8;
+            --card-bg: #faf8f5;
+            --btn-bg: #e6dfcd;
+            --btn-hover: #d4ccb6;
+            --input-bg: #ffffff;
+            
+            --color-high: #ffe3e3;
+            --color-medium: #fff4e3;
+            --color-low: #e3ffe6;
+            --color-border-high: #cc8e8e;
+            --color-border-medium: #ccb08e;
+            --color-border-low: #8ecc9b;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1816;
+            --text-color: #dcd7c6;
+            --border-color: #3b3732;
+            --card-bg: #24211e;
+            --btn-bg: #332f2b;
+            --btn-hover: #443e39;
+            --input-bg: #141210;
+
+            --color-high: #3d2222;
+            --color-medium: #3d3122;
+            --color-low: #223d26;
+            --color-border-high: #6b3e3e;
+            --color-border-medium: #6b583e;
+            --color-border-low: #3e6b47;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #app-wrapper {
+            padding: 20px; max-width: 1200px; margin: auto;
+            background-color: var(--bg-color);
+        }
+
+        h1, h2, h3 { font-family: 'Crimson Text', 'Amiri', serif; font-weight: 700; }
+
+        .main-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;
+        }
+
+        .main-header h1 { font-size: 24px; margin: 0; }
+        .corner-controls { display: flex; gap: 10px; }
+
+        .sub-controls { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; align-items: center; }
+        
+        /* تنسيق الأزرار السفلية (الآن تحت الجداول مباشرة) */
+        .bottom-controls {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; 
+            padding-top: 20px; border-top: 2px dashed var(--border-color);
+            justify-content: center;
+        }
+
+        button {
+            font-family: 'Amiri', serif; background-color: var(--btn-bg); color: var(--text-color);
+            border: 1px solid var(--border-color); padding: 8px 16px; cursor: pointer;
+            font-size: 16px; font-weight: bold; border-radius: 4px; transition: background-color 0.2s, color 0.2s;
+        }
+        button:hover { background-color: var(--btn-hover); }
+
+        .top-btn { font-family: 'Crimson Text', 'Amiri', serif; }
+        .back-btn { background-color: transparent; border-style: dashed; font-size: 14px; }
+        .back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
+
+        /* زر حذف الكل المخصص */
+        .btn-danger {
+            background-color: #b04040 !important;
+            color: #ffffff !important;
+            border-color: #8c3333 !important;
+        }
+        .btn-danger:hover { background-color: #8c3333 !important; }
+
+        .form-group { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+
+        input[type="text"], select {
+            font-family: 'Amiri', serif; flex: 1; padding: 10px;
+            background-color: var(--input-bg); color: var(--text-color);
+            border: 1px solid var(--border-color); font-size: 16px; border-radius: 4px;
+        }
+
+        .subjects-container {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px; align-items: start;
+        }
+
+        .subject-card {
+            background-color: var(--card-bg); border: 1px solid var(--border-color);
+            padding: 15px; display: flex; flex-direction: column; border-radius: 8px;
+            position: relative;
+        }
+
+        .subject-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px; flex-wrap: wrap; gap: 10px;
+        }
+
+        .subject-title { font-size: 20px; flex: 1; display: flex; align-items: center; }
+        
+        .delete-btn, .edit-btn { background: transparent; padding: 4px 8px; font-size: 14px; }
+        .delete-btn { color: #b04040; border-color: #b04040; }
+        .delete-btn:hover { background-color: #b04040; color: #fff; }
+        .edit-btn { color: #a88d3e; border-color: #a88d3e; }
+        .edit-btn:hover { background-color: #a88d3e; color: #fff; }
+
+        .lesson-list { list-style: none; margin-bottom: 15px; min-height: 10px; position: relative; }
+
+        .lesson-item {
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 10px; margin-bottom: 8px; background-color: var(--input-bg);
+            border: 1px solid var(--border-color); border-right-width: 5px; border-right-style: solid;
+            gap: 10px; border-radius: 4px; position: relative;
+        }
+
+        .priority-high { background-color: var(--color-high); border-right-color: var(--color-border-high); }
+        .priority-medium { background-color: var(--color-medium); border-right-color: var(--color-border-medium); }
+        .priority-low { background-color: var(--color-low); border-right-color: var(--color-border-low); }
+
+        .lesson-text { flex: 1; word-wrap: break-word; transition: opacity 0.3s, text-decoration 0.3s; }
+        .lesson-text.completed { text-decoration: line-through; opacity: 0.5; }
+        .lesson-actions { display: flex; gap: 5px; align-items: center; }
+        input[type="checkbox"] { transform: scale(1.3); cursor: pointer; accent-color: #2c2825; flex-shrink: 0; }
+
+        /* ========= إعدادات الأنميشن الصحيحة لأزرار وعناصر التعديل ========= */
+        .admin-action, .drag-handle, .subject-drag-handle, .edit-mode-btn {
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            border-width: 0;
+            transform: scale(0.8);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            white-space: nowrap;
+        }
+
+        /* حالة التفعيل للأزرار العلوية (التراجع، الاعادة، حذف الكل) */
+        body.edit-mode-active .edit-mode-btn {
+            max-width: 150px; 
+            opacity: 1;
+            padding: 8px 16px;
+            border-width: 1px;
+            transform: scale(1);
+        }
+
+        /* حالة التفعيل لعناصر التعديل داخل البطاقات */
+        body.edit-mode-active .admin-action {
+            max-width: 100px; 
+            opacity: 1;
+            padding: 4px 8px;
+            border-width: 1px;
+            transform: scale(1);
+        }
+        body.edit-mode-active select.admin-action { padding: 2px 5px; } 
+
+        /* حالة التفعيل لمقابض السحب */
+        body.edit-mode-active .drag-handle { max-width: 20px; opacity: 1; margin-left: 8px; transform: scale(1); cursor: grab; color: #888; user-select: none; }
+        body.edit-mode-active .subject-drag-handle { max-width: 30px; opacity: 1; margin-left: 10px; font-size: 22px; transform: scale(1); cursor: grab; color: #888; user-select: none; }
+
+        .sortable-ghost { opacity: 0.3; }
+        .sortable-drag { z-index: 9999 !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; transform: scale(1.02); opacity: 1 !important; cursor: grabbing; }
+
+        @media print {
+            @page { margin: 0; size: A4; }
+            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; background-color: var(--bg-color) !important; margin: 0 !important; padding: 20px !important; }
+            #app-wrapper { max-width: 100% !important; margin: 0; padding: 0; }
+            .main-header, .sub-controls, .bottom-controls, .form-group, .admin-action, .drag-handle, .subject-drag-handle { display: none !important; }
+            .subject-card { break-inside: avoid; margin-bottom: 20px; }
+        }
+
+        @media (max-width: 600px) {
+            #app-wrapper { padding: 15px; }
+            .main-header { flex-direction: column; align-items: stretch; text-align: center; gap: 10px; }
+            .corner-controls { justify-content: center; }
+            .corner-controls button { flex: 1; }
+            .sub-controls, .bottom-controls { justify-content: center; }
+            .sub-controls button, .bottom-controls button { flex: 1 1 40%; font-size: 14px; padding: 8px 4px; }
+            #mainFormGroup { flex-direction: column; gap: 10px; }
+            #mainFormGroup input, #mainFormGroup button { width: 100%; }
+            .subjects-container { grid-template-columns: 1fr; }
+            .subject-card .form-group { flex-direction: column; gap: 8px; }
+            .subject-card .form-group input, .subject-card .form-group select, .subject-card .form-group button { width: 100%; flex: none; }
+            .lesson-item { flex-wrap: wrap; }
+            .lesson-actions { width: 100%; justify-content: space-between; margin-top: 10px; border-top: 1px dashed var(--border-color); padding-top: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-wrapper">
+    <div class="main-header">
+        <h1>سجل المواد</h1>
+        <div class="corner-controls">
+            <button id="fsToggle" class="top-btn">ملء الشاشة</button>
+            <button class="top-btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+        </div>
+    </div>
+
+    <div class="sub-controls">
+        <button id="toggleEditModeBtn">التعديل</button>
+        <button id="undoBtn" class="edit-mode-btn" title="تراجع خطوة">تراجع ↩</button>
+        <button id="redoBtn" class="edit-mode-btn" title="إعادة خطوة">إعادة ↪</button>
+        <button id="deleteAllBtn" class="edit-mode-btn btn-danger" title="حذف كل المواد">حذف الكل</button>
+    </div>
+
+    <div class="form-group" id="mainFormGroup">
+        <input type="text" id="subjectInput" placeholder="اسم المادة (مثال: Anatomy، biology...)">
+        <button id="addSubjectBtn">إضافة مادة</button>
+    </div>
+
+    <div class="subjects-container" id="subjectsContainer">
+    </div>
+
+    <div class="bottom-controls">
+        <button id="exportPdfBtn">تصدير PDF</button>
+        <button id="exportBtn">حفظ نسخة (Export)</button>
+        <button id="importBtn">استرجاع نسخة (Import)</button>
+    </div>
+</div>
+
+<script>
+    const metaThemeColor = document.getElementById('meta-theme-color');
+    let currentTheme = localStorage.getItem('sharedTheme') || 'light';
+    applyTheme(currentTheme);
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            metaThemeColor.setAttribute('content', '#1a1816');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            metaThemeColor.setAttribute('content', '#f4f1ea');
+        }
+    }
+
+    const fsToggleBtn = document.getElementById('fsToggle');
+    fsToggleBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+        else if (document.exitFullscreen) document.exitFullscreen();
+    });
+
+    let isEditMode = false;
+    const toggleEditModeBtn = document.getElementById('toggleEditModeBtn');
+    toggleEditModeBtn.addEventListener('click', () => {
+        isEditMode = !isEditMode;
+        document.body.classList.toggle('edit-mode-active', isEditMode);
+        toggleEditModeBtn.textContent = isEditMode ? 'انهاء التعديل' : 'التعديل';
+    });
+
+    document.getElementById('exportPdfBtn').addEventListener('click', () => { window.print(); });
+
+    let subjectsData = JSON.parse(localStorage.getItem('academicSubjects')) || [];
+    let undoStack = [];
+    let redoStack = [];
+
+    function saveState() {
+        undoStack.push(JSON.stringify(subjectsData));
+        redoStack = []; 
+        if (undoStack.length > 30) undoStack.shift(); 
+    }
+
+    document.getElementById('undoBtn').addEventListener('click', () => {
+        if (undoStack.length > 0) {
+            redoStack.push(JSON.stringify(subjectsData)); 
+            subjectsData = JSON.parse(undoStack.pop());
+            saveData(); renderUI();
+        } else { alert("لا توجد إجراءات سابقة للتراجع عنها."); }
+    });
+
+    document.getElementById('redoBtn').addEventListener('click', () => {
+        if (redoStack.length > 0) {
+            undoStack.push(JSON.stringify(subjectsData)); 
+            subjectsData = JSON.parse(redoStack.pop());
+            saveData(); renderUI();
+        } else { alert("لا توجد إجراءات لإعادتها."); }
+    });
+
+    // برمجة زر حذف الكل
+    document.getElementById('deleteAllBtn').addEventListener('click', () => {
+        if (subjectsData.length === 0) {
+            alert("لا توجد مواد لحذفها.");
+            return;
+        }
+        if (confirm("تحذير: هل أنت متأكد من حذف جميع المواد والدروس بالكامل؟")) {
+            saveState(); // يحفظ الحالة للتمكن من التراجع في حال الخطأ
+            subjectsData = [];
+            saveData();
+            renderUI();
+        }
+    });
+
+    subjectsData.forEach(sub => {
+        sub.lessons.forEach((l, idx) => { if (l.posOrder === undefined) l.posOrder = idx; });
+    });
+
+    const subjectInput = document.getElementById('subjectInput');
+    const addSubjectBtn = document.getElementById('addSubjectBtn');
+    const subjectsContainer = document.getElementById('subjectsContainer');
+
+    function saveData() { localStorage.setItem('academicSubjects', JSON.stringify(subjectsData)); }
+
+    addSubjectBtn.addEventListener('click', () => {
+        const title = subjectInput.value.trim();
+        if (title !== "") {
+            saveState(); 
+            subjectsData.push({ id: Date.now().toString(), title: title, lessons: [] });
+            saveData(); subjectInput.value = ''; renderUI();
+        }
+    });
+
+    function editSubjectTitle(subjectId) {
+        const subject = subjectsData.find(s => s.id === subjectId);
+        if(subject) {
+            const newTitle = prompt("أدخل الاسم الجديد:", subject.title);
+            if(newTitle && newTitle.trim() !== "") { 
+                saveState(); 
+                subject.title = newTitle.trim(); saveData(); renderUI(); 
+            }
+        }
+    }
+
+    function editLessonText(subjectId, lessonId) {
+        const lesson = subjectsData.find(s => s.id === subjectId).lessons.find(l => l.id === lessonId);
+        if (lesson) {
+            const newText = prompt("أدخل الاسم الجديد:", lesson.text);
+            if(newText && newText.trim() !== "") { 
+                saveState(); 
+                lesson.text = newText.trim(); saveData(); renderUI(); 
+            }
+        }
+    }
+
+    function addLesson(subjectId, lessonText, priority) {
+        const subject = subjectsData.find(s => s.id === subjectId);
+        if (subject && lessonText.trim() !== "") {
+            saveState(); 
+            subject.lessons.push({ id: Date.now().toString(), text: lessonText, priority: priority, completed: false, posOrder: subject.lessons.length });
+            saveData(); renderUI();
+        }
+    }
+
+    function deleteLesson(subjectId, lessonId) {
+        if(confirm("متأكد من الحذف؟")) {
+            saveState(); 
+            const subject = subjectsData.find(s => s.id === subjectId);
+            subject.lessons = subject.lessons.filter(l => l.id !== lessonId);
+            saveData(); renderUI();
+        }
+    }
+
+    function toggleLessonAnimated(subjectId, lessonId) {
+        saveState(); 
+        
+        const beforeRects = new Map();
+        document.querySelectorAll('.lesson-item').forEach(li => {
+            beforeRects.set(li.dataset.lessonId, li.getBoundingClientRect());
+        });
+
+        const subject = subjectsData.find(s => s.id === subjectId);
+        const lesson = subject.lessons.find(l => l.id === lessonId);
+        lesson.completed = !lesson.completed;
+        saveData();
+        renderUI();
+
+        document.querySelectorAll('.lesson-item').forEach(li => {
+            const lId = li.dataset.lessonId;
+            const beforeRect = beforeRects.get(lId);
+            if (beforeRect) {
+                const afterRect = li.getBoundingClientRect();
+                const deltaY = beforeRect.top - afterRect.top;
+
+                if (deltaY !== 0) {
+                    li.style.transform = `translateY(${deltaY}px)`;
+                    li.style.transition = 'none';
+                    if (lId === lessonId) { li.style.zIndex = '1'; } else { li.style.zIndex = '10'; }
+
+                    requestAnimationFrame(() => {
+                        li.style.transition = 'transform 0.4s ease-in-out';
+                        li.style.transform = 'translateY(0)';
+                        setTimeout(() => { li.style.transition = ''; li.style.transform = ''; li.style.zIndex = ''; }, 400);
+                    });
+                }
+            }
+        });
+    }
+
+    function updatePriority(subjectId, lessonId, newPriority) {
+        saveState(); 
+        const lesson = subjectsData.find(s => s.id === subjectId).lessons.find(l => l.id === lessonId);
+        if (lesson) { lesson.priority = newPriority; saveData(); renderUI(); }
+    }
+
+    function deleteSubject(subjectId) {
+        if(confirm("حذف المادة؟")) { 
+            saveState(); 
+            subjectsData = subjectsData.filter(s => s.id !== subjectId); saveData(); renderUI(); 
+        }
+    }
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+        const dataStr = JSON.stringify(subjectsData, null, 2);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = "lessons_backup.json";
+        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('importBtn').addEventListener('click', () => {
+        const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+        input.onchange = e => {
+            const file = e.target.files[0]; if (!file) return;
+            if (!confirm("سيتم مسح بياناتك الحالية، متأكد؟")) return;
+            const reader = new FileReader();
+            reader.onload = event => {
+                try {
+                    const importedData = JSON.parse(event.target.result);
+                    if (Array.isArray(importedData)) {
+                        saveState(); 
+                        subjectsData = importedData;
+                        subjectsData.forEach(sub => { sub.lessons.forEach((l, idx) => { if (l.posOrder === undefined) l.posOrder = idx; }); });
+                        saveData(); renderUI(); alert("نجاح!");
+                    }
+                } catch (err) { alert("ملف غير صالح."); }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    });
+
+    let subjectSortableInstance = null;
+
+    function renderUI() {
+        subjectsContainer.innerHTML = '';
+
+        subjectsData.forEach(subject => {
+            subject.lessons.sort((a, b) => {
+                if (a.completed && !b.completed) return 1;
+                if (!a.completed && b.completed) return -1;
+                return (a.posOrder || 0) - (b.posOrder || 0); 
+            });
+
+            const card = document.createElement('div');
+            card.className = 'subject-card'; card.dataset.subjectId = subject.id;
+
+            const header = document.createElement('div'); header.className = 'subject-header';
+            const titleWrapper = document.createElement('div'); titleWrapper.className = 'subject-title';
+            const dragHandleSub = document.createElement('span'); dragHandleSub.className = 'subject-drag-handle'; dragHandleSub.innerHTML = '☰';
+            const titleText = document.createElement('span'); titleText.textContent = subject.title;
+
+            titleWrapper.append(dragHandleSub, titleText);
+
+            const headerActions = document.createElement('div'); headerActions.style.display = 'flex'; headerActions.style.gap = '5px';
+            const editSubBtn = document.createElement('button'); editSubBtn.className = 'edit-btn admin-action'; editSubBtn.textContent = '✏️'; editSubBtn.onclick = () => editSubjectTitle(subject.id);
+            const delSubBtn = document.createElement('button'); delSubBtn.className = 'delete-btn admin-action'; delSubBtn.textContent = 'حذف'; delSubBtn.onclick = () => deleteSubject(subject.id);
+
+            headerActions.append(editSubBtn, delSubBtn);
+            header.append(titleWrapper, headerActions);
+            card.appendChild(header);
+
+            const lessonList = document.createElement('ul');
+            lessonList.className = 'lesson-list'; lessonList.dataset.subjectId = subject.id; 
+
+            subject.lessons.forEach(lesson => {
+                const li = document.createElement('li');
+                li.className = `lesson-item priority-${lesson.priority}`;
+                li.dataset.lessonId = lesson.id;
+
+                const dragHandleLess = document.createElement('span'); dragHandleLess.className = 'drag-handle'; dragHandleLess.innerHTML = '☰';
+
+                const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = lesson.completed || false;
+                checkbox.onchange = () => toggleLessonAnimated(subject.id, lesson.id);
+
+                const textSpan = document.createElement('span'); textSpan.className = 'lesson-text';
+                if(lesson.completed) textSpan.classList.add('completed');
+                textSpan.textContent = lesson.text;
+
+                const actionsDiv = document.createElement('div'); actionsDiv.className = 'lesson-actions';
+                const editLessonBtn = document.createElement('button'); editLessonBtn.className = 'edit-btn admin-action'; editLessonBtn.textContent = '✏️'; editLessonBtn.onclick = () => editLessonText(subject.id, lesson.id);
+
+                const prioritySelect = document.createElement('select'); prioritySelect.className = 'edit-priority admin-action';
+                const pHigh = document.createElement('option'); pHigh.value = 'high'; pHigh.textContent = 'قصوى';
+                const pMed = document.createElement('option'); pMed.value = 'medium'; pMed.textContent = 'متوسطة';
+                const pLow = document.createElement('option'); pLow.value = 'low'; pLow.textContent = 'عادية';
+                prioritySelect.append(pHigh, pMed, pLow); prioritySelect.value = lesson.priority;
+                prioritySelect.onchange = (e) => updatePriority(subject.id, lesson.id, e.target.value);
+
+                const delLessonBtn = document.createElement('button'); delLessonBtn.className = 'delete-btn admin-action'; delLessonBtn.textContent = 'x'; delLessonBtn.onclick = () => deleteLesson(subject.id, lesson.id);
+
+                actionsDiv.append(editLessonBtn, prioritySelect, delLessonBtn);
+                li.append(dragHandleLess, checkbox, textSpan, actionsDiv);
+                lessonList.appendChild(li);
+            });
+
+            card.appendChild(lessonList);
+
+            new Sortable(lessonList, {
+                group: 'shared-lessons', animation: 250, handle: '.drag-handle', forceFallback: true, fallbackClass: 'sortable-drag', ghostClass: 'sortable-ghost',
+                onEnd: function (evt) {
+                    if(evt.from === evt.to && evt.oldIndex === evt.newIndex) return;
+                    saveState(); 
+                    const fromSubject = subjectsData.find(s => s.id === evt.from.dataset.subjectId);
+                    const toSubject = subjectsData.find(s => s.id === evt.to.dataset.subjectId);
+                    if (evt.from !== evt.to) {
+                        const movedLesson = fromSubject.lessons.splice(evt.oldIndex, 1)[0];
+                        toSubject.lessons.splice(evt.newIndex, 0, movedLesson);
+                    } else {
+                        const movedLesson = fromSubject.lessons.splice(evt.oldIndex, 1)[0];
+                        fromSubject.lessons.splice(evt.newIndex, 0, movedLesson);
+                    }
+                    toSubject.lessons.forEach((l, i) => l.posOrder = i);
+                    if(evt.from !== evt.to) fromSubject.lessons.forEach((l, i) => l.posOrder = i);
+                    saveData(); renderUI(); 
+                }
+            });
+
+            const lessonForm = document.createElement('div'); lessonForm.className = 'form-group'; lessonForm.style.marginBottom = '0'; lessonForm.style.width = '100%'; lessonForm.style.marginTop = 'auto'; 
+            const lessonInput = document.createElement('input'); lessonInput.type = 'text'; lessonInput.placeholder = 'اسم الدرس...';
+            const prioritySelect = document.createElement('select');
+            const optHigh = document.createElement('option'); optHigh.value = 'high'; optHigh.textContent = 'قصوى';
+            const optMedium = document.createElement('option'); optMedium.value = 'medium'; optMedium.textContent = 'متوسطة'; optMedium.selected = true;
+            const optLow = document.createElement('option'); optLow.value = 'low'; optLow.textContent = 'عادية';
+            prioritySelect.append(optHigh, optMedium, optLow);
+            const addLessonBtn = document.createElement('button'); addLessonBtn.textContent = 'إضافة';
+            addLessonBtn.onclick = () => { addLesson(subject.id, lessonInput.value, prioritySelect.value); lessonInput.value = ''; };
+            lessonForm.append(lessonInput, prioritySelect, addLessonBtn);
+            card.appendChild(lessonForm);
+            subjectsContainer.appendChild(card);
+        });
+
+        if (subjectSortableInstance) subjectSortableInstance.destroy();
+        subjectSortableInstance = new Sortable(subjectsContainer, {
+            animation: 250, handle: '.subject-drag-handle', forceFallback: true, fallbackClass: 'sortable-drag', ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                if(evt.oldIndex === evt.newIndex) return;
+                saveState(); 
+                const newDOMOrderIds = Array.from(subjectsContainer.querySelectorAll('.subject-card')).map(card => card.dataset.subjectId);
+                subjectsData.sort((a, b) => newDOMOrderIds.indexOf(a.id) - newDOMOrderIds.indexOf(b.id));
+                saveData(); renderUI();
+            }
+        });
+    }
+
+    renderUI();
+</script>
+</body>
+</html>
