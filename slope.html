@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب الميل</title>
+    
+    <meta name="theme-color" content="#f4f1ea">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #f4f1ea;
+            --text-color: #2c2825;
+            --card-bg: #fdfdfa;
+            --border-color: #8c7b68;
+            --border-dark: #2c2825;
+            --btn-hover-bg: #2c2825;
+            --btn-hover-text: #f4f1ea;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            
+            --chart-grid: #e3decb;
+            --chart-highlight: #2c2825; 
+            --chart-normal: #8c7b68;   
+            
+            --math-font: 'Cambria Math', 'Times New Roman', Times, serif;
+
+            --fs-btn-bg: #e6dfcd;
+            --fs-btn-hover: #d4ccb6;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1816;
+            --text-color: #dcd7c6;
+            --card-bg: #24221f;
+            --border-color: #5c5346;
+            --border-dark: #8c7b68;
+            --btn-hover-bg: #dcd7c6;
+            --btn-hover-text: #1a1816;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            
+            --chart-grid: #332f2b;
+            --chart-highlight: #dcd7c6; 
+            --chart-normal: #8c7b68;   
+
+            --fs-btn-bg: #332f2b;
+            --fs-btn-hover: #443e39;
+        }
+
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .top-controls {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            gap: 10px;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .control-btn {
+            background-color: transparent;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 6px 12px;
+            font-family: 'Amiri', serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            background-color: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
+        }
+
+        .back-btn {
+            border-style: dashed;
+            font-weight: bold;
+        }
+
+        .fs-btn {
+            background-color: var(--fs-btn-bg) !important;
+            border-color: var(--border-color) !important;
+            font-family: 'Crimson Text', 'Amiri', serif;
+            font-weight: bold;
+        }
+        .fs-btn:hover {
+            background-color: var(--fs-btn-hover) !important;
+            color: var(--text-color) !important;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 30px 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-align: center;
+            width: 95%; 
+            max-width: 1400px; 
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            font-family: 'Crimson Text', serif;
+            font-size: 2.2em;
+            color: var(--text-color);
+            margin: 0 0 25px 0;
+            border-bottom: 2px double var(--border-dark);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 18px;
+            min-width: 300px;
+        }
+
+        th, td {
+            padding: 12px 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        th { 
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            background-color: transparent;
+            color: var(--text-color);
+            text-align: center;
+            font-family: var(--math-font);
+            font-size: 18px;
+            box-sizing: border-box;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--text-color);
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .open-btn {
+            display: inline-block;
+            background-color: transparent;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            padding: 8px 20px;
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .open-btn:hover {
+            background-color: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
+        }
+
+        select.open-btn {
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        
+        select.open-btn option {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .btn-danger { 
+            color: var(--text-color);
+            border: none;
+            background: transparent;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .btn-danger:hover { color: #d9534f; }
+        
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: var(--text-color);
+            background: var(--bg-color);
+            border: 1px dashed var(--border-color);
+            padding: 20px;
+            display: none;
+            text-align: right;
+            line-height: 1.8;
+            word-wrap: break-word;
+        }
+
+        .intercepts-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        
+        .math-text { font-family: var(--math-font); direction: ltr; display: inline-block; }
+        .highlight { color: var(--text-color); font-weight: bold; border-bottom: 1px solid var(--border-color); }
+        
+        .chart-container {
+            margin-top: 40px;
+            position: relative;
+            height: 70vh; 
+            min-height: 500px;
+            width: 100%;
+            display: block;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            background: var(--card-bg);
+            box-sizing: border-box;
+        }
+
+        #equationBox {
+            margin-top: 30px;
+            padding: 25px 10px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            font-size: 24px;
+            display: none;
+            direction: ltr; 
+            text-align: center;
+            color: var(--text-color);
+            font-family: var(--math-font);
+            overflow-x: auto;
+        }
+        .fraction {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 10px;
+        }
+        .numerator {
+            border-bottom: 2px solid var(--text-color);
+            padding: 0 5px;
+            display: block;
+        }
+        .denominator {
+            display: block;
+            padding: 0 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px 10px; width: 100%; }
+            h2 { font-size: 1.8em; margin-bottom: 15px; }
+            table { font-size: 15px; }
+            th, td { padding: 8px 4px; }
+            input[type="number"] { width: 60px; font-size: 16px; padding: 6px; }
+            .btn-group { flex-direction: column; align-items: stretch; gap: 10px; }
+            .open-btn { width: 100%; padding: 12px; }
+            #result { font-size: 16px; padding: 15px; }
+            #equationBox { font-size: 18px; padding: 15px 5px; }
+            .chart-container { height: 50vh; min-height: 350px; padding: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-controls">
+        <button class="control-btn fs-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">Fullscreen</button>
+        <button class="control-btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+    </div>
+
+    <div class="container">
+        <h2>أقرب نقطتين لخط المتوسط والميل</h2>
+        
+        <div class="table-responsive">
+            <table id="pointsTable">
+                <thead>
+                    <tr>
+                        <th>النقطة</th>
+                        <th>X</th>
+                        <th>Y</th>
+                        <th>إزالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="number" class="x-val" placeholder="x" step="any"></td>
+                        <td><input type="number" class="y-val" placeholder="y" step="any"></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="number" class="x-val" placeholder="x" step="any"></td>
+                        <td><input type="number" class="y-val" placeholder="y" step="any"></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><input type="number" class="x-val" placeholder="x" step="any"></td>
+                        <td><input type="number" class="y-val" placeholder="y" step="any"></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><input type="number" class="x-val" placeholder="x" step="any"></td>
+                        <td><input type="number" class="y-val" placeholder="y" step="any"></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="btn-group">
+            <button class="open-btn" onclick="addRow()">إضافة نقطة</button>
+            
+            <select id="calcMode" class="open-btn">
+                <option value="origin">يمر بنقطة الأصل</option>
+				                <option value="bestfit">حر</option>
+            </select>
+
+            <button class="open-btn" style="background-color: var(--text-color); color: var(--bg-color);" onclick="processData()">احسب واستخرج</button>
+            <button class="open-btn" onclick="downloadChart()">تحميل الرسم</button>
+        </div>
+
+        <div id="result"></div>
+
+        <div class="chart-container" dir="ltr">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div id="equationBox"></div>
+    </div>
+
+    <script>
+        let myChart = null;
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function loadTheme() {
+            if (localStorage.getItem('sharedTheme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelector("meta[name=theme-color]").setAttribute("content", "#1a1816");
+            }
+        }
+
+        function getChartThemeColors() {
+            const styles = getComputedStyle(document.body);
+            return {
+                text: styles.getPropertyValue('--text-color').trim(),
+                grid: styles.getPropertyValue('--chart-grid').trim(),
+                highlight: styles.getPropertyValue('--chart-highlight').trim(),
+                normal: styles.getPropertyValue('--chart-normal').trim(),
+                cardBg: styles.getPropertyValue('--card-bg').trim()
+            };
+        }
+
+        const dynamicBackgroundPlugin = {
+            id: 'customCanvasBackgroundColor',
+            beforeDraw: (chart) => {
+                const ctx = chart.canvas.getContext('2d');
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = getChartThemeColors().cardBg;
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        };
+
+        function addRow() {
+            const tbody = document.querySelector("#pointsTable tbody");
+            const rowCount = tbody.rows.length + 1;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${rowCount}</td>
+                <td><input type="number" class="x-val" placeholder="x" step="any"></td>
+                <td><input type="number" class="y-val" placeholder="y" step="any"></td>
+                <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+            `;
+            tbody.appendChild(tr);
+            updateRowNumbers();
+        }
+
+        function removeRow(button) {
+            const row = button.closest("tr");
+            row.remove();
+            updateRowNumbers();
+        }
+
+        function updateRowNumbers() {
+            const rows = document.querySelectorAll("#pointsTable tbody tr");
+            rows.forEach((row, index) => {
+                row.cells[0].innerText = index + 1;
+            });
+        }
+
+        function processData(isRedraw = false) {
+            const xInputs = document.querySelectorAll('.x-val');
+            const yInputs = document.querySelectorAll('.y-val');
+            const calcMode = document.getElementById('calcMode').value;
+            
+            let points = [];
+            let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+            let n = 0;
+
+            for (let i = 0; i < xInputs.length; i++) {
+                let x = parseFloat(xInputs[i].value);
+                let y = parseFloat(yInputs[i].value);
+
+                if (!isNaN(x) && !isNaN(y)) {
+                    points.push({ x: x, y: y, originalIndex: i + 1 });
+                    sumX += x;
+                    sumY += y;
+                    sumXY += x * y;
+                    sumX2 += x * x;
+                    n++;
+                }
+            }
+
+            if (n < 2) {
+                if(!isRedraw) alert("الرجاء إدخال نقطتين صحيحتين على الأقل للتمكن من الحساب!");
+                return;
+            }
+
+            let avgX = sumX / n;
+            let avgY = sumY / n;
+
+            let minX = Math.min(...points.map(p => p.x));
+            let maxX = Math.max(...points.map(p => p.x));
+            
+            // حساب مسافة معقولة لتمديد الخط يميناً ويساراً بدون تخريب أبعاد الرسم
+            let rangeX = maxX - minX;
+            if (rangeX === 0) rangeX = 1; 
+            let startX = minX - (rangeX * 0.1); 
+            let endX = maxX + (rangeX * 0.1);
+
+            let lineStart, lineEnd;
+            let interceptsHtml = "";
+
+            if (calcMode === 'origin') {
+                let slopeAvg = avgY / avgX;
+                lineStart = { x: startX, y: slopeAvg * startX };
+                lineEnd = { x: endX, y: slopeAvg * endX };
+
+                let denominator = Math.sqrt(Math.pow(avgY, 2) + Math.pow(avgX, 2));
+                points.forEach(p => {
+                    p.distance = (denominator === 0) ? 0 : Math.abs(avgY * p.x - avgX * p.y) / denominator;
+                });
+            } else {
+                let denominatorM = n * sumX2 - (sumX * sumX);
+                
+                if (denominatorM === 0) {
+                    lineStart = { x: avgX, y: Math.min(...points.map(p=>p.y)) - rangeX };
+                    lineEnd = { x: avgX, y: Math.max(...points.map(p=>p.y)) + rangeX };
+                    points.forEach(p => { p.distance = Math.abs(p.x - avgX); });
+
+                    interceptsHtml = `
+                    <div class="intercepts-box">
+                        <strong>نقاط تقاطع خط التوافق:</strong><br>
+                        التقاطع مع محور X: <span class="math-text">(${Number(avgX.toFixed(4))}, 0)</span><br>
+                        التقاطع مع محور Y: <span class="math-text">لا يوجد (الخط عمودي)</span>
+                    </div>`;
+                } else {
+                    let m = (n * sumXY - sumX * sumY) / denominatorM;
+                    let b = avgY - m * avgX;
+                    
+                    lineStart = { x: startX, y: m * startX + b }; 
+                    lineEnd = { x: endX, y: m * endX + b };
+
+                    let distDenom = Math.sqrt(Math.pow(m, 2) + 1);
+                    points.forEach(p => {
+                        p.distance = Math.abs(m * p.x - p.y + b) / distDenom;
+                    });
+
+                    // حساب التقاطع بدقة 4 منازل عشرية كحد أدنى كما طلبت (استخدام Number يزيل الأصفار الزائدة)
+                    let yInterceptText = `(0, ${Number(b.toFixed(4))})`;
+                    let xInterceptText = "";
+                    
+                    if (Math.abs(m) < 0.000001) { 
+                        xInterceptText = "لا يوجد (الخط أفقي)";
+                    } else {
+                        let xIntercept = -b / m;
+                        xInterceptText = `(${Number(xIntercept.toFixed(4))}, 0)`;
+                    }
+
+                    interceptsHtml = `
+                    <div class="intercepts-box">
+                        <strong>نقاط تقاطع خط التوافق:</strong><br>
+                        التقاطع مع محور Y: <span class="math-text">${yInterceptText}</span><br>
+                        التقاطع مع محور X: <span class="math-text">${xInterceptText}</span>
+                    </div>`;
+                }
+            }
+
+            points.sort((a, b) => a.distance - b.distance);
+
+            let closest1 = points[0];
+            let closest2 = points[1];
+
+            if (closest1.x > closest2.x) {
+                let temp = closest1; closest1 = closest2; closest2 = temp;
+            }
+
+            let dx = Number((closest2.x - closest1.x).toFixed(4));
+            let dy = Number((closest2.y - closest1.y).toFixed(4));
+
+            let slopeText = (dx === 0) ? "Undefined" : (dy / dx).toFixed(4);
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 10px;">نقطة المتوسط (Centroid): <span class="math-text">(${avgX.toFixed(2)}, ${avgY.toFixed(2)})</span></li>
+                    <li style="margin-bottom: 10px;">أقرب نقطتين لخط المتوسط هن:<br> 
+                        <span class="math-text"><i>P</i><sub>1</sub>: <strong>(${closest1.x}, ${closest1.y})</strong></span> <br>
+                        <span class="math-text"><i>P</i><sub>2</sub>: <strong>(${closest2.x}, ${closest2.y})</strong></span>
+                    </li>
+                    ${interceptsHtml}
+                    <li class="highlight" style="margin-top: 15px;">الميل (<i class="math-text">m</i>) = <span class="math-text">${slopeText}</span></li>
+                </ul>
+            `;
+
+            const eqBox = document.getElementById('equationBox');
+            eqBox.style.display = 'block';
+            
+            if (dx === 0) {
+                 eqBox.innerHTML = `<i>m</i> = <div class="fraction"><span class="numerator">${closest2.y} - ${closest1.y}</span><span class="denominator">${closest2.x} - ${closest1.x}</span></div> = <strong>Undefined</strong>`;
+            } else {
+                 eqBox.innerHTML = `<i>m</i> = <div class="fraction"><span class="numerator"><i>y</i><sub>2</sub> - <i>y</i><sub>1</sub></span><span class="denominator"><i>x</i><sub>2</sub> - <i>x</i><sub>1</sub></span></div> = <div class="fraction"><span class="numerator">${closest2.y} - ${closest1.y}</span><span class="denominator">${closest2.x} - ${closest1.x}</span></div> = <div class="fraction"><span class="numerator">${dy}</span><span class="denominator">${dx}</span></div> = <strong>${slopeText}</strong>`;
+            }
+
+            drawChart(points, avgX, avgY, lineStart, lineEnd, closest1, closest2);
+        }
+
+        function drawChart(points, avgX, avgY, lineStart, lineEnd, c1, c2) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (myChart != null) myChart.destroy();
+
+            const c = getChartThemeColors();
+            Chart.defaults.font.family = "'Cambria Math', 'Times New Roman', Times, serif";
+            Chart.defaults.color = c.text;
+
+            const isMobile = window.innerWidth <= 768;
+            const axisFontSize = isMobile ? 14 : 18;
+            const legendFontSize = isMobile ? 12 : 16;
+
+            myChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        { label: 'النقاط', data: points.filter(p => p !== c1 && p !== c2), backgroundColor: c.normal, pointRadius: 5 },
+                        { label: 'أقرب نقطتين', data: [c1, c2], backgroundColor: c.highlight, pointRadius: 8, borderColor: c.cardBg, borderWidth: 1 },
+                        { label: 'المتوسط', data: [{ x: avgX, y: avgY }], backgroundColor: c.text, pointRadius: 7, pointStyle: 'rectRot' },
+                        { label: 'خط المتوسط', data: [lineStart, lineEnd], borderColor: c.normal, borderWidth: 1.5, borderDash: [5, 5], showLine: true, pointRadius: 0 },
+                        { label: 'الميل', data: [{ x: c1.x, y: c1.y }, { x: c2.x, y: c2.y }], borderColor: c.highlight, borderWidth: 2, showLine: true, pointRadius: 0 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'X', font: { size: axisFontSize, style: 'italic' }, color: c.text }, ticks: { color: c.text }, grid: { color: c.grid, borderColor: c.text } },
+                        y: { title: { display: true, text: 'Y', font: { size: axisFontSize, style: 'italic' }, color: c.text }, ticks: { color: c.text }, grid: { color: c.grid, borderColor: c.text } }
+                    },
+                    plugins: { legend: { labels: { color: c.text, font: { size: legendFontSize } } } }
+                },
+                plugins: [dynamicBackgroundPlugin] 
+            });
+        }
+
+        function drawEmptyChart() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (myChart != null) myChart.destroy();
+            
+            const c = getChartThemeColors();
+            const isMobile = window.innerWidth <= 768;
+            const axisFontSize = isMobile ? 14 : 18;
+
+            Chart.defaults.font.family = "'Cambria Math', 'Times New Roman', Times, serif";
+            Chart.defaults.color = c.text;
+
+            myChart = new Chart(ctx, {
+                type: 'scatter',
+                data: { datasets: [] },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'X', font: { size: axisFontSize, style: 'italic' }, color: c.text }, min: 0, max: 10, ticks: { color: c.text }, grid: { color: c.grid, borderColor: c.text } },
+                        y: { title: { display: true, text: 'Y', font: { size: axisFontSize, style: 'italic' }, color: c.text }, min: 0, max: 10, ticks: { color: c.text }, grid: { color: c.grid, borderColor: c.text } }
+                    }
+                },
+                plugins: [dynamicBackgroundPlugin]
+            });
+        }
+
+        function downloadChart() {
+            const canvas = document.getElementById('myChart');
+            const imageURL = canvas.toDataURL('image/png', 1.0);
+            
+            const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0,0,0,0.85)';
+            modal.style.display = 'flex';
+            modal.style.flexDirection = 'column';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '10000';
+            modal.style.padding = '20px';
+            modal.style.boxSizing = 'border-box';
+
+            const img = document.createElement('img');
+            img.src = imageURL;
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '70%';
+            img.style.border = '2px solid var(--bg-color)';
+            img.style.borderRadius = '4px';
+
+            const hint = document.createElement('p');
+            hint.innerHTML = '<b>اضغط مطولاً على الصورة</b> لاختيار "حفظ الصورة"<br><br> انقر في أي مكان فارغ لإغلاق النافذة';
+            hint.style.color = '#f4f1ea';
+            hint.style.fontSize = '18px';
+            hint.style.textAlign = 'center';
+            hint.style.lineHeight = '1.6';
+            hint.style.marginTop = '20px';
+            hint.style.fontFamily = 'var(--arabic-font)';
+
+            modal.appendChild(img);
+            modal.appendChild(hint);
+
+            modal.onclick = function() {
+                document.body.removeChild(modal);
+            };
+
+            document.body.appendChild(modal);
+        }
+
+        window.addEventListener('load', () => {
+            loadTheme();
+            drawEmptyChart();
+        });
+    </script>
+</body>
+</html>

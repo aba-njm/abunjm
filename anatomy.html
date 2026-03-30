@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <link rel="icon" href="https://image2url.com/r2/default/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg" type="image/png">
+    <link rel="apple-touch-icon" href="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpng.pngtree.com%2Fpng-vector%2F20220129%2Fourlarge%2Fpngtree-fractured-limb-icon-for-healthcare-and-trauma-treatment-vector-png-image_44257800.jpg&f=1&ipt=cb13b10d918d020004f64cef019b14509eb830a4dc23867784622a4e624572b5">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anatomy Muscles</title>
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#f4f1ea">
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f4f1ea;
+            --text-color: #2c2825;
+            --table-bg: #fdfdfa;
+            --th-bg: #e6e2d3;
+            --border-color: #8c7b68;
+            --border-dark: #2c2825;
+            --cell-focus: #ebe7d9;
+            --section-bg: #dcd7c6;
+            --btn-hover-bg: #2c2825;
+            --btn-hover-text: #f4f1ea;
+            --danger-color: #8b0000;
+            --danger-hover: #ffffff;
+            --action-color: #2980b9;
+            --fs-btn-bg: #e6dfcd;
+            --fs-btn-hover: #d4ccb6;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1816;
+            --text-color: #dcd7c6;
+            --table-bg: #24221f;
+            --th-bg: #332f2a;
+            --border-color: #5c5346;
+            --border-dark: #8c7b68;
+            --cell-focus: #3a352f;
+            --section-bg: #3f3933;
+            --btn-hover-bg: #dcd7c6;
+            --btn-hover-text: #1a1816;
+            --danger-color: #cc3333;
+            --danger-hover: #1a1816;
+            --action-color: #5dade2;
+            --fs-btn-bg: #332f2b;
+            --fs-btn-hover: #443e39;
+        }
+
+        body {
+            background-color: var(--bg-color); color: var(--text-color); font-family: 'Amiri', serif;
+            margin: 0; padding: 20px; transition: background-color 0.3s, color 0.3s;
+        }
+
+        .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px double var(--border-dark); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .main-title { margin: 0; font-size: 2.2em; font-family: 'Crimson Text', serif; }
+        .corner-controls { display: flex; gap: 10px; }
+        .sub-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 38px; }
+        .bottom-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 2px dashed var(--border-color); }
+
+        .btn { background-color: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 8px 12px; font-family: 'Amiri', serif; font-size: 15px; cursor: pointer; transition: all 0.2s; font-weight: bold; border-radius: 4px; }
+        .btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
+        .back-btn { border-style: dashed; }
+        .back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
+        .fs-btn { background-color: var(--fs-btn-bg); border: 1px solid var(--border-color); font-family: 'Crimson Text', 'Amiri', serif; }
+        .fs-btn:hover { background-color: var(--fs-btn-hover); color: var(--text-color); }
+        .btn-section { border-width: 2px; }
+        .btn-data { border-color: var(--action-color); color: var(--action-color); }
+        .btn-data:hover { background-color: var(--action-color); color: #fff; }
+        .btn-clear { border-color: var(--danger-color); color: var(--danger-color); }
+        .btn-clear:hover { background-color: var(--danger-color); color: var(--danger-hover); }
+        
+        /* كلاس موحد لتأثيرات الانبثاق للأزرار الذكية */
+        .auto-hide {
+            max-width: 0; padding-left: 0; padding-right: 0; margin: 0; border-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .auto-hide.visible {
+            max-width: 120px; padding-left: 12px; padding-right: 12px; border-width: 1px; opacity: 1;
+        }
+
+        /* ألوان أزرار التاريخ */
+        .history-btn { color: #d35400; border-color: #d35400; }
+        .history-btn:hover { background-color: #d35400; color: #fff; }
+
+        #pdf-content { width: 100%; background-color: var(--bg-color); }
+
+        table { width: 100%; table-layout: fixed; border-collapse: collapse; font-family: 'Crimson Text', serif; background-color: var(--table-bg); border: 2px solid var(--border-dark); transition: background-color 0.3s; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 8px; vertical-align: middle; line-height: 1.4; font-size: 1.1em; word-wrap: break-word; overflow-wrap: break-word; }
+        th { background-color: var(--th-bg); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border-dark); text-align: center; }
+        
+        .section-header { background-color: var(--section-bg); font-weight: bold; text-align: center; font-size: 1.2em; letter-spacing: 1px; text-transform: uppercase; color: var(--text-color); border-top: 2px solid var(--border-dark); border-bottom: 2px solid var(--border-dark); }
+        td[contenteditable="true"] { outline: none; }
+        td[contenteditable="true"]:focus { background-color: var(--cell-focus); }
+        
+        .action-column { text-align: center; vertical-align: middle; user-select: none; }
+
+        .action-btn { background: none; border: 1px solid var(--border-dark); color: var(--text-color); padding: 4px 6px; margin: 2px 1px; font-size: 12px; cursor: pointer; transition: 0.2s; display: inline-block; }
+        .action-btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
+        .btn-delete-row { border-color: var(--danger-color); color: var(--danger-color); }
+        .btn-delete-row:hover { background-color: var(--danger-color); color: var(--danger-hover); }
+
+        .drag-handle { cursor: grab; font-size: 16px; font-weight: bold; padding: 2px 6px; border-style: dashed; touch-action: none;}
+        .drag-handle:active { cursor: grabbing; }
+        .region-handle { background-color: var(--section-bg); }
+
+        .sortable-ghost { opacity: 0.3; background-color: var(--cell-focus); }
+        .sortable-drag { 
+            background-color: var(--table-bg) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; 
+            opacity: 1 !important; cursor: grabbing !important; display: table !important; z-index: 9999 !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            body { padding: 15px 5px; } 
+            .main-header { flex-direction: column; align-items: stretch; text-align: center; }
+            .corner-controls { justify-content: center; }
+            .corner-controls button { flex: 1; }
+            .sub-controls, .bottom-controls { justify-content: center; gap: 8px; }
+            .sub-controls button, .bottom-controls button { flex: 1 1 40%; font-size: 12px; padding: 6px 8px; }
+            th, td { padding: 4px 2px; font-size: 11px; line-height: 1.2; }
+            th { font-size: 9px; }
+            .section-header { font-size: 12px; }
+            .action-btn { padding: 2px 4px; font-size: 9px; display: block; width: 100%; box-sizing: border-box; }
+            .drag-handle { display: block; width: 100%; margin-bottom: 2px;}
+        }
+
+        @media print {
+            .main-header, .sub-controls, .bottom-controls, .action-column { display: none !important; }
+            table { border: 1px solid #000; font-size: 12pt; }
+            th, td { padding: 8px; border: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-header">
+        <h2 class="main-title">Anatomy Muscles</h2>
+        <div class="corner-controls">
+            <button class="btn fs-btn" id="fs-btn" onclick="toggleFullScreen()" title="Toggle Full Screen">Full Screen</button>
+            <button class="btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+        </div>
+    </div>
+
+    <div class="sub-controls">
+        <button class="btn btn-section" onclick="addSection()">Add Region</button>
+        <button class="btn" onclick="addRow()">Add Muscle</button>
+        <button class="btn auto-hide history-btn" id="undo-btn" onclick="undoData()">↶ تراجع</button>
+        <button class="btn auto-hide history-btn" id="redo-btn" onclick="redoData()">استعادة ↷</button>
+        <button class="btn auto-hide btn-clear" id="clear-btn" onclick="clearData()" title="حذف جميع البيانات">Clear Data</button>
+    </div>
+
+    <div id="pdf-content">
+        <table id="anatomyTable">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Muscle</th>
+                    <th style="width: 20%;">Origin</th>
+                    <th style="width: 20%;">Insertion</th>
+                    <th style="width: 20%;">Action</th>
+                    <th style="width: 15%;">Nerve supply</th>
+                    <th class="action-column" style="width: 10%;">Control</th>
+                </tr>
+            </thead>
+            </table>
+    </div>
+
+    <div class="bottom-controls">
+        <button class="btn btn-data" onclick="exportPDF()">Export PDF</button>
+        <button class="btn btn-data" onclick="exportDataBackup()">Export Backup</button>
+        <button class="btn btn-data" onclick="importDataBackup()">Import Backup</button>
+    </div>
+
+    <script>
+        const table = document.getElementById('anatomyTable');
+        let tableSortable;
+        let stateHistory = [];
+        let historyIndex = -1;
+        let isHistoryAction = false; 
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => {});
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            const fsBtn = document.getElementById('fs-btn');
+            fsBtn.innerText = document.fullscreenElement ? "Exit Full Screen" : "Full Screen";
+        });
+
+        function loadTheme() {
+            if (localStorage.getItem('sharedTheme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelector("meta[name=theme-color]").setAttribute("content", "#1a1816");
+            }
+        }
+
+        function migrateOldData() {
+            let savedData = localStorage.getItem('lowerLimbAnatomyData');
+            if (!savedData) return;
+            if (savedData.includes('moveUp') || savedData.includes('moveDown') || savedData.includes('colSpan="6"')) {
+                const tempDiv = document.createElement('div'); tempDiv.innerHTML = `<table>${savedData}</table>`;
+                const rows = tempDiv.querySelectorAll('tr'); let newHtml = ''; let currentTbodyHtml = '';
+                rows.forEach(row => {
+                    const sectionHeader = row.querySelector('.section-header');
+                    if (sectionHeader) {
+                        if (currentTbodyHtml !== '') newHtml += `<tbody>${currentTbodyHtml}</tbody>`;
+                        currentTbodyHtml = `<tr><td colspan="5" class="section-header" contenteditable="true">${sectionHeader.innerText}</td><td class="action-column"><span class="action-btn drag-handle region-handle" title="Drag entire Region">☰</span><button class="action-btn btn-delete-row" onclick="deleteRegion(this)" title="Delete Region">X</button></td></tr>`;
+                    } else {
+                        let cells = row.querySelectorAll('td');
+                        if (cells.length >= 5 && !row.querySelector('.section-header')) {
+                            let rowHtml = `<tr class="muscle-row">`;
+                            for(let i = 0; i < 5; i++) rowHtml += `<td contenteditable="true">${cells[i] ? cells[i].innerHTML : ''}</td>`;
+                            rowHtml += `<td class="action-column"><span class="action-btn drag-handle row-handle" title="Drag Muscle">☰</span><button class="action-btn btn-delete-row" onclick="deleteRow(this)" title="Delete Muscle">X</button></td></tr>`;
+                            currentTbodyHtml += rowHtml;
+                        }
+                    }
+                });
+                if (currentTbodyHtml !== '') newHtml += `<tbody>${currentTbodyHtml}</tbody>`;
+                localStorage.setItem('lowerLimbAnatomyData', newHtml);
+            }
+        }
+
+        function pushToHistory(htmlData) {
+            if (isHistoryAction || (historyIndex >= 0 && stateHistory[historyIndex] === htmlData)) return;
+            if (historyIndex < stateHistory.length - 1) stateHistory = stateHistory.slice(0, historyIndex + 1);
+            stateHistory.push(htmlData);
+            if (stateHistory.length > 30) stateHistory.shift(); else historyIndex++;
+            updateHistoryButtons();
+        }
+
+        function updateHistoryButtons() {
+            const undoBtn = document.getElementById('undo-btn');
+            const redoBtn = document.getElementById('redo-btn');
+            if (historyIndex > 0) undoBtn.classList.add('visible'); else undoBtn.classList.remove('visible');
+            if (historyIndex < stateHistory.length - 1) redoBtn.classList.add('visible'); else redoBtn.classList.remove('visible');
+        }
+
+        function undoData() {
+            if (historyIndex > 0) {
+                isHistoryAction = true; historyIndex--; applyState(stateHistory[historyIndex]);
+                isHistoryAction = false; updateHistoryButtons();
+            }
+        }
+
+        function redoData() {
+            if (historyIndex < stateHistory.length - 1) {
+                isHistoryAction = true; historyIndex++; applyState(stateHistory[historyIndex]);
+                isHistoryAction = false; updateHistoryButtons();
+            }
+        }
+
+        function applyState(htmlData) {
+            document.querySelectorAll('#anatomyTable tbody').forEach(tb => tb.remove());
+            if (htmlData && htmlData.trim() !== '') {
+                const tempDiv = document.createElement('div'); tempDiv.innerHTML = `<table>${htmlData}</table>`;
+                tempDiv.querySelectorAll('tbody').forEach(tb => table.appendChild(tb));
+                initSortables();
+            }
+            localStorage.setItem('lowerLimbAnatomyData', htmlData); 
+            updateClearButton();
+        }
+
+        function updateClearButton() {
+            const clearBtn = document.getElementById('clear-btn');
+            const tbodys = document.querySelectorAll('#anatomyTable tbody');
+            
+            // الزر يظهر فقط إذا كان هناك أي بيانات (أقسام أو صفوف)
+            if (tbodys.length > 0) clearBtn.classList.add('visible');
+            else clearBtn.classList.remove('visible');
+        }
+
+        function saveData(skipHistory = false) { 
+            const tbodys = document.querySelectorAll('#anatomyTable tbody'); let dataToSave = '';
+            tbodys.forEach(tb => { 
+                Array.from(tb.querySelectorAll('td')).forEach(td => td.style.width = '');
+                tb.removeAttribute('data-sortable-init'); dataToSave += tb.outerHTML; 
+            });
+            localStorage.setItem('lowerLimbAnatomyData', dataToSave); 
+            if (!skipHistory) pushToHistory(dataToSave);
+            updateClearButton();
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem('lowerLimbAnatomyData');
+            document.querySelectorAll('#anatomyTable tbody').forEach(tb => tb.remove());
+
+            if (savedData && savedData.trim() !== '') { 
+                const tempDiv = document.createElement('div'); tempDiv.innerHTML = `<table>${savedData}</table>`;
+                tempDiv.querySelectorAll('tbody').forEach(tb => table.appendChild(tb));
+                initSortables();
+            } 
+            // تم إزالة الأقسام الافتراضية، ليظل الجدول فارغاً ونظيفاً عند بدء العمل
+            
+            let baseData = ""; document.querySelectorAll('#anatomyTable tbody').forEach(tb => baseData += tb.outerHTML);
+            pushToHistory(baseData); updateClearButton();
+        }
+
+        function fixTableLayout(evt) { Array.from(evt.item.querySelectorAll('td')).forEach(td => td.style.width = window.getComputedStyle(td).width); }
+        function resetTableLayout(evt) { Array.from(evt.item.querySelectorAll('td')).forEach(td => td.style.width = ''); saveData(); }
+
+        function initSortables() {
+            if(tableSortable) tableSortable.destroy();
+            tableSortable = new Sortable(table, { animation: 200, handle: '.region-handle', draggable: 'tbody', forceFallback: true, fallbackClass: 'sortable-drag', ghostClass: 'sortable-ghost', onChoose: fixTableLayout, onEnd: resetTableLayout });
+            document.querySelectorAll('#anatomyTable tbody').forEach(tbody => {
+                if(!tbody.sortable) {
+                    new Sortable(tbody, { group: 'muscles-group', animation: 150, handle: '.row-handle', draggable: '.muscle-row', forceFallback: true, fallbackClass: 'sortable-drag', ghostClass: 'sortable-ghost', onChoose: fixTableLayout, onEnd: resetTableLayout });
+                }
+            });
+        }
+
+        function addSection(defaultText = "Click to edit Region Name", skipSave = false) {
+            const newTbody = document.createElement('tbody'); const newRow = document.createElement('tr');
+            let cell = document.createElement('td'); cell.colSpan = 5; cell.contentEditable = "true"; cell.className = "section-header"; cell.innerText = defaultText;
+            let controlCell = document.createElement('td'); controlCell.className = "action-column";
+            controlCell.innerHTML = `<span class="action-btn drag-handle region-handle" title="Drag entire Region">☰</span><button class="action-btn btn-delete-row" onclick="deleteRegion(this)" title="Delete Region">X</button>`;
+            newRow.appendChild(cell); newRow.appendChild(controlCell); newTbody.appendChild(newRow); table.appendChild(newTbody);
+            initSortables(); if(!skipSave) saveData();
+        }
+
+        function addRow(skipSave = false) {
+            const tbodys = document.querySelectorAll('#anatomyTable tbody');
+            // إذا كان الجدول فارغاً تماماً وأراد إضافة عضلة، ننشئ له قسماً أولاً
+            if(tbodys.length === 0) addSection(undefined, true);
+            
+            const lastTbody = document.querySelectorAll('#anatomyTable tbody')[document.querySelectorAll('#anatomyTable tbody').length - 1];
+            const newRow = document.createElement('tr'); newRow.className = "muscle-row";
+            for (let i = 0; i < 5; i++) { let cell = document.createElement('td'); cell.contentEditable = "true"; newRow.appendChild(cell); }
+            let controlCell = document.createElement('td'); controlCell.className = "action-column";
+            controlCell.innerHTML = `<span class="action-btn drag-handle row-handle" title="Drag Muscle">☰</span><button class="action-btn btn-delete-row" onclick="deleteRow(this)" title="Delete Muscle">X</button>`;
+            
+            newRow.appendChild(controlCell); lastTbody.appendChild(newRow);
+            initSortables(); if(!skipSave) saveData();
+        }
+
+        function deleteRow(btn) { btn.closest('tr').remove(); saveData(); }
+        function deleteRegion(btn) { btn.closest('tbody').remove(); saveData(); }
+
+        function clearData() {
+            // إضافة التنبيه وحذف كل شيء للإبقاء على الجدول فارغاً تماماً
+            if(confirm("Are you sure you want to clear all data?")) {
+                document.querySelectorAll('#anatomyTable tbody').forEach(tb => tb.remove());
+                saveData(); 
+            }
+        }
+
+        function exportDataBackup() {
+            const currentData = localStorage.getItem('lowerLimbAnatomyData') || "";
+            const blob = new Blob([currentData], { type: 'text/plain' });
+            const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'Anatomy_Backup.txt'; link.click();
+        }
+
+        function importDataBackup() {
+            const input = document.createElement('input'); input.type = 'file'; input.accept = '.txt';
+            input.onchange = e => {
+                const file = e.target.files[0]; if (!file) return;
+                const reader = new FileReader();
+                reader.onload = event => { localStorage.setItem('lowerLimbAnatomyData', event.target.result); migrateOldData(); loadData(); alert("Data imported successfully!"); };
+                reader.readAsText(file);
+            }; input.click();
+        }
+
+        function exportPDF() {
+            const element = document.getElementById('pdf-content'); const actionCells = document.querySelectorAll('.action-column');
+            actionCells.forEach(cell => cell.style.display = 'none');
+            const wasDarkMode = document.body.classList.contains('dark-mode'); if (wasDarkMode) document.body.classList.remove('dark-mode');
+
+            const opt = { margin: 10, filename: 'Anatomy_Lower_Limb.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } };
+            html2pdf().set(opt).from(element).save().then(() => { actionCells.forEach(cell => cell.style.display = ''); if (wasDarkMode) document.body.classList.add('dark-mode'); });
+        }
+
+        let typingTimer;
+        document.getElementById('anatomyTable').addEventListener('input', () => {
+            saveData(true); clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => { pushToHistory(localStorage.getItem('lowerLimbAnatomyData')); }, 800); 
+        });
+        
+        window.onload = () => { loadTheme(); migrateOldData(); loadData(); };
+    </script>
+</body>
+</html>
