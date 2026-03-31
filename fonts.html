@@ -4,13 +4,17 @@
     <link rel="icon" href="https://image2url.com/r2/default/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة الخطوط العربية</title>
+    <title>مكتبة الخطوط العربية الشاملة (49 خط)</title>
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#f4f1ea">
 
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Tajawal:wght@300;400;700&family=Almarai:wght@300;400;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;700&family=Readex+Pro:wght@300;400;700&family=El+Messiri:wght@400;700&family=Lemonada:wght@400;700&family=Changa:wght@400;700&family=Lalezar&family=Reem+Kufi:wght@400;700&family=Baloo+Bhaijaan+2:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Scheherazade+New:wght@400;700&family=Harmattan:wght@400;700&family=Vibes&family=Aref+Ruqaa:wght@400;700&family=Alexandria:wght@400;700&family=Markazi+Text:wght@400;700&family=Mada:wght@400;700&family=Lateef:wght@400;700&family=Jomhuria&family=Katibeh&family=Mirza:wght@400;700&family=Rakkas&family=Kufam:wght@400;700&family=Qahiri&family=Zain:wght@400;700&family=Ruwudu:wght@400;700&family=Blaka&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Cairo:wght@400;700;900&family=Tajawal:wght@300;400;700&family=Almarai:wght@300;400;700;800&family=Zain:wght@400;700&family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;700&family=Readex+Pro:wght@300;400;700&family=Markazi+Text:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mada:wght@400;700&family=El+Messiri:wght@400;700&family=Lemonada:wght@400;700&family=Changa:wght@400;700&family=Lalezar&family=Reem+Kufi:wght@400;700&family=Reem+Kufi+Fun:wght@400;700&family=Reem+Kufi+Ink&family=Lateef:wght@400;700&family=Baloo+Bhaijaan+2:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700&family=Scheherazade+New:wght@400;700&family=Jomhuria&family=Katibeh&family=Mirza:wght@400;700&family=Rakkas&family=Kufam:wght@400;700&family=Qahiri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ruwudu:wght@400;700&family=Blaka&family=Blaka+Hollow&family=Blaka+Ink&family=Harmattan:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Aref+Ruqaa+Ink:wght@400;700&family=Vibes&family=Vazirmatn:wght@400;700&family=Marhey:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gulzar&family=Alkalami&family=Rubik+Arabic:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Momin:wght@400;700&family=Noto+Sans+Arabic+UI:wght@400;700&family=Noto+Naskh+Arabic+UI:wght@400;700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -76,7 +80,7 @@
         .fonts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .font-card { background-color: var(--table-bg); border: 2px solid var(--border-dark); display: flex; flex-direction: column; transition: background-color 0.3s; }
         
-        .font-name { background-color: var(--section-bg); font-weight: bold; text-align: center; font-size: 1.2em; padding: 10px; border-bottom: 2px solid var(--border-dark); }
+        .font-name { background-color: var(--section-bg); font-weight: bold; text-align: center; font-size: 1.2em; padding: 10px; border-bottom: 2px solid var(--border-dark); direction: ltr; }
         
         .variants-container { display: flex; justify-content: center; gap: 8px; padding: 10px; background-color: var(--th-bg); flex-wrap: wrap; border-bottom: 1px dashed var(--border-color); }
         .variant-btn { background-color: transparent; border: 1px solid var(--border-dark); color: var(--text-color); padding: 4px 10px; font-family: 'Amiri', serif; font-size: 13px; border-radius: 12px; cursor: pointer; transition: 0.2s; }
@@ -107,7 +111,7 @@
             <button class="btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
             <button class="btn fs-btn" id="fs-btn" onclick="toggleFullScreen()">Full Screen</button>
         </div>
-        <h2 class="main-title">مكتبة الخطوط العربية الشاملة</h2>
+        <h2 class="main-title">مكتبة الخطوط (50 خطاً)</h2>
     </div>
 
     <div class="top-controls-wrapper">
@@ -150,159 +154,108 @@
             previews.forEach(p => p.style.fontSize = currentFontSize + 'px');
         }
 
-        // --- قائمة الخطوط الشاملة (الوزن "عادي" دائماً في البداية) ---
+        // جميع الخطوط الـ 49 من جوجل + خط كوكب مونو (الإجمالي 50)
         const fonts = [
+            { name: 'Cairo', family: 'Cairo', weight: '400', url: 'Cairo' },
+            { name: 'Tajawal', family: 'Tajawal', weight: '400', url: 'Tajawal' },
+            { name: 'Almarai', family: 'Almarai', weight: '400', url: 'Almarai' },
+            { name: 'Zain', family: 'Zain', weight: '400', url: 'Zain' },
+            { name: 'Alexandria', family: 'Alexandria', weight: '400', url: 'Alexandria' },
+            { name: 'IBM Plex Sans Arabic', family: 'IBM Plex Sans Arabic', weight: '400', url: 'IBM+Plex+Sans+Arabic' },
+            { name: 'Readex Pro', family: 'Readex Pro', weight: '400', url: 'Readex+Pro' },
+            { name: 'Markazi Text', family: 'Markazi Text', weight: '400', url: 'Markazi+Text' },
+            { name: 'Mada', family: 'Mada', weight: '400', url: 'Mada' },
+            { name: 'El Messiri', family: 'El Messiri', weight: '400', url: 'El+Messiri' },
+            { name: 'Lemonada', family: 'Lemonada', weight: '400', url: 'Lemonada' },
+            { name: 'Changa', family: 'Changa', weight: '400', url: 'Changa' },
+            { name: 'Lalezar', family: 'Lalezar', weight: '400', url: 'Lalezar' },
+            { name: 'Reem Kufi', family: 'Reem Kufi', weight: '400', url: 'Reem+Kufi' },
+            { name: 'Reem Kufi Fun', family: 'Reem Kufi Fun', weight: '400', url: 'Reem+Kufi+Fun' },
+            { name: 'Reem Kufi Ink', family: 'Reem Kufi Ink', weight: '400', url: 'Reem+Kufi+Ink' },
+            { name: 'Lateef', family: 'Lateef', weight: '400', url: 'Lateef' },
+            { name: 'Baloo Bhaijaan 2', family: 'Baloo Bhaijaan 2', weight: '400', url: 'Baloo+Bhaijaan+2' },
+            { name: 'Noto Naskh Arabic', family: 'Noto Naskh Arabic', weight: '400', url: 'Noto+Naskh+Arabic' },
+            { name: 'Noto Sans Arabic', family: 'Noto Sans Arabic', weight: '400', url: 'Noto+Sans+Arabic' },
+            { name: 'Noto Kufi Arabic', family: 'Noto Kufi Arabic', weight: '400', url: 'Noto+Kufi+Arabic' },
+            { name: 'Scheherazade New', family: 'Scheherazade New', weight: '400', url: 'Scheherazade+New' },
+            { name: 'Jomhuria', family: 'Jomhuria', weight: '400', url: 'Jomhuria' },
+            { name: 'Katibeh', family: 'Katibeh', weight: '400', url: 'Katibeh' },
+            { name: 'Mirza', family: 'Mirza', weight: '400', url: 'Mirza' },
+            { name: 'Rakkas', family: 'Rakkas', weight: '400', url: 'Rakkas' },
+            { name: 'Kufam', family: 'Kufam', weight: '400', url: 'Kufam' },
+            { name: 'Qahiri', family: 'Qahiri', weight: '400', url: 'Qahiri' },
+            { name: 'Ruwudu', family: 'Ruwudu', weight: '400', url: 'Ruwudu' },
+            { name: 'Blaka', family: 'Blaka', weight: '400', url: 'Blaka' },
+            { name: 'Blaka Hollow', family: 'Blaka Hollow', weight: '400', url: 'Blaka+Hollow' },
+            { name: 'Blaka Ink', family: 'Blaka Ink', weight: '400', url: 'Blaka+Ink' },
+            { name: 'Harmattan', family: 'Harmattan', weight: '400', url: 'Harmattan' },
+            { name: 'Aref Ruqaa', family: 'Aref Ruqaa', weight: '400', url: 'Aref+Ruqaa' },
+            { name: 'Aref Ruqaa Ink', family: 'Aref Ruqaa Ink', weight: '400', url: 'Aref+Ruqaa+Ink' },
+            { name: 'Vibes', family: 'Vibes', weight: '400', url: 'Vibes' },
+            { name: 'Amiri', family: 'Amiri', weight: '400', url: 'Amiri' },
+            { name: 'Amiri Quran', family: 'Amiri Quran', weight: '400', url: 'Amiri+Quran' },
+            { name: 'Vazirmatn', family: 'Vazirmatn', weight: '400', url: 'Vazirmatn' },
+            { name: 'Marhey', family: 'Marhey', weight: '400', url: 'Marhey' },
+            { name: 'Gulzar', family: 'Gulzar', weight: '400', url: 'Gulzar' },
+            { name: 'Alkalami', family: 'Alkalami', weight: '400', url: 'Alkalami' },
+            { name: 'Noto Nastaliq Urdu', family: 'Noto Nastaliq Urdu', weight: '400', url: 'Noto+Nastaliq+Urdu' },
+            { name: 'Rubik Arabic', family: 'Rubik Arabic', weight: '400', url: 'Rubik+Arabic' },
+            { name: 'Momin', family: 'Momin', weight: '400', url: 'Momin' },
+            { name: 'Noto Sans Arabic UI', family: 'Noto Sans Arabic UI', weight: '400', url: 'Noto+Sans+Arabic+UI' },
+            { name: 'Noto Naskh Arabic UI', family: 'Noto Naskh Arabic UI', weight: '400', url: 'Noto+Naskh+Arabic+UI' },
+            
+            // إضافة الخط المحلي (كوكب مونو)
             { 
-                name: 'خط كايرو (Cairo)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Cairo', externalDownload: 'https://fonts.google.com/download?family=Cairo',
-                variants: [ { name: 'عادي', family: 'Cairo', weight: '400' }, { name: 'عريض', family: 'Cairo', weight: '700' }, { name: 'أسود', family: 'Cairo', weight: '900' } ]
-            },
-            { 
-                name: 'خط تجوال (Tajawal)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Tajawal', externalDownload: 'https://fonts.google.com/download?family=Tajawal',
-                variants: [ { name: 'عادي', family: 'Tajawal', weight: '400' }, { name: 'خفيف', family: 'Tajawal', weight: '300' }, { name: 'عريض', family: 'Tajawal', weight: '700' } ]
-            },
-            { 
-                name: 'خط المراعي (Almarai)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Almarai', externalDownload: 'https://fonts.google.com/download?family=Almarai',
-                variants: [ { name: 'عادي', family: 'Almarai', weight: '400' }, { name: 'عريض', family: 'Almarai', weight: '700' }, { name: 'أسود', family: 'Almarai', weight: '800' } ]
-            },
-            { 
-                name: 'زين (Zain)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Zain', externalDownload: 'https://fonts.google.com/download?family=Zain',
-                variants: [ { name: 'عادي', family: 'Zain', weight: '400' }, { name: 'عريض', family: 'Zain', weight: '700' } ]
-            },
-            { 
-                name: 'الإسكندرية (Alexandria)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Alexandria', externalDownload: 'https://fonts.google.com/download?family=Alexandria',
-                variants: [ { name: 'عادي', family: 'Alexandria', weight: '400' }, { name: 'عريض', family: 'Alexandria', weight: '700' } ]
-            },
-            { 
-                name: 'آي بي إم بلكس (IBM Plex Arabic)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/IBM+Plex+Sans+Arabic', externalDownload: 'https://fonts.google.com/download?family=IBM+Plex+Sans+Arabic',
-                variants: [ { name: 'عادي', family: 'IBM Plex Sans Arabic', weight: '400' }, { name: 'خفيف', family: 'IBM Plex Sans Arabic', weight: '300' }, { name: 'عريض', family: 'IBM Plex Sans Arabic', weight: '700' } ]
-            },
-            { 
-                name: 'ريديكس برو (Readex Pro)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Readex+Pro', externalDownload: 'https://fonts.google.com/download?family=Readex+Pro',
-                variants: [ { name: 'عادي', family: 'Readex Pro', weight: '400' }, { name: 'خفيف', family: 'Readex Pro', weight: '300' }, { name: 'عريض', family: 'Readex Pro', weight: '700' } ]
-            },
-            { 
-                name: 'ماركازي (Markazi Text)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Markazi+Text', externalDownload: 'https://fonts.google.com/download?family=Markazi+Text',
-                variants: [ { name: 'عادي', family: 'Markazi Text', weight: '400' }, { name: 'عريض', family: 'Markazi Text', weight: '700' } ]
-            },
-            { 
-                name: 'كوكب مونو (Kawkab Mono)', source: 'Makkuk', sourceUrl: 'https://makkuk.com/kawkab-mono/', externalDownload: 'https://makkuk.com/kawkab-mono/downloads/kawkab-mono-0.500.zip',
-                variants: [ { name: 'عادي', family: 'Kawkab-Regular', weight: 'normal' }, { name: 'خفيف', family: 'Kawkab-Light', weight: 'normal' }, { name: 'عريض', family: 'Kawkab-Bold', weight: 'normal' } ]
-            },
-            { 
-                name: 'مدى (Mada)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Mada', externalDownload: 'https://fonts.google.com/download?family=Mada',
-                variants: [ { name: 'عادي', family: 'Mada', weight: '400' }, { name: 'عريض', family: 'Mada', weight: '700' } ]
-            },
-            { 
-                name: 'المسيري (El Messiri)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/El+Messiri', externalDownload: 'https://fonts.google.com/download?family=El+Messiri',
-                variants: [ { name: 'عادي', family: 'El Messiri', weight: '400' }, { name: 'عريض', family: 'El Messiri', weight: '700' } ]
-            },
-            { 
-                name: 'ليمونادة (Lemonada)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lemonada', externalDownload: 'https://fonts.google.com/download?family=Lemonada',
-                variants: [ { name: 'عادي', family: 'Lemonada', weight: '400' }, { name: 'عريض', family: 'Lemonada', weight: '700' } ]
-            },
-            { 
-                name: 'تشانغا (Changa)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Changa', externalDownload: 'https://fonts.google.com/download?family=Changa',
-                variants: [ { name: 'عادي', family: 'Changa', weight: '400' }, { name: 'عريض', family: 'Changa', weight: '700' } ]
-            },
-            { 
-                name: 'لاليزار (Lalezar)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lalezar', externalDownload: 'https://fonts.google.com/download?family=Lalezar',
-                variants: [ { name: 'عادي', family: 'Lalezar', weight: '400' } ]
-            },
-            { 
-                name: 'ريم كوفي (Reem Kufi)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Reem+Kufi', externalDownload: 'https://fonts.google.com/download?family=Reem+Kufi',
-                variants: [ { name: 'عادي', family: 'Reem Kufi', weight: '400' }, { name: 'عريض', family: 'Reem Kufi', weight: '700' } ]
-            },
-            { 
-                name: 'لطيف (Lateef)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lateef', externalDownload: 'https://fonts.google.com/download?family=Lateef',
-                variants: [ { name: 'عادي', family: 'Lateef', weight: '400' }, { name: 'عريض', family: 'Lateef', weight: '700' } ]
-            },
-            { 
-                name: 'بالو بهيجان (Baloo Bhaijaan 2)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Baloo+Bhaijaan+2', externalDownload: 'https://fonts.google.com/download?family=Baloo+Bhaijaan+2',
-                variants: [ { name: 'عادي', family: 'Baloo Bhaijaan 2', weight: '400' }, { name: 'عريض', family: 'Baloo Bhaijaan 2', weight: '700' } ]
-            },
-            { 
-                name: 'نوتو نسخ (Noto Naskh)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Noto+Naskh+Arabic', externalDownload: 'https://fonts.google.com/download?family=Noto+Naskh+Arabic',
-                variants: [ { name: 'عادي', family: 'Noto Naskh Arabic', weight: '400' }, { name: 'عريض', family: 'Noto Naskh Arabic', weight: '700' } ]
-            },
-            { 
-                name: 'نوتو سانس (Noto Sans)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Noto+Sans+Arabic', externalDownload: 'https://fonts.google.com/download?family=Noto+Sans+Arabic',
-                variants: [ { name: 'عادي', family: 'Noto Sans Arabic', weight: '400' }, { name: 'عريض', family: 'Noto Sans Arabic', weight: '700' } ]
-            },
-            { 
-                name: 'شهرزاد (Scheherazade New)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Scheherazade+New', externalDownload: 'https://fonts.google.com/download?family=Scheherazade+New',
-                variants: [ { name: 'عادي', family: 'Scheherazade New', weight: '400' }, { name: 'عريض', family: 'Scheherazade New', weight: '700' } ]
-            },
-            { 
-                name: 'جمهورية (Jomhuria)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Jomhuria', externalDownload: 'https://fonts.google.com/download?family=Jomhuria',
-                variants: [ { name: 'عادي', family: 'Jomhuria', weight: '400' } ]
-            },
-            { 
-                name: 'كتيبة (Katibeh)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Katibeh', externalDownload: 'https://fonts.google.com/download?family=Katibeh',
-                variants: [ { name: 'عادي', family: 'Katibeh', weight: '400' } ]
-            },
-            { 
-                name: 'ميرزا (Mirza)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Mirza', externalDownload: 'https://fonts.google.com/download?family=Mirza',
-                variants: [ { name: 'عادي', family: 'Mirza', weight: '400' }, { name: 'عريض', family: 'Mirza', weight: '700' } ]
-            },
-            { 
-                name: 'رقاص (Rakkas)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Rakkas', externalDownload: 'https://fonts.google.com/download?family=Rakkas',
-                variants: [ { name: 'عادي', family: 'Rakkas', weight: '400' } ]
-            },
-            { 
-                name: 'كوفام (Kufam)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Kufam', externalDownload: 'https://fonts.google.com/download?family=Kufam',
-                variants: [ { name: 'عادي', family: 'Kufam', weight: '400' }, { name: 'عريض', family: 'Kufam', weight: '700' } ]
-            },
-            { 
-                name: 'قاهري (Qahiri)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Qahiri', externalDownload: 'https://fonts.google.com/download?family=Qahiri',
-                variants: [ { name: 'عادي', family: 'Qahiri', weight: '400' } ]
-            },
-            { 
-                name: 'روضو (Ruwudu)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Ruwudu', externalDownload: 'https://fonts.google.com/download?family=Ruwudu',
-                variants: [ { name: 'عادي', family: 'Ruwudu', weight: '400' }, { name: 'عريض', family: 'Ruwudu', weight: '700' } ]
-            },
-            { 
-                name: 'بلكا (Blaka)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Blaka', externalDownload: 'https://fonts.google.com/download?family=Blaka',
-                variants: [ { name: 'عادي', family: 'Blaka', weight: '400' } ]
-            },
-            { 
-                name: 'هرمتان (Harmattan)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Harmattan', externalDownload: 'https://fonts.google.com/download?family=Harmattan',
-                variants: [ { name: 'عادي', family: 'Harmattan', weight: '400' }, { name: 'عريض', family: 'Harmattan', weight: '700' } ]
-            },
-            { 
-                name: 'أريف رقعة (Aref Ruqaa)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Aref+Ruqaa', externalDownload: 'https://fonts.google.com/download?family=Aref+Ruqaa',
-                variants: [ { name: 'عادي', family: 'Aref Ruqaa', weight: '400' }, { name: 'عريض', family: 'Aref Ruqaa', weight: '700' } ]
-            },
-            { 
-                name: 'فايبز (Vibes)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Vibes', externalDownload: 'https://fonts.google.com/download?family=Vibes',
-                variants: [ { name: 'عادي', family: 'Vibes', weight: '400' } ]
+                name: 'Kawkab Mono (Local)', 
+                family: 'Kawkab-Regular', 
+                weight: 'normal', 
+                isLocal: true,
+                localUrl: 'https://makkuk.com/kawkab-mono/',
+                localDownload: 'https://makkuk.com/kawkab-mono/downloads/kawkab-mono-0.500.zip',
+                variants: [
+                    { name: 'عادي', family: 'Kawkab-Regular', weight: 'normal' },
+                    { name: 'خفيف', family: 'Kawkab-Light', weight: 'normal' },
+                    { name: 'عريض', family: 'Kawkab-Bold', weight: 'normal' }
+                ]
             }
         ];
 
         function renderFonts() {
             fontsGrid.innerHTML = ''; 
             document.getElementById('fontSizeDisplay').innerText = currentFontSize + 'px';
+            
             fonts.forEach((font, fontIndex) => {
-                const defaultVariant = font.variants[0]; 
                 const card = document.createElement('div');
                 card.className = 'font-card';
+                
+                let sourceUrl = font.isLocal ? font.localUrl : `https://fonts.google.com/specimen/${font.url}`;
+                let downloadUrl = font.isLocal ? font.localDownload : `https://fonts.google.com/download?family=${font.url}`;
+                
                 let variantsHtml = '';
-                if (font.variants.length > 1) {
+                if (font.variants) { // للمحلي (كوكب)
                     variantsHtml = `<div class="variants-container" id="variants-container-${fontIndex}">`;
                     font.variants.forEach((variant, variantIndex) => {
                         const activeClass = variantIndex === 0 ? 'active' : '';
                         variantsHtml += `<button class="variant-btn ${activeClass}" onclick="changeVariant(${fontIndex}, ${variantIndex})">${variant.name}</button>`;
                     });
                     variantsHtml += `</div>`;
+                } else { // لجوجل فونتس
+                    variantsHtml = `
+                    <div class="variants-container" id="variants-container-${fontIndex}">
+                        <button class="variant-btn active" onclick="changeGoogleVariant(${fontIndex}, '400', 0)">عادي</button>
+                        <button class="variant-btn" onclick="changeGoogleVariant(${fontIndex}, '700', 1)">عريض</button>
+                    </div>`;
                 }
+
                 card.innerHTML = `
                     <div class="font-name">${font.name}</div>
                     ${variantsHtml}
-                    <div class="font-preview" id="preview-${fontIndex}" style="font-family: '${defaultVariant.family}', serif; font-weight: ${defaultVariant.weight}; font-size: ${currentFontSize}px;">
+                    <div class="font-preview" id="preview-${fontIndex}" style="font-family: '${font.family}', serif; font-weight: ${font.weight}; font-size: ${currentFontSize}px;">
                         ${mainInput.value || defaultText}
                     </div>
                     <div class="card-footer">
-                        <a href="${font.sourceUrl}" target="_blank" class="btn">المصدر</a>
-                        <a href="${font.externalDownload}" target="_blank" class="btn btn-data">تحميل الخط</a>
+                        <a href="${sourceUrl}" target="_blank" class="btn">المصدر</a>
+                        <a href="${downloadUrl}" target="_blank" class="btn btn-data">تحميل الخط</a>
                     </div>
                 `;
                 fontsGrid.appendChild(card);
@@ -315,10 +268,17 @@
             const previewText = document.getElementById(`preview-${fontIndex}`);
             previewText.style.fontFamily = `'${variant.family}', serif`;
             previewText.style.fontWeight = variant.weight;
+            
             const buttons = document.querySelectorAll(`#variants-container-${fontIndex} .variant-btn`);
-            buttons.forEach((btn, index) => {
-                btn.classList.toggle('active', index === variantIndex);
-            });
+            buttons.forEach((btn, index) => btn.classList.toggle('active', index === variantIndex));
+        };
+
+        window.changeGoogleVariant = function(fontIndex, weight, btnIndex) {
+            const previewText = document.getElementById(`preview-${fontIndex}`);
+            previewText.style.fontWeight = weight;
+            
+            const buttons = document.querySelectorAll(`#variants-container-${fontIndex} .variant-btn`);
+            buttons.forEach((btn, index) => btn.classList.toggle('active', index === btnIndex));
         };
 
         mainInput.addEventListener('input', () => {
