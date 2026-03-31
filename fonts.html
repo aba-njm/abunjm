@@ -174,25 +174,24 @@
         // دالة تغيير حجم الخط
         function changeFontSize(step) {
             currentFontSize += step;
-            // نمنع الخط يصير صغير جداً أو كبير جداً
             if (currentFontSize < 14) currentFontSize = 14;
             if (currentFontSize > 120) currentFontSize = 120;
             
-            // تحديث الرقم المعروض
             document.getElementById('fontSizeDisplay').innerText = currentFontSize + 'px';
             
-            // تحديث كل الخطوط في المعاينة
             const previews = document.querySelectorAll('.font-preview');
             previews.forEach(p => {
                 p.style.fontSize = currentFontSize + 'px';
             });
         }
 
+        // --- قائمة الخطوط ---
         const fonts = [
             { 
                 name: 'خط كايرو (Cairo)', 
                 source: 'Google Fonts', 
                 sourceUrl: 'https://fonts.google.com/specimen/Cairo',
+                externalDownload: 'https://fonts.google.com/download?family=Cairo', // <--- هنا تحط رابط التحميل
                 variants: [
                     { name: 'عادي', family: 'Cairo', weight: '400', file: '#' },
                     { name: 'عريض', family: 'Cairo', weight: '700', file: '#' },
@@ -203,16 +202,18 @@
                 name: 'خط تجوال (Tajawal)', 
                 source: 'Google Fonts', 
                 sourceUrl: 'https://fonts.google.com/specimen/Tajawal',
+                externalDownload: 'https://fonts.google.com/download?family=Tajawal', // <--- هنا تحط رابط التحميل
                 variants: [
                     { name: 'خفيف', family: 'Tajawal', weight: '300', file: '#' },
                     { name: 'عادي', family: 'Tajawal', weight: '400', file: '#' },
                     { name: 'عريض', family: 'Tajawal', weight: '700', file: '#' }
                 ]
             },
-			{ 
-                name: 'كوكب مونو (Kawkb Mono)', 
+            { 
+                name: 'كوكب مونو (Kawkab Mono)', 
                 source: 'Makkuk', 
                 sourceUrl: 'https://makkuk.com/kawkab-mono/',
+                externalDownload: 'https://makkuk.com/kawkab-mono/downloads/kawkab-mono-0.500.zip', // <--- مثال لرابط تحميل خط كوكب
                 variants: [
                     { name: 'خفيف', family: 'Kawkab-Light', weight: '300', file: 'fonts/Kawkab Mono/KawkabMono-Light.ttf' },
                     { name: 'عادي', family: 'Kawkab-Regular', weight: '400', file: 'fonts/Kawkab Mono/KawkabMono-Regular.ttf' },
@@ -223,7 +224,6 @@
 
         function renderFonts() {
             fontsGrid.innerHTML = ''; 
-            // نعرض الحجم المبدئي في الأزرار
             document.getElementById('fontSizeDisplay').innerText = currentFontSize + 'px';
 
             fonts.forEach((font, fontIndex) => {
@@ -250,7 +250,7 @@
                     </div>
                     <div class="card-footer">
                         <a href="${font.sourceUrl}" target="_blank" class="btn">المصدر</a>
-                        <a href="${defaultVariant.file}" id="download-${fontIndex}" class="btn btn-data" download>تحميل الخط</a>
+                        <a href="${font.externalDownload}" target="_blank" class="btn btn-data">تحميل الخط</a>
                     </div>
                 `;
                 fontsGrid.appendChild(card);
@@ -264,8 +264,6 @@
             const previewText = document.getElementById(`preview-${fontIndex}`);
             previewText.style.fontFamily = `'${variant.family}', serif`;
             previewText.style.fontWeight = variant.weight || 'normal';
-            
-            document.getElementById(`download-${fontIndex}`).href = variant.file;
             
             const buttons = document.querySelectorAll(`#variants-container-${fontIndex} .variant-btn`);
             buttons.forEach((btn, index) => {
