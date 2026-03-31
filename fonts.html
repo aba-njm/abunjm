@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="icon" href="https://image2url.com/r2/default/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الخطوط</title>
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#f4f1ea">
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f4f1ea;
+            --text-color: #2c2825;
+            --table-bg: #fdfdfa;
+            --th-bg: #e6e2d3;
+            --border-color: #8c7b68;
+            --border-dark: #2c2825;
+            --cell-focus: #ebe7d9;
+            --section-bg: #dcd7c6;
+            --btn-hover-bg: #2c2825;
+            --btn-hover-text: #f4f1ea;
+            --action-color: #2980b9;
+            --fs-btn-bg: #e6dfcd;
+            --fs-btn-hover: #d4ccb6;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1816;
+            --text-color: #dcd7c6;
+            --table-bg: #24221f;
+            --th-bg: #332f2a;
+            --border-color: #5c5346;
+            --border-dark: #8c7b68;
+            --cell-focus: #3a352f;
+            --section-bg: #3f3933;
+            --btn-hover-bg: #dcd7c6;
+            --btn-hover-text: #1a1816;
+            --action-color: #5dade2;
+            --fs-btn-bg: #332f2b;
+            --fs-btn-hover: #443e39;
+        }
+
+        body {
+            background-color: var(--bg-color); color: var(--text-color); font-family: 'Amiri', serif;
+            margin: 0; padding: 20px; transition: background-color 0.3s, color 0.3s;
+        }
+
+        .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px double var(--border-dark); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .main-title { margin: 0; font-size: 2.2em; font-family: 'Amiri', serif; text-align: right; }
+        .corner-controls { display: flex; gap: 10px; }
+
+        .btn { background-color: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 8px 12px; font-family: 'Amiri', serif; font-size: 15px; cursor: pointer; transition: all 0.2s; font-weight: bold; border-radius: 4px; text-decoration: none; text-align: center;}
+        .btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
+        .back-btn { border-style: dashed; }
+        .back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
+        .fs-btn { background-color: var(--fs-btn-bg); border: 1px solid var(--border-color); font-family: 'Crimson Text', 'Amiri', serif; }
+        .fs-btn:hover { background-color: var(--fs-btn-hover); color: var(--text-color); }
+        .btn-data { border-color: var(--action-color); color: var(--action-color); }
+        .btn-data:hover { background-color: var(--action-color); color: #fff; }
+
+        .top-controls-wrapper { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; gap: 15px; }
+        
+        .input-container { width: 100%; max-width: 800px; }
+        .main-input { width: 100%; box-sizing: border-box; padding: 15px; font-size: 1.5em; font-family: 'Amiri', serif; background-color: var(--table-bg); color: var(--text-color); border: 2px solid var(--border-dark); border-radius: 4px; text-align: center; outline: none; transition: background-color 0.3s; }
+        .main-input:focus { background-color: var(--cell-focus); border-style: dashed; }
+
+        /* أزرار التحكم بحجم الخط */
+        .size-controls { display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: bold; font-size: 1.1em; background-color: var(--th-bg); padding: 10px 20px; border-radius: 8px; border: 1px dashed var(--border-dark); }
+        .size-controls .btn { padding: 4px 15px; font-size: 1.2em; }
+        .size-display { display: inline-block; min-width: 50px; text-align: center; background-color: var(--table-bg); padding: 5px 10px; border: 1px solid var(--border-color); border-radius: 4px; }
+
+        .fonts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .font-card { background-color: var(--table-bg); border: 2px solid var(--border-dark); display: flex; flex-direction: column; transition: background-color 0.3s; }
+        
+        .font-name { background-color: var(--section-bg); font-weight: bold; text-align: center; font-size: 1.2em; padding: 10px; border-bottom: 2px solid var(--border-dark); }
+        
+        .variants-container { display: flex; justify-content: center; gap: 8px; padding: 10px; background-color: var(--th-bg); flex-wrap: wrap; border-bottom: 1px dashed var(--border-color); }
+        .variant-btn { background-color: transparent; border: 1px solid var(--border-dark); color: var(--text-color); padding: 4px 10px; font-family: 'Amiri', serif; font-size: 13px; border-radius: 12px; cursor: pointer; transition: 0.2s; }
+        .variant-btn:hover { background-color: var(--border-color); }
+        .variant-btn.active { background-color: var(--action-color); color: #fff; border-color: var(--action-color); font-weight: bold; }
+
+        /* حجم الخط المبدئي 32 */
+        .font-preview { padding: 20px; font-size: 32px; text-align: center; min-height: 80px; display: flex; align-items: center; justify-content: center; word-wrap: break-word; flex-grow: 1; line-height: 1.5; transition: font-size 0.2s; }
+        
+        .card-footer { display: flex; justify-content: space-between; padding: 10px; border-top: 1px dashed var(--border-color); background-color: var(--th-bg); gap: 10px; }
+        .card-footer .btn { flex: 1; font-size: 13px; }
+
+        @media screen and (max-width: 768px) {
+            body { padding: 15px 5px; } 
+            .main-header { flex-direction: column-reverse; align-items: stretch; text-align: center; gap: 15px; }
+            .main-title { text-align: center; } 
+            .corner-controls { justify-content: center; }
+            .corner-controls button { flex: 1; }
+            .main-input { font-size: 1.2em; padding: 10px; }
+            .font-preview { font-size: 26px; padding: 15px; } /* حجم مصغر للجوال */
+            .fonts-grid { grid-template-columns: 1fr; gap: 15px;}
+            .size-controls { width: 100%; box-sizing: border-box; }
+        }
+@font-face {
+    font-family: 'Kawkab-Regular';
+    src: url('fonts/Kawkab Mono/KawkabMono-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Kawkab-Bold';
+    src: url('fonts/Kawkab Mono/KawkabMono-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Kawkab-Light';
+    src: url('fonts/Kawkab Mono/KawkabMono-Light.ttf') format('truetype');
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="main-header">
+        <div class="corner-controls">
+            <button class="btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+            <button class="btn fs-btn" id="fs-btn" onclick="toggleFullScreen()" title="Toggle Full Screen">Full Screen</button>
+        </div>
+        <h2 class="main-title">مكتبة الخطوط المتميزة</h2>
+    </div>
+
+    <div class="top-controls-wrapper">
+        <div class="input-container">
+            <input type="text" id="mainInput" class="main-input" value="التصميم هو السفير الصامت لعلامتك التجارية" placeholder="اكتب جملة لتجربتها على جميع الخطوط...">
+        </div>
+        
+        <div class="size-controls">
+            <span>حجم الخط:</span>
+            <button class="btn" onclick="changeFontSize(4)">+</button>
+            <span class="size-display" id="fontSizeDisplay">20px</span>
+            <button class="btn" onclick="changeFontSize(-4)">-</button>
+        </div>
+    </div>
+
+    <div class="fonts-grid" id="fontsGrid">
+        </div>
+
+    <script>
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => {});
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            const fsBtn = document.getElementById('fs-btn');
+            fsBtn.innerText = document.fullscreenElement ? "Exit Full Screen" : "Full Screen";
+        });
+
+        function loadTheme() {
+            if (localStorage.getItem('sharedTheme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelector("meta[name=theme-color]").setAttribute("content", "#1a1816");
+            }
+        }
+
+        const defaultText = "التصميم هو السفير الصامت لعلامتك التجارية";
+        const mainInput = document.getElementById('mainInput');
+        const fontsGrid = document.getElementById('fontsGrid');
+        
+        // متغير لحفظ حجم الخط الحالي
+        let currentFontSize = window.innerWidth <= 768 ? 26 : 20; 
+
+        // دالة تغيير حجم الخط
+        function changeFontSize(step) {
+            currentFontSize += step;
+            // نمنع الخط يصير صغير جداً أو كبير جداً
+            if (currentFontSize < 14) currentFontSize = 14;
+            if (currentFontSize > 120) currentFontSize = 120;
+            
+            // تحديث الرقم المعروض
+            document.getElementById('fontSizeDisplay').innerText = currentFontSize + 'px';
+            
+            // تحديث كل الخطوط في المعاينة
+            const previews = document.querySelectorAll('.font-preview');
+            previews.forEach(p => {
+                p.style.fontSize = currentFontSize + 'px';
+            });
+        }
+
+        const fonts = [
+            { 
+                name: 'خط كايرو (Cairo)', 
+                source: 'Google Fonts', 
+                sourceUrl: 'https://fonts.google.com/specimen/Cairo',
+                variants: [
+                    { name: 'عادي', family: 'Cairo', weight: '400', file: '#' },
+                    { name: 'عريض', family: 'Cairo', weight: '700', file: '#' },
+                    { name: 'أسود (Black)', family: 'Cairo', weight: '900', file: '#' }
+                ]
+            },
+            { 
+                name: 'خط تجوال (Tajawal)', 
+                source: 'Google Fonts', 
+                sourceUrl: 'https://fonts.google.com/specimen/Tajawal',
+                variants: [
+                    { name: 'خفيف', family: 'Tajawal', weight: '300', file: '#' },
+                    { name: 'عادي', family: 'Tajawal', weight: '400', file: '#' },
+                    { name: 'عريض', family: 'Tajawal', weight: '700', file: '#' }
+                ]
+            },
+			{ 
+                name: 'كوكب مونو (Kawkb Mono)', 
+                source: 'Makkuk', 
+                sourceUrl: 'https://makkuk.com/kawkab-mono/',
+                variants: [
+                    { name: 'خفيف', family: 'Kawkab-Light', weight: '300', file: 'fonts/Kawkab Mono/KawkabMono-Light.ttf' },
+                    { name: 'عادي', family: 'Kawkab-Regular', weight: '400', file: 'fonts/Kawkab Mono/KawkabMono-Regular.ttf' },
+                    { name: 'عريض', family: 'Kawkab-Bold', weight: '700', file: 'fonts/Kawkab Mono/KawkabMono-Bold.ttf' }
+                ]
+            }
+        ];
+
+        function renderFonts() {
+            fontsGrid.innerHTML = ''; 
+            // نعرض الحجم المبدئي في الأزرار
+            document.getElementById('fontSizeDisplay').innerText = currentFontSize + 'px';
+
+            fonts.forEach((font, fontIndex) => {
+                const defaultVariant = font.variants[0]; 
+                
+                const card = document.createElement('div');
+                card.className = 'font-card';
+                
+                let variantsHtml = '';
+                if (font.variants.length > 1) {
+                    variantsHtml = `<div class="variants-container" id="variants-container-${fontIndex}">`;
+                    font.variants.forEach((variant, variantIndex) => {
+                        const activeClass = variantIndex === 0 ? 'active' : '';
+                        variantsHtml += `<button class="variant-btn ${activeClass}" onclick="changeVariant(${fontIndex}, ${variantIndex})">${variant.name}</button>`;
+                    });
+                    variantsHtml += `</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="font-name">${font.name}</div>
+                    ${variantsHtml}
+                    <div class="font-preview" id="preview-${fontIndex}" style="font-family: '${defaultVariant.family}', serif; font-weight: ${defaultVariant.weight || 'normal'}; font-size: ${currentFontSize}px;">
+                        ${mainInput.value || defaultText}
+                    </div>
+                    <div class="card-footer">
+                        <a href="${font.sourceUrl}" target="_blank" class="btn">المصدر</a>
+                        <a href="${defaultVariant.file}" id="download-${fontIndex}" class="btn btn-data" download>تحميل الخط</a>
+                    </div>
+                `;
+                fontsGrid.appendChild(card);
+            });
+        }
+
+        window.changeVariant = function(fontIndex, variantIndex) {
+            const font = fonts[fontIndex];
+            const variant = font.variants[variantIndex];
+            
+            const previewText = document.getElementById(`preview-${fontIndex}`);
+            previewText.style.fontFamily = `'${variant.family}', serif`;
+            previewText.style.fontWeight = variant.weight || 'normal';
+            
+            document.getElementById(`download-${fontIndex}`).href = variant.file;
+            
+            const buttons = document.querySelectorAll(`#variants-container-${fontIndex} .variant-btn`);
+            buttons.forEach((btn, index) => {
+                if (index === variantIndex) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        };
+
+        mainInput.addEventListener('input', () => {
+            const previews = document.querySelectorAll('.font-preview');
+            const text = mainInput.value || defaultText;
+            previews.forEach(p => p.textContent = text);
+        });
+
+        window.onload = () => {
+            loadTheme();
+            renderFonts();
+        };
+    </script>
+</body>
+</html>
