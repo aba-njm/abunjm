@@ -59,10 +59,11 @@
         }
 
         .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px double var(--border-dark); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-        .main-title { margin: 0; font-size: 2.2em; font-family: 'Crimson Text', serif; }
+        .main-title { margin: 0; font-size: 2.2em; font-family: 'Crimson Text', serif; text-align: right; }
         .corner-controls { display: flex; gap: 10px; }
-        .sub-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 38px; }
-        .bottom-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 2px dashed var(--border-color); }
+        
+        .sub-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 38px; }
+        .bottom-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 2px dashed var(--border-color); }
 
         .btn { background-color: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 8px 12px; font-family: 'Amiri', serif; font-size: 15px; cursor: pointer; transition: all 0.2s; font-weight: bold; border-radius: 4px; }
         .btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
@@ -76,21 +77,20 @@
         .btn-clear { border-color: var(--danger-color); color: var(--danger-color); }
         .btn-clear:hover { background-color: var(--danger-color); color: var(--danger-hover); }
         
-        /* كلاس موحد لتأثيرات الانبثاق للأزرار الذكية */
         .auto-hide {
             max-width: 0; padding-left: 0; padding-right: 0; margin: 0; border-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .auto-hide.visible {
-            max-width: 120px; padding-left: 12px; padding-right: 12px; border-width: 1px; opacity: 1;
+            max-width: 150px; padding-left: 12px; padding-right: 12px; border-width: 1px; opacity: 1;
         }
 
-        /* ألوان أزرار التاريخ */
         .history-btn { color: #d35400; border-color: #d35400; }
         .history-btn:hover { background-color: #d35400; color: #fff; }
 
         #pdf-content { width: 100%; background-color: var(--bg-color); }
 
         table { width: 100%; table-layout: fixed; border-collapse: collapse; font-family: 'Crimson Text', serif; background-color: var(--table-bg); border: 2px solid var(--border-dark); transition: background-color 0.3s; }
+        tr { page-break-inside: avoid !important; break-inside: avoid !important; }
         th, td { border: 1px solid var(--border-color); padding: 10px 8px; vertical-align: middle; line-height: 1.4; font-size: 1.1em; word-wrap: break-word; overflow-wrap: break-word; }
         th { background-color: var(--th-bg); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border-dark); text-align: center; }
         
@@ -99,7 +99,6 @@
         td[contenteditable="true"]:focus { background-color: var(--cell-focus); }
         
         .action-column { text-align: center; vertical-align: middle; user-select: none; }
-
         .action-btn { background: none; border: 1px solid var(--border-dark); color: var(--text-color); padding: 4px 6px; margin: 2px 1px; font-size: 12px; cursor: pointer; transition: 0.2s; display: inline-block; }
         .action-btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
         .btn-delete-row { border-color: var(--danger-color); color: var(--danger-color); }
@@ -110,18 +109,40 @@
         .region-handle { background-color: var(--section-bg); }
 
         .sortable-ghost { opacity: 0.3; background-color: var(--cell-focus); }
-        .sortable-drag { 
-            background-color: var(--table-bg) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; 
-            opacity: 1 !important; cursor: grabbing !important; display: table !important; z-index: 9999 !important;
-        }
+        .sortable-drag { background-color: var(--table-bg) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; opacity: 1 !important; cursor: grabbing !important; display: table !important; z-index: 9999 !important; }
 
+        /* تعديلات الجوال النهائية */
         @media screen and (max-width: 768px) {
             body { padding: 15px 5px; } 
-            .main-header { flex-direction: column; align-items: stretch; text-align: center; }
+            
+            .main-header { flex-direction: column-reverse; align-items: stretch; text-align: center; gap: 15px; }
+            .main-title { text-align: center; } /* هنا التعديل الوحيد عشان العنوان يصير بالنص */
+            
             .corner-controls { justify-content: center; }
             .corner-controls button { flex: 1; }
-            .sub-controls, .bottom-controls { justify-content: center; gap: 8px; }
-            .sub-controls button, .bottom-controls button { flex: 1 1 40%; font-size: 12px; padding: 6px 8px; }
+            
+            .sub-controls, .bottom-controls { justify-content: center; flex-wrap: wrap; gap: 8px; }
+            
+            .sub-controls button:nth-child(1),
+            .sub-controls button:nth-child(2) {
+                flex: 1 1 45%; 
+                font-size: 14px;
+                padding: 10px 5px;
+            }
+
+            .bottom-controls button {
+                flex: 1 1 30%;
+                font-size: 13px;
+                padding: 10px 5px;
+            }
+            
+            .sub-controls .auto-hide.visible {
+                flex: 0 1 auto; 
+                font-size: 13px;
+                padding: 8px 12px;
+                margin-top: 5px; 
+            }
+            
             th, td { padding: 4px 2px; font-size: 11px; line-height: 1.2; }
             th { font-size: 9px; }
             .section-header { font-size: 12px; }
@@ -139,11 +160,11 @@
 <body>
 
     <div class="main-header">
-        <h2 class="main-title">Anatomy Muscles</h2>
         <div class="corner-controls">
-            <button class="btn fs-btn" id="fs-btn" onclick="toggleFullScreen()" title="Toggle Full Screen">Full Screen</button>
             <button class="btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+            <button class="btn fs-btn" id="fs-btn" onclick="toggleFullScreen()" title="Toggle Full Screen">Full Screen</button>
         </div>
+        <h2 class="main-title">Anatomy Muscles</h2>
     </div>
 
     <div class="sub-controls">
@@ -257,8 +278,7 @@
         function applyState(htmlData) {
             document.querySelectorAll('#anatomyTable tbody').forEach(tb => tb.remove());
             if (htmlData && htmlData.trim() !== '') {
-                const tempDiv = document.createElement('div'); tempDiv.innerHTML = `<table>${htmlData}</table>`;
-                tempDiv.querySelectorAll('tbody').forEach(tb => table.appendChild(tb));
+                table.insertAdjacentHTML('beforeend', htmlData);
                 initSortables();
             }
             localStorage.setItem('lowerLimbAnatomyData', htmlData); 
@@ -268,8 +288,6 @@
         function updateClearButton() {
             const clearBtn = document.getElementById('clear-btn');
             const tbodys = document.querySelectorAll('#anatomyTable tbody');
-            
-            // الزر يظهر فقط إذا كان هناك أي بيانات (أقسام أو صفوف)
             if (tbodys.length > 0) clearBtn.classList.add('visible');
             else clearBtn.classList.remove('visible');
         }
@@ -290,14 +308,18 @@
             document.querySelectorAll('#anatomyTable tbody').forEach(tb => tb.remove());
 
             if (savedData && savedData.trim() !== '') { 
-                const tempDiv = document.createElement('div'); tempDiv.innerHTML = `<table>${savedData}</table>`;
-                tempDiv.querySelectorAll('tbody').forEach(tb => table.appendChild(tb));
-                initSortables();
-            } 
-            // تم إزالة الأقسام الافتراضية، ليظل الجدول فارغاً ونظيفاً عند بدء العمل
-            
-            let baseData = ""; document.querySelectorAll('#anatomyTable tbody').forEach(tb => baseData += tb.outerHTML);
-            pushToHistory(baseData); updateClearButton();
+                table.insertAdjacentHTML('beforeend', savedData);
+                setTimeout(() => {
+                    initSortables();
+                    let baseData = ""; 
+                    document.querySelectorAll('#anatomyTable tbody').forEach(tb => baseData += tb.outerHTML);
+                    pushToHistory(baseData); 
+                    updateClearButton();
+                }, 50);
+            } else {
+                pushToHistory(""); 
+                updateClearButton();
+            }
         }
 
         function fixTableLayout(evt) { Array.from(evt.item.querySelectorAll('td')).forEach(td => td.style.width = window.getComputedStyle(td).width); }
@@ -324,7 +346,6 @@
 
         function addRow(skipSave = false) {
             const tbodys = document.querySelectorAll('#anatomyTable tbody');
-            // إذا كان الجدول فارغاً تماماً وأراد إضافة عضلة، ننشئ له قسماً أولاً
             if(tbodys.length === 0) addSection(undefined, true);
             
             const lastTbody = document.querySelectorAll('#anatomyTable tbody')[document.querySelectorAll('#anatomyTable tbody').length - 1];
@@ -341,7 +362,6 @@
         function deleteRegion(btn) { btn.closest('tbody').remove(); saveData(); }
 
         function clearData() {
-            // إضافة التنبيه وحذف كل شيء للإبقاء على الجدول فارغاً تماماً
             if(confirm("Are you sure you want to clear all data?")) {
                 document.querySelectorAll('#anatomyTable tbody').forEach(tb => tb.remove());
                 saveData(); 
@@ -365,12 +385,26 @@
         }
 
         function exportPDF() {
-            const element = document.getElementById('pdf-content'); const actionCells = document.querySelectorAll('.action-column');
+            const element = document.getElementById('pdf-content'); 
+            const actionCells = document.querySelectorAll('.action-column');
             actionCells.forEach(cell => cell.style.display = 'none');
-            const wasDarkMode = document.body.classList.contains('dark-mode'); if (wasDarkMode) document.body.classList.remove('dark-mode');
+            
+            const wasDarkMode = document.body.classList.contains('dark-mode'); 
+            if (wasDarkMode) document.body.classList.remove('dark-mode');
 
-            const opt = { margin: 10, filename: 'Anatomy_Lower_Limb.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } };
-            html2pdf().set(opt).from(element).save().then(() => { actionCells.forEach(cell => cell.style.display = ''); if (wasDarkMode) document.body.classList.add('dark-mode'); });
+            const opt = { 
+                margin: 10, 
+                filename: 'Anatomy_Lower_Limb.pdf', 
+                image: { type: 'jpeg', quality: 0.98 }, 
+                html2canvas: { scale: 2, useCORS: true }, 
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+                pagebreak: { mode: ['css', 'legacy'] } 
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => { 
+                actionCells.forEach(cell => cell.style.display = ''); 
+                if (wasDarkMode) document.body.classList.add('dark-mode'); 
+            });
         }
 
         let typingTimer;
