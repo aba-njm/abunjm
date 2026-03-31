@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#f4f1ea">
 
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Tajawal:wght@400;300;700&family=Almarai:wght@400;300;700;800&family=IBM+Plex+Sans+Arabic:wght@400;300;700&family=Readex+Pro:wght@400;300;700&family=El+Messiri:wght@400;700&family=Lemonada:wght@400;700&family=Changa:wght@400;700&family=Lalezar&family=Reem+Kufi:wght@400;700&family=Baloo+Bhaijaan+2:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Scheherazade+New:wght@400;700&family=Harmattan:wght@400;700&family=Vibes&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Tajawal:wght@300;400;700&family=Almarai:wght@300;400;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;700&family=Readex+Pro:wght@300;400;700&family=El+Messiri:wght@400;700&family=Lemonada:wght@400;700&family=Changa:wght@400;700&family=Lalezar&family=Reem+Kufi:wght@400;700&family=Baloo+Bhaijaan+2:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&family=Scheherazade+New:wght@400;700&family=Harmattan:wght@400;700&family=Vibes&family=Aref+Ruqaa:wght@400;700&family=Alexandria:wght@400;700&family=Markazi+Text:wght@400;700&family=Mada:wght@400;700&family=Lateef:wght@400;700&family=Jomhuria&family=Katibeh&family=Mirza:wght@400;700&family=Rakkas&family=Kufam:wght@400;700&family=Qahiri&family=Zain:wght@400;700&family=Ruwudu:wght@400;700&family=Blaka&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -107,7 +107,7 @@
             <button class="btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
             <button class="btn fs-btn" id="fs-btn" onclick="toggleFullScreen()">Full Screen</button>
         </div>
-        <h2 class="main-title">مكتبة الخطوط العربية</h2>
+        <h2 class="main-title">مكتبة الخطوط العربية الشاملة</h2>
     </div>
 
     <div class="top-controls-wrapper">
@@ -150,120 +150,130 @@
             previews.forEach(p => p.style.fontSize = currentFontSize + 'px');
         }
 
-        // --- القائمة المحدثة: "عادي" هو الأول دائماً + خطوط جوجل الجديدة ---
+        // --- قائمة الخطوط الشاملة (الوزن "عادي" دائماً في البداية) ---
         const fonts = [
             { 
-                name: 'خط كايرو (Cairo)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Cairo',
-                externalDownload: 'https://fonts.google.com/download?family=Cairo',
-                variants: [
-                    { name: 'عادي', family: 'Cairo', weight: '400' },
-                    { name: 'عريض', family: 'Cairo', weight: '700' },
-                    { name: 'أسود', family: 'Cairo', weight: '900' }
-                ]
+                name: 'خط كايرو (Cairo)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Cairo', externalDownload: 'https://fonts.google.com/download?family=Cairo',
+                variants: [ { name: 'عادي', family: 'Cairo', weight: '400' }, { name: 'عريض', family: 'Cairo', weight: '700' }, { name: 'أسود', family: 'Cairo', weight: '900' } ]
             },
             { 
-                name: 'خط تجوال (Tajawal)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Tajawal',
-                externalDownload: 'https://fonts.google.com/download?family=Tajawal',
-                variants: [
-                    { name: 'عادي', family: 'Tajawal', weight: '400' },
-                    { name: 'خفيف', family: 'Tajawal', weight: '300' },
-                    { name: 'عريض', family: 'Tajawal', weight: '700' }
-                ]
+                name: 'خط تجوال (Tajawal)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Tajawal', externalDownload: 'https://fonts.google.com/download?family=Tajawal',
+                variants: [ { name: 'عادي', family: 'Tajawal', weight: '400' }, { name: 'خفيف', family: 'Tajawal', weight: '300' }, { name: 'عريض', family: 'Tajawal', weight: '700' } ]
             },
             { 
-                name: 'خط المراعي (Almarai)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Almarai',
-                externalDownload: 'https://fonts.google.com/download?family=Almarai',
-                variants: [
-                    { name: 'عادي', family: 'Almarai', weight: '400' },
-                    { name: 'عريض', family: 'Almarai', weight: '700' },
-                    { name: 'أسود', family: 'Almarai', weight: '800' }
-                ]
+                name: 'خط المراعي (Almarai)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Almarai', externalDownload: 'https://fonts.google.com/download?family=Almarai',
+                variants: [ { name: 'عادي', family: 'Almarai', weight: '400' }, { name: 'عريض', family: 'Almarai', weight: '700' }, { name: 'أسود', family: 'Almarai', weight: '800' } ]
             },
             { 
-                name: 'آي بي إم بلكس (IBM Plex Arabic)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/IBM+Plex+Sans+Arabic',
-                externalDownload: 'https://fonts.google.com/download?family=IBM+Plex+Sans+Arabic',
-                variants: [
-                    { name: 'عادي', family: 'IBM Plex Sans Arabic', weight: '400' },
-                    { name: 'خفيف', family: 'IBM Plex Sans Arabic', weight: '300' },
-                    { name: 'عريض', family: 'IBM Plex Sans Arabic', weight: '700' }
-                ]
+                name: 'زين (Zain)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Zain', externalDownload: 'https://fonts.google.com/download?family=Zain',
+                variants: [ { name: 'عادي', family: 'Zain', weight: '400' }, { name: 'عريض', family: 'Zain', weight: '700' } ]
             },
             { 
-                name: 'ريديكس برو (Readex Pro)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Readex+Pro',
-                externalDownload: 'https://fonts.google.com/download?family=Readex+Pro',
-                variants: [
-                    { name: 'عادي', family: 'Readex Pro', weight: '400' },
-                    { name: 'خفيف', family: 'Readex Pro', weight: '300' },
-                    { name: 'عريض', family: 'Readex Pro', weight: '700' }
-                ]
+                name: 'الإسكندرية (Alexandria)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Alexandria', externalDownload: 'https://fonts.google.com/download?family=Alexandria',
+                variants: [ { name: 'عادي', family: 'Alexandria', weight: '400' }, { name: 'عريض', family: 'Alexandria', weight: '700' } ]
             },
             { 
-                name: 'كوكب مونو (Kawkab Mono)', source: 'Makkuk', sourceUrl: 'https://makkuk.com/kawkab-mono/',
-                externalDownload: 'https://makkuk.com/kawkab-mono/downloads/kawkab-mono-0.500.zip',
-                variants: [
-                    { name: 'عادي', family: 'Kawkab-Regular', weight: 'normal' },
-                    { name: 'خفيف', family: 'Kawkab-Light', weight: 'normal' },
-                    { name: 'عريض', family: 'Kawkab-Bold', weight: 'normal' }
-                ]
+                name: 'آي بي إم بلكس (IBM Plex Arabic)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/IBM+Plex+Sans+Arabic', externalDownload: 'https://fonts.google.com/download?family=IBM+Plex+Sans+Arabic',
+                variants: [ { name: 'عادي', family: 'IBM Plex Sans Arabic', weight: '400' }, { name: 'خفيف', family: 'IBM Plex Sans Arabic', weight: '300' }, { name: 'عريض', family: 'IBM Plex Sans Arabic', weight: '700' } ]
             },
             { 
-                name: 'المسيري (El Messiri)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/El+Messiri',
-                externalDownload: 'https://fonts.google.com/download?family=El+Messiri',
+                name: 'ريديكس برو (Readex Pro)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Readex+Pro', externalDownload: 'https://fonts.google.com/download?family=Readex+Pro',
+                variants: [ { name: 'عادي', family: 'Readex Pro', weight: '400' }, { name: 'خفيف', family: 'Readex Pro', weight: '300' }, { name: 'عريض', family: 'Readex Pro', weight: '700' } ]
+            },
+            { 
+                name: 'ماركازي (Markazi Text)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Markazi+Text', externalDownload: 'https://fonts.google.com/download?family=Markazi+Text',
+                variants: [ { name: 'عادي', family: 'Markazi Text', weight: '400' }, { name: 'عريض', family: 'Markazi Text', weight: '700' } ]
+            },
+            { 
+                name: 'كوكب مونو (Kawkab Mono)', source: 'Makkuk', sourceUrl: 'https://makkuk.com/kawkab-mono/', externalDownload: 'https://makkuk.com/kawkab-mono/downloads/kawkab-mono-0.500.zip',
+                variants: [ { name: 'عادي', family: 'Kawkab-Regular', weight: 'normal' }, { name: 'خفيف', family: 'Kawkab-Light', weight: 'normal' }, { name: 'عريض', family: 'Kawkab-Bold', weight: 'normal' } ]
+            },
+            { 
+                name: 'مدى (Mada)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Mada', externalDownload: 'https://fonts.google.com/download?family=Mada',
+                variants: [ { name: 'عادي', family: 'Mada', weight: '400' }, { name: 'عريض', family: 'Mada', weight: '700' } ]
+            },
+            { 
+                name: 'المسيري (El Messiri)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/El+Messiri', externalDownload: 'https://fonts.google.com/download?family=El+Messiri',
                 variants: [ { name: 'عادي', family: 'El Messiri', weight: '400' }, { name: 'عريض', family: 'El Messiri', weight: '700' } ]
             },
             { 
-                name: 'ليمونادة (Lemonada)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lemonada',
-                externalDownload: 'https://fonts.google.com/download?family=Lemonada',
+                name: 'ليمونادة (Lemonada)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lemonada', externalDownload: 'https://fonts.google.com/download?family=Lemonada',
                 variants: [ { name: 'عادي', family: 'Lemonada', weight: '400' }, { name: 'عريض', family: 'Lemonada', weight: '700' } ]
             },
             { 
-                name: 'تشانغا (Changa)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Changa',
-                externalDownload: 'https://fonts.google.com/download?family=Changa',
+                name: 'تشانغا (Changa)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Changa', externalDownload: 'https://fonts.google.com/download?family=Changa',
                 variants: [ { name: 'عادي', family: 'Changa', weight: '400' }, { name: 'عريض', family: 'Changa', weight: '700' } ]
             },
             { 
-                name: 'لاليزار (Lalezar)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lalezar',
-                externalDownload: 'https://fonts.google.com/download?family=Lalezar',
+                name: 'لاليزار (Lalezar)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lalezar', externalDownload: 'https://fonts.google.com/download?family=Lalezar',
                 variants: [ { name: 'عادي', family: 'Lalezar', weight: '400' } ]
             },
             { 
-                name: 'ريم كوفي (Reem Kufi)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Reem+Kufi',
-                externalDownload: 'https://fonts.google.com/download?family=Reem+Kufi',
+                name: 'ريم كوفي (Reem Kufi)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Reem+Kufi', externalDownload: 'https://fonts.google.com/download?family=Reem+Kufi',
                 variants: [ { name: 'عادي', family: 'Reem Kufi', weight: '400' }, { name: 'عريض', family: 'Reem Kufi', weight: '700' } ]
             },
             { 
-                name: 'بالو بهيجان (Baloo Bhaijaan 2)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Baloo+Bhaijaan+2',
-                externalDownload: 'https://fonts.google.com/download?family=Baloo+Bhaijaan+2',
+                name: 'لطيف (Lateef)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Lateef', externalDownload: 'https://fonts.google.com/download?family=Lateef',
+                variants: [ { name: 'عادي', family: 'Lateef', weight: '400' }, { name: 'عريض', family: 'Lateef', weight: '700' } ]
+            },
+            { 
+                name: 'بالو بهيجان (Baloo Bhaijaan 2)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Baloo+Bhaijaan+2', externalDownload: 'https://fonts.google.com/download?family=Baloo+Bhaijaan+2',
                 variants: [ { name: 'عادي', family: 'Baloo Bhaijaan 2', weight: '400' }, { name: 'عريض', family: 'Baloo Bhaijaan 2', weight: '700' } ]
             },
             { 
-                name: 'نوتو نسخ (Noto Naskh)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Noto+Naskh+Arabic',
-                externalDownload: 'https://fonts.google.com/download?family=Noto+Naskh+Arabic',
+                name: 'نوتو نسخ (Noto Naskh)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Noto+Naskh+Arabic', externalDownload: 'https://fonts.google.com/download?family=Noto+Naskh+Arabic',
                 variants: [ { name: 'عادي', family: 'Noto Naskh Arabic', weight: '400' }, { name: 'عريض', family: 'Noto Naskh Arabic', weight: '700' } ]
             },
             { 
-                name: 'نوتو سانس (Noto Sans)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Noto+Sans+Arabic',
-                externalDownload: 'https://fonts.google.com/download?family=Noto+Sans+Arabic',
+                name: 'نوتو سانس (Noto Sans)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Noto+Sans+Arabic', externalDownload: 'https://fonts.google.com/download?family=Noto+Sans+Arabic',
                 variants: [ { name: 'عادي', family: 'Noto Sans Arabic', weight: '400' }, { name: 'عريض', family: 'Noto Sans Arabic', weight: '700' } ]
             },
             { 
-                name: 'شهرزاد (Scheherazade New)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Scheherazade+New',
-                externalDownload: 'https://fonts.google.com/download?family=Scheherazade+New',
+                name: 'شهرزاد (Scheherazade New)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Scheherazade+New', externalDownload: 'https://fonts.google.com/download?family=Scheherazade+New',
                 variants: [ { name: 'عادي', family: 'Scheherazade New', weight: '400' }, { name: 'عريض', family: 'Scheherazade New', weight: '700' } ]
             },
             { 
-                name: 'هرمتان (Harmattan)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Harmattan',
-                externalDownload: 'https://fonts.google.com/download?family=Harmattan',
+                name: 'جمهورية (Jomhuria)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Jomhuria', externalDownload: 'https://fonts.google.com/download?family=Jomhuria',
+                variants: [ { name: 'عادي', family: 'Jomhuria', weight: '400' } ]
+            },
+            { 
+                name: 'كتيبة (Katibeh)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Katibeh', externalDownload: 'https://fonts.google.com/download?family=Katibeh',
+                variants: [ { name: 'عادي', family: 'Katibeh', weight: '400' } ]
+            },
+            { 
+                name: 'ميرزا (Mirza)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Mirza', externalDownload: 'https://fonts.google.com/download?family=Mirza',
+                variants: [ { name: 'عادي', family: 'Mirza', weight: '400' }, { name: 'عريض', family: 'Mirza', weight: '700' } ]
+            },
+            { 
+                name: 'رقاص (Rakkas)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Rakkas', externalDownload: 'https://fonts.google.com/download?family=Rakkas',
+                variants: [ { name: 'عادي', family: 'Rakkas', weight: '400' } ]
+            },
+            { 
+                name: 'كوفام (Kufam)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Kufam', externalDownload: 'https://fonts.google.com/download?family=Kufam',
+                variants: [ { name: 'عادي', family: 'Kufam', weight: '400' }, { name: 'عريض', family: 'Kufam', weight: '700' } ]
+            },
+            { 
+                name: 'قاهري (Qahiri)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Qahiri', externalDownload: 'https://fonts.google.com/download?family=Qahiri',
+                variants: [ { name: 'عادي', family: 'Qahiri', weight: '400' } ]
+            },
+            { 
+                name: 'روضو (Ruwudu)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Ruwudu', externalDownload: 'https://fonts.google.com/download?family=Ruwudu',
+                variants: [ { name: 'عادي', family: 'Ruwudu', weight: '400' }, { name: 'عريض', family: 'Ruwudu', weight: '700' } ]
+            },
+            { 
+                name: 'بلكا (Blaka)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Blaka', externalDownload: 'https://fonts.google.com/download?family=Blaka',
+                variants: [ { name: 'عادي', family: 'Blaka', weight: '400' } ]
+            },
+            { 
+                name: 'هرمتان (Harmattan)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Harmattan', externalDownload: 'https://fonts.google.com/download?family=Harmattan',
                 variants: [ { name: 'عادي', family: 'Harmattan', weight: '400' }, { name: 'عريض', family: 'Harmattan', weight: '700' } ]
             },
             { 
-                name: 'أريف رقعة (Aref Ruqaa)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Aref+Ruqaa',
-                externalDownload: 'https://fonts.google.com/download?family=Aref+Ruqaa',
+                name: 'أريف رقعة (Aref Ruqaa)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Aref+Ruqaa', externalDownload: 'https://fonts.google.com/download?family=Aref+Ruqaa',
                 variants: [ { name: 'عادي', family: 'Aref Ruqaa', weight: '400' }, { name: 'عريض', family: 'Aref Ruqaa', weight: '700' } ]
             },
             { 
-                name: 'فايبز (Vibes)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Vibes',
-                externalDownload: 'https://fonts.google.com/download?family=Vibes',
+                name: 'فايبز (Vibes)', source: 'Google Fonts', sourceUrl: 'https://fonts.google.com/specimen/Vibes', externalDownload: 'https://fonts.google.com/download?family=Vibes',
                 variants: [ { name: 'عادي', family: 'Vibes', weight: '400' } ]
             }
         ];
