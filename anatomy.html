@@ -33,6 +33,7 @@
             --action-color: #2980b9;
             --fs-btn-bg: #e6dfcd;
             --fs-btn-hover: #d4ccb6;
+            --color-btn-bg: #d35400;
         }
 
         body.dark-mode {
@@ -51,6 +52,7 @@
             --action-color: #5dade2;
             --fs-btn-bg: #332f2b;
             --fs-btn-hover: #443e39;
+            --color-btn-bg: #e67e22;
         }
 
         body {
@@ -62,8 +64,32 @@
         .main-title { margin: 0; font-size: 2.2em; font-family: 'Crimson Text', serif; text-align: right; }
         .corner-controls { display: flex; gap: 10px; }
         
-        .sub-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; min-height: 38px; }
+        .sub-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; min-height: 38px; }
         .bottom-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 2px dashed var(--border-color); }
+
+        /* شريط التلوين الجديد (مخفي افتراضياً مع أنيميشن) */
+        .color-toolbar-container {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease;
+        }
+        .color-toolbar-container.show {
+            max-height: 150px;
+            opacity: 1;
+            margin-bottom: 20px;
+        }
+        .color-toolbar {
+            display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; padding: 15px; background-color: var(--th-bg); border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .color-input-wrapper { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 300px;}
+        #target-word { padding: 8px; border: 1px solid var(--border-dark); border-radius: 4px; font-family: 'Crimson Text', serif; font-size: 15px; width: 100%; background-color: var(--table-bg); color: var(--text-color); }
+        
+        .btn-apply-color { background-color: var(--color-btn-bg); color: white; border: none; padding: 8px 20px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; font-family: 'Amiri', serif; transition: 0.2s; }
+        .btn-apply-color:hover { filter: brightness(1.1); }
+        .btn-clear-colors { background-color: transparent; border: 1px dashed var(--danger-color); color: var(--danger-color); padding: 8px 12px; font-size: 14px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        .btn-clear-colors:hover { background-color: var(--danger-color); color: white; }
 
         .btn { background-color: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 8px 12px; font-family: 'Amiri', serif; font-size: 15px; cursor: pointer; transition: all 0.2s; font-weight: bold; border-radius: 4px; }
         .btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
@@ -76,16 +102,13 @@
         .btn-data:hover { background-color: var(--action-color); color: #fff; }
         .btn-clear { border-color: var(--danger-color); color: var(--danger-color); }
         .btn-clear:hover { background-color: var(--danger-color); color: var(--danger-hover); }
+        .btn-toggle-colors { border-color: var(--color-btn-bg); color: var(--color-btn-bg); }
+        .btn-toggle-colors:hover { background-color: var(--color-btn-bg); color: #fff; }
         
-        .auto-hide {
-            max-width: 0; padding-left: 0; padding-right: 0; margin: 0; border-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .auto-hide.visible {
-            max-width: 150px; padding-left: 12px; padding-right: 12px; border-width: 1px; opacity: 1;
-        }
-
-        .history-btn { color: #d35400; border-color: #d35400; }
-        .history-btn:hover { background-color: #d35400; color: #fff; }
+        .auto-hide { max-width: 0; padding-left: 0; padding-right: 0; margin: 0; border-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .auto-hide.visible { max-width: 150px; padding-left: 12px; padding-right: 12px; border-width: 1px; opacity: 1; }
+        .history-btn { color: #8e44ad; border-color: #8e44ad; }
+        .history-btn:hover { background-color: #8e44ad; color: #fff; }
 
         #pdf-content { width: 100%; background-color: var(--bg-color); }
 
@@ -111,47 +134,31 @@
         .sortable-ghost { opacity: 0.3; background-color: var(--cell-focus); }
         .sortable-drag { background-color: var(--table-bg) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; opacity: 1 !important; cursor: grabbing !important; display: table !important; z-index: 9999 !important; }
 
-        /* تعديلات الجوال النهائية */
         @media screen and (max-width: 768px) {
             body { padding: 15px 5px; } 
-            
             .main-header { flex-direction: column-reverse; align-items: stretch; text-align: center; gap: 15px; }
-            .main-title { text-align: center; } /* هنا التعديل الوحيد عشان العنوان يصير بالنص */
-            
+            .main-title { text-align: center; } 
             .corner-controls { justify-content: center; }
             .corner-controls button { flex: 1; }
-            
             .sub-controls, .bottom-controls { justify-content: center; flex-wrap: wrap; gap: 8px; }
-            
-            .sub-controls button:nth-child(1),
-            .sub-controls button:nth-child(2) {
-                flex: 1 1 45%; 
-                font-size: 14px;
-                padding: 10px 5px;
-            }
-
-            .bottom-controls button {
-                flex: 1 1 30%;
-                font-size: 13px;
-                padding: 10px 5px;
-            }
-            
-            .sub-controls .auto-hide.visible {
-                flex: 0 1 auto; 
-                font-size: 13px;
-                padding: 8px 12px;
-                margin-top: 5px; 
-            }
-            
+            .sub-controls button { flex: 1 1 45%; font-size: 13px; padding: 8px 4px; }
+            .bottom-controls button { flex: 1 1 30%; font-size: 13px; padding: 10px 5px; }
             th, td { padding: 4px 2px; font-size: 11px; line-height: 1.2; }
             th { font-size: 9px; }
             .section-header { font-size: 12px; }
             .action-btn { padding: 2px 4px; font-size: 9px; display: block; width: 100%; box-sizing: border-box; }
             .drag-handle { display: block; width: 100%; margin-bottom: 2px;}
+            
+            /* تعديلات شريط الألوان للموبايل */
+            .color-toolbar { flex-direction: column; gap: 10px; padding: 10px; }
+            .color-input-wrapper { width: 100%; max-width: none; justify-content: center; }
+            #target-word { flex: 1; max-width: 100%; text-align: center; }
+            .btn-apply-color, .btn-clear-colors { width: 100%; max-width: none; }
+            .color-toolbar-container.show { max-height: 250px; }
         }
 
         @media print {
-            .main-header, .sub-controls, .bottom-controls, .action-column { display: none !important; }
+            .main-header, .sub-controls, .bottom-controls, .action-column, .color-toolbar-container { display: none !important; }
             table { border: 1px solid #000; font-size: 12pt; }
             th, td { padding: 8px; border: 1px solid #000; }
         }
@@ -170,9 +177,20 @@
     <div class="sub-controls">
         <button class="btn btn-section" onclick="addSection()">Add Region</button>
         <button class="btn" onclick="addRow()">Add Muscle</button>
+        <button class="btn btn-toggle-colors" onclick="toggleColorToolbar()">🎨 أدوات التمييز</button>
         <button class="btn auto-hide history-btn" id="undo-btn" onclick="undoData()">↶ تراجع</button>
         <button class="btn auto-hide history-btn" id="redo-btn" onclick="redoData()">استعادة ↷</button>
         <button class="btn auto-hide btn-clear" id="clear-btn" onclick="clearData()" title="حذف جميع البيانات">Clear Data</button>
+    </div>
+
+    <div class="color-toolbar-container" id="color-toolbar">
+        <div class="color-toolbar">
+            <div class="color-input-wrapper">
+                <input type="text" id="target-word" placeholder="اكتب الكلمة هنا... (مثال: crest)">
+            </div>
+            <button class="btn-apply-color" onclick="applySmartColor()">تمييز</button>
+            <button class="btn-clear-colors" onclick="clearAllColors()">إزالة كل الألوان</button>
+        </div>
     </div>
 
     <div id="pdf-content">
@@ -321,6 +339,78 @@
                 updateClearButton();
             }
         }
+
+        // ================= نظام التلوين الذكي التلقائي =================
+        function toggleColorToolbar() {
+            const toolbar = document.getElementById('color-toolbar');
+            toolbar.classList.toggle('show');
+        }
+
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        // دالة لتوليد لون فاتح (Pastel) عشوائي لضمان وضوح النص الأسود عليه
+        function getRandomLightColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 80%, 85%)`;
+        }
+
+        function applySmartColor() {
+            const wordInput = document.getElementById('target-word');
+            const word = wordInput.value.trim();
+            
+            if(!word) {
+                alert("يرجى كتابة الكلمة أو العبارة في المربع أولاً!");
+                return;
+            }
+
+            const bgColor = getRandomLightColor(); // سحب لون عشوائي تلقائي
+
+            // استخدام Regex يمنع استبدال النصوص داخل الأوسمة (HTML Tags) لتجنب تخريب الجدول
+            const regex = new RegExp("(?![^<]*>)(" + escapeRegExp(word) + ")", "gi");
+            const rows = document.querySelectorAll('#anatomyTable tbody tr.muscle-row');
+            
+            let matchFound = false;
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                // اللف على (Origin, Insertion, Action, Nerve) ونتجاهل اسم العضلة (cells[0])
+                for(let i=1; i<=4; i++) {
+                    if(cells[i] && regex.test(cells[i].innerHTML)) {
+                        matchFound = true;
+                        // إعادة تهيئة الـ regex لأن .test تغير الـ index
+                        cells[i].innerHTML = cells[i].innerHTML.replace(regex, `<span class="smart-hl" style="background-color: ${bgColor}; color: #000; padding: 0 4px; border-radius: 4px; font-weight: bold;">$1</span>`);
+                    }
+                }
+            });
+            
+            if (matchFound) {
+                saveData(false); // حفظ التعديل
+                wordInput.value = ''; // تفريغ المربع بعد التمييز الناجح لتسهيل كتابة الكلمة التالية
+            } else {
+                alert("لم يتم العثور على الكلمة في الجدول! تأكد من الإملاء.");
+            }
+        }
+
+        function clearAllColors() {
+            if(!confirm("هل أنت متأكد من إزالة جميع الألوان من الجدول؟")) return;
+            
+            const rows = document.querySelectorAll('#anatomyTable tbody tr.muscle-row');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                for(let i=1; i<=4; i++) {
+                    if(cells[i]) {
+                        // إزالة كود الـ span وإرجاع النص لحالته الطبيعية
+                        cells[i].innerHTML = cells[i].innerHTML.replace(/<span class="smart-hl"[^>]*>(.*?)<\/span>/gi, "$1");
+                        // تكرارها مرة ثانية للاحتياط إذا كان فيه ألوان متداخلة
+                        cells[i].innerHTML = cells[i].innerHTML.replace(/<span class="smart-hl"[^>]*>(.*?)<\/span>/gi, "$1");
+                    }
+                }
+            });
+            saveData(false);
+        }
+        // =============================================================
 
         function fixTableLayout(evt) { Array.from(evt.item.querySelectorAll('td')).forEach(td => td.style.width = window.getComputedStyle(td).width); }
         function resetTableLayout(evt) { Array.from(evt.item.querySelectorAll('td')).forEach(td => td.style.width = ''); saveData(); }
