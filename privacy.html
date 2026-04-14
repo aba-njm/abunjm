@@ -3,71 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاكي النجاة الرقمي - اللعبة الكاملة</title>
+    <title> النجاة الرقمي</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        :root { --main-bg: #f4f4f4; --text-col: #333; --primary: #1a73e8; --danger: #d32f2f; --success: #4caf50; }
-        body { margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; background: var(--main-bg); color: var(--text-col); }
+        /* ------------------------------------ */
+        /* الأنيميشنات (Animations)             */
+        /* ------------------------------------ */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(100%); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInPage {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body.fade-out {
+            animation: fadeOutPage 0.3s ease-in forwards !important;
+        }
+
+        @keyframes fadeOutPage {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-15px); }
+        }
+
+        /* ------------------------------------ */
+        /* ستايلات مقر القيادة (الثيم الحاد)    */
+        /* ------------------------------------ */
+        :root { 
+            --hq-bg: #ffffff; 
+            --hq-text: #000000; 
+            --hq-border: #000000; 
+            --hq-border-light: #e0e0e0;
+        }
+
+        body.dark-mode {
+            --hq-bg: #000000; 
+            --hq-text: #ffffff; 
+            --hq-border: #ffffff; 
+            --hq-border-light: #333333;
+        }
+
+        body { 
+            margin: 0; padding: 0; 
+            transition: background-color 0.3s ease, color 0.3s ease; 
+            font-family: 'Tajawal', sans-serif;
+            animation: fadeInPage 0.4s ease-out forwards;
+        }
+
+        .hq-theme {
+            background-color: var(--hq-bg); color: var(--hq-text); font-family: 'Cairo', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px;
+        }
+
+        .hq-card { 
+            max-width: 600px; 
+            border: 2px solid var(--hq-border); 
+            padding: 40px; 
+            background: var(--hq-bg); 
+            border-radius: 0; 
+            animation: popIn 0.5s ease-out; 
+            box-shadow: none; 
+        }
         
-        /* تأثيرات الظهور */
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ================= القائمة الرئيسية ================= */
-        #main-menu { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
-        .title-box { background: #fff; padding: 50px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #222; }
-        .title-box h1 { font-family: 'Cairo', sans-serif; font-size: 2.5em; margin-bottom: 10px; color: #111; }
-        .start-btn { background: #111; color: #fff; border: none; padding: 15px 40px; font-size: 1.2em; font-family: 'Cairo'; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; margin-top: 20px; }
-        .start-btn:hover { background: var(--primary); }
-
-        /* ================= الحاويات العامة للمراحل ================= */
-        .level-container { display: none; min-height: 100vh; padding: 20px; padding-bottom: 100px; }
-        .level-header { text-align: center; margin-bottom: 30px; font-family: 'Cairo'; }
+        .hq-card h1 { 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 900;
+            font-size: 2.2em; 
+            margin-top: 0; 
+            border-bottom: 2px dashed var(--hq-border-light);
+            padding-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .hq-card p { font-size: 1.2em; line-height: 1.6; font-weight: 700; }
         
-        /* ================= المرحلة 1: الإيميل ================= */
-        .email-app { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #ddd; }
-        .email-header { background: #eee; padding: 15px; border-bottom: 1px solid #ddd; }
-        .email-header p { margin: 5px 0; font-size: 14px; }
-        .email-body { padding: 30px; text-align: center; }
-        .phishing-btn { display: inline-block; background: var(--primary); color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 4px; font-weight: bold; margin: 20px 0; cursor: pointer; }
-        .email-footer { background: #fafafa; padding: 15px; display: flex; justify-content: space-between; border-top: 1px solid #eee; }
-        .btn-delete { background: var(--danger); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .btn-delete:hover { background: #b71c1c; }
+        .btn-group-hq {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
 
-        /* ================= المرحلة 2: التسجيل ================= */
-        .signup-box { max-width: 500px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .signup-box input[type="text"], .signup-box input[type="password"] { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .dark-pattern-btn-huge { width: 100%; background: var(--success); color: white; border: none; padding: 15px; font-size: 18px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-bottom: 10px; }
-        .dark-pattern-link { display: block; text-align: center; color: #888; font-size: 12px; cursor: pointer; text-decoration: underline; margin-top: 10px; }
-        .hidden-checkbox-group { font-size: 13px; color: #555; background: #f9f9f9; padding: 10px; border: 1px solid #eee; margin-bottom: 15px; }
-
-        /* ================= المرحلة 3: الدفع (تم نقله بالكامل) ================= */
-        .browser-bar { background: #e0e0e0; padding: 10px; display: flex; align-items: center; gap: 10px; direction: ltr; border-bottom: 1px solid #bbb; margin-bottom: 30px; }
-        .url-input { background: #fff; border: 1px solid #ccc; border-radius: 20px; padding: 5px 15px; width: 100%; max-width: 500px; font-family: monospace; font-size: 14px; outline: none; }
+        .start-btn {
+            background-color: transparent; 
+            color: var(--hq-text); 
+            border: 2px solid var(--hq-border); 
+            padding: 12px 25px; 
+            font-size: 1.1em; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 900;
+            cursor: pointer; 
+            border-radius: 0; 
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
         
-        .checkout-container { max-width: 500px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: right; }
+        .start-btn:hover { 
+            background-color: var(--hq-text); 
+            color: var(--hq-bg); 
+        }
+
+        /* ------------------------------------ */
+        /* زر الرئيسية العائم (الثابت)          */
+        /* ------------------------------------ */
+        .btn-home-fixed {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--hq-bg);
+            color: var(--hq-text);
+            border: 2px solid var(--hq-border);
+            padding: 8px 15px;
+            font-size: 14px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            z-index: 3000;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+        .btn-home-fixed:hover {
+            background: var(--hq-text);
+            color: var(--hq-bg);
+        }
+
+        /* ------------------------------------ */
+        /* نظام التدخل                          */
+        /* ------------------------------------ */
+        .system-override {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; justify-content: center; align-items: center; color: var(--hq-text); font-family: 'Cairo', sans-serif; direction: rtl; text-align: center;
+        }
+        .override-box { 
+            border: 2px solid var(--hq-border); padding: 40px; background: var(--hq-bg); max-width: 500px; border-radius: 0; 
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .override-box h2 { font-weight: 900; color: #e57373; margin-top: 0; font-size: 2em; text-transform: uppercase;}
+        .override-box h2.success { color: #4caf50; }
+        
+        .override-box p { color: var(--hq-text); font-size: 1.1em; font-weight: 700; }
+
+        .sys-btn { 
+            background: transparent; color: var(--hq-text); border: 2px solid var(--hq-border); padding: 10px 20px; font-size: 1.1em; font-weight: 900; font-family: 'Cairo', sans-serif; cursor: pointer; border-radius: 0; margin: 5px; transition: all 0.2s ease; text-transform: uppercase;
+        }
+        .sys-btn:hover { background: var(--hq-text); color: var(--hq-bg); }
+        .sys-btn.outline { border-style: dashed; }
+
+        .status-icon { width: 40px; height: 40px; margin-bottom: 10px; display: inline-block; }
+        .status-success { color: #4caf50; }
+        .status-error { color: #e57373; }
+        .status-info { color: #64b5f6; }
+
+        /* ========================================================================== */
+        /* بيئة المحاكاة والمراحل                                                     */
+        /* ========================================================================== */
+
+        /* المرحلة الأولى: بوابة البحث */
+        .fake-web-theme {
+            background-color: #292a35; color: #ffffff; display: none; min-height: 100vh; position: relative; animation: fadeIn 0.5s ease-out; font-family: 'Tajawal', sans-serif;
+        }
+        .browser-tabs { background: #1a1b22; padding: 8px 15px; display: flex; align-items: center; border-bottom: 1px solid #111; direction: ltr; font-size: 14px; color: #aaa;}
+        .tab { background: #292a35; padding: 8px 20px; border-radius: 8px 8px 0 0; display: flex; align-items: center; gap: 10px; color: #fff;}
+        .browser-url-bar { background: #292a35; padding: 10px 15px; display: flex; align-items: center; border-bottom: 1px solid #3c3e4c; direction: ltr; gap: 15px;}
+        .svg-icon { width: 22px; height: 22px; color: #aaa; cursor: pointer; transition: color 0.2s;}
+        .svg-icon:hover { color: #fff; }
+        .url-input { background: #1e1f28; border: 1px solid #3c3e4c; border-radius: 20px; padding: 8px 15px; flex-grow: 1; display: flex; align-items: center; gap: 10px; direction: ltr;}
+        .url-engine-selector { display: flex; align-items: center; gap: 5px; cursor: pointer; position: relative; padding-right: 10px; border-right: 1px solid #444;}
+        .url-engine-selector img { width: 18px; height: 18px; border-radius: 50%; object-fit: contain; background: transparent;}
+        .top-search-input { background: transparent; border: none; color: white; flex-grow: 1; outline: none; font-size: 14px; font-family: 'Tajawal'; }
+        .start-page-container { display: flex; flex-direction: column; align-items: center; padding-top: 50px; height: calc(100vh - 100px); }
+        .shortcuts-grid { display: flex; gap: 25px; margin-bottom: 40px; }
+        .shortcut { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s;}
+        .shortcut:hover { transform: translateY(-3px); }
+        .shortcut-icon { width: 60px; height: 60px; background: #1e1f28; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background 0.2s;}
+        .shortcut:hover .shortcut-icon { background: #3c3e4c; }
+        .shortcut-icon img { width: 35px; height: 35px; border-radius: 8px; object-fit: contain; }
+        .shortcut-text { font-size: 13px; color: #bbb; }
+        
+        .engine-dropdown {
+            display: none; position: absolute; top: 130%; left: 0; background: #292a35; border: 1px solid #3c3e4c; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-radius: 12px; padding: 8px 0; z-index: 100; width: 220px; text-align: left;
+            animation: fadeIn 0.2s ease-out;
+        }
+        .engine-option { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; cursor: pointer; font-size: 15px; color: #eee; transition: background 0.2s;}
+        .engine-option:hover { background-color: #3c3e4c; }
+        .engine-left { display: flex; align-items: center; gap: 12px; }
+        .engine-left img { width: 20px; height: 20px; border-radius: 50%; background: transparent;}
+        .engine-check { display: none; color: #fff; font-weight: bold; }
+        .engine-option.selected .engine-check { display: block; }
+        
+        .big-search-wrapper { position: relative; width: 100%; max-width: 500px; margin-top: 20px;}
+        .big-search-input { width: 100%; background: #1e1f28; border: 1px solid #3c3e4c; padding: 15px 20px; border-radius: 25px; color: white; font-size: 16px; outline: none; font-family: 'Tajawal'; text-align: right; box-sizing: border-box;}
+        .big-search-input:focus { border-color: #5c5e6c; }
+        .big-search-btn { position: absolute; left: 5px; top: 5px; background: #3c3e4c; border: none; color: white; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-family: 'Tajawal'; transition: background 0.2s;}
+        .big-search-btn:hover { background: #4c4e5c; }
+
+        /* المرحلة الثانية: موقع الـ PDF */
+        .level-2-theme {
+            background-color: #f0f2f5; color: #1c1e21; font-family: 'Tajawal', sans-serif; display: none; min-height: 100vh; animation: fadeIn 0.5s ease-out;
+            padding-bottom: 120px; 
+        }
+        .browser-top-l2 { background: #e0e0e0; padding: 10px; display: flex; align-items: center; border-bottom: 1px solid #ccc; direction: ltr; font-family: monospace; color: #555;}
+        .browser-top-l2 span { background: #fff; padding: 5px 15px; border-radius: 15px; width: 100%; max-width: 600px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .fake-site-container {
+            max-width: 800px; margin: 40px auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;
+            animation: popIn 0.6s ease-out;
+        }
+        .fake-site-container h1 { color: #d32f2f; margin-bottom: 5px; }
+        .fake-site-container h3 { color: #555; font-weight: 400; margin-top: 0; }
+        .download-area { border: 2px dashed #4caf50; padding: 30px; background: #e8f5e9; margin: 30px 0; border-radius: 8px; }
+        .download-area h2 { color: #2e7d32; margin: 0 0 15px 0; }
+        .auth-section { max-width: 400px; margin: 0 auto; border-top: 1px solid #eee; padding-top: 20px; }
+        .btn-social {
+            display: block; width: 100%; padding: 12px; margin-bottom: 15px; border: none; border-radius: 4px; color: white; font-size: 16px; font-weight: bold; cursor: pointer; font-family: 'Tajawal', sans-serif; transition: transform 0.2s, filter 0.2s;
+        }
+        .btn-social:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn-google { background-color: #db4437; }
+        .btn-fb { background-color: #4267B2; }
+        .email-separator { margin: 20px 0; color: #888; font-size: 14px; position: relative; }
+        .email-form { display: flex; flex-direction: column; gap: 10px; text-align: right; }
+        .email-form input { padding: 12px; border: 1px solid #ccc; border-radius: 4px; direction: ltr; font-size: 16px; outline: none;}
+        .email-form input:focus { border-color: #4caf50; }
+        .email-form button { background: #333; color: #fff; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-size: 16px; font-family: 'Tajawal'; transition: background 0.2s;}
+        .email-form button:hover { background: #555; }
+        
+        .cookie-banner {
+            position: fixed; bottom: 0; left: 0; right: 0; background: #222; color: #fff; padding: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; z-index: 1000; direction: rtl;
+            animation: slideUp 0.6s ease-out; box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+        }
+        .cookie-banner p { margin: 0 0 10px 0; flex: 1 1 100%; font-size: 14px;}
+        .cookie-btns { display: flex; gap: 10px; width: 100%; justify-content: flex-end;}
+        .c-btn { padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; font-family: 'Tajawal'; transition: transform 0.2s;}
+        .c-btn:hover { transform: scale(1.05); }
+        .c-accept { background: #4caf50; color: white; font-weight: bold; }
+        .c-reject { background: transparent; color: #aaa; text-decoration: underline; }
+
+        /* ========================================================================== */
+        /* المرحلة الثالثة: الدفع والزعيم الأخير (الكوكيز المعقدة)                    */
+        /* ========================================================================== */
+        .level-3-theme {
+            background-color: #eef2f3; color: #333; font-family: 'Tajawal', sans-serif; display: none; min-height: 100vh; animation: fadeIn 0.5s ease-out; padding-bottom: 150px;
+        }
+        
+        .checkout-container { 
+            max-width: 500px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); text-align: right; border-top: 5px solid #0070ba; 
+            animation: popIn 0.6s ease-out;
+        }
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
-        .input-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 14px; direction: ltr; }
         
-        .dark-pattern-box { background: #fafafa; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; font-size: 12px; color: #666; display: flex; gap: 8px; }
-        .pay-btn { background: #0070ba; color: white; border: none; width: 100%; padding: 15px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        .dark-pattern-box { background: #f9f9f9; border: 1px solid #eee; padding: 12px; margin-bottom: 10px; font-size: 13px; color: #555; display: flex; gap: 8px; border-radius: 4px;}
+        .pay-btn { background: #0070ba; color: white; border: none; width: 100%; padding: 15px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: background 0.2s; margin-top: 10px;}
+        .pay-btn:hover { background: #005ea6; }
 
-        /* نافذة الكوكيز المرحلة 3 */
-        .cookie-popup { position: fixed; bottom: 20px; left: 20px; width: 350px; background: #fff; box-shadow: 0 0 20px rgba(0,0,0,0.3); border-radius: 8px; z-index: 1000; direction: rtl; border: 1px solid #ccc; display: none; }
-        .cookie-header { padding: 15px; background: #333; color: #fff; border-radius: 8px 8px 0 0; }
-        .cookie-header h4 { margin: 0; font-size: 14px; }
-        .cookie-body { padding: 0; max-height: 220px; overflow-y: auto; display: none; border-bottom: 1px solid #eee; }
-        .option-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #fff; }
-        .option-info h5 { margin: 0 0 4px 0; font-size: 13px; color: #333; }
-        .option-info p { margin: 0; font-size: 11px; color: #888; line-height: 1.3; }
-        .cookie-footer { padding: 10px; display: flex; gap: 8px; }
-        .btn-c { flex: 1; padding: 8px; border-radius: 4px; cursor: pointer; border: none; font-weight: bold; font-size: 12px; }
-        .btn-acc { background: #4caf50; color: white; }
-        .btn-cust { background: #eee; }
-        .btn-save { background: var(--primary); color: white; display: none; width: 100%; }
+        /* نافذة الزعيم (الكوكيز المعقدة) */
+        .cookie-boss-popup { position: fixed; bottom: 20px; left: 20px; width: 360px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-radius: 8px; z-index: 1000; direction: rtl; border: 1px solid #ccc; display: none; animation: slideUp 0.5s ease-out; }
+        .cb-header { padding: 15px; background: #222; color: #fff; border-radius: 8px 8px 0 0; }
+        .cb-header h4 { margin: 0; font-size: 15px; font-family: 'Cairo'; }
+        .cb-body { padding: 0; max-height: 250px; overflow-y: auto; display: none; border-bottom: 1px solid #eee; }
+        .cb-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid #f0f0f0; background: #fff; }
+        .cb-info h5 { margin: 0 0 4px 0; font-size: 13px; color: #333; }
+        .cb-info p { margin: 0; font-size: 11px; color: #888; line-height: 1.3; max-width: 250px;}
+        .cb-footer { padding: 15px; display: flex; gap: 10px; background: #fafafa; border-radius: 0 0 8px 8px;}
+        .cb-btn { flex: 1; padding: 10px; border-radius: 4px; cursor: pointer; border: none; font-weight: bold; font-size: 13px; font-family: 'Tajawal'; transition: 0.2s;}
+        .cb-acc { background: #4caf50; color: white; }
+        .cb-acc:hover { background: #388e3c; }
+        .cb-cust { background: #e0e0e0; color: #333; }
+        .cb-cust:hover { background: #d0d0d0; }
+        .cb-save { background: #0070ba; color: white; display: none; width: 100%; }
 
         /* التبديل Switch */
         .switch { position: relative; width: 34px; height: 18px; flex-shrink: 0;}
@@ -76,75 +295,150 @@
         .slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: .2s; }
         input:checked + .slider { background: #4caf50; }
         input:checked + .slider:before { transform: translateX(16px); }
-
-        /* ================= نظام الإشعارات الشامل ================= */
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; justify-content: center; align-items: center; text-align: center; color: white; padding: 20px; }
-        .msg-box { background: white; color: black; padding: 40px; border-radius: 10px; max-width: 450px; }
-        .msg-box h2 { margin-top: 0; color: var(--danger); font-family: 'Cairo'; font-size: 2em;}
-        .msg-box h2.win { color: var(--success); }
-        .msg-text { font-size: 1.1em; line-height: 1.6; margin-bottom: 20px;}
-        .sys-btn { background: #333; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-weight: bold; font-size: 1.1em; font-family: 'Cairo'; }
     </style>
 </head>
-<body>
+<body id="main-body" class="hq-theme">
 
-    <div id="main-menu" class="fade-in">
-        <div class="title-box">
-            <h1>محاكي النجاة الرقمي</h1>
-            <p style="font-size: 1.2em; color: #555;">هل يمكنك النجاة من فخاخ الإنترنت المظلمة؟</p>
-            <button class="start-btn" onclick="startLevel(1)">ابدأ التحدي</button>
-        </div>
-    </div>
+    <button id="btn-home-fixed" class="btn-home-fixed" onclick="goHome(event)">
+        <svg style="width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+        </svg>
+        الرئيسية
+    </button>
 
-    <div id="level-1" class="level-container fade-in">
-        <h2 class="level-header">المرحلة 1: صندوق الوارد</h2>
-        <div class="email-app">
-            <div class="email-header">
-                <p><strong>من:</strong> security@peypal-support-team.com</p>
-                <p><strong>الموضوع:</strong> عاجل: تم تقييد حسابك البنكي!</p>
-            </div>
-            <div class="email-body">
-                <h3 style="color: #d32f2f;">تحذير أمني</h3>
-                <p>لقد لاحظنا نشاطاً مشبوهاً في حسابك. يرجى تحديث بيانات بطاقتك الائتمانية فوراً لتجنب إيقاف الحساب نهائياً.</p>
-                <div class="phishing-btn" onclick="checkL1(false)">تحديث البيانات الآن</div>
-            </div>
-            <div class="email-footer">
-                <button class="btn-delete" onclick="checkL1(true)">حذف الرسالة</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="level-2" class="level-container fade-in">
-        <h2 class="level-header">المرحلة 2: إنشاء الحساب</h2>
-        <div class="signup-box">
-            <h3 style="text-align: center; margin-top:0;">حساب جديد</h3>
-            <input type="text" placeholder="اسم المستخدم">
-            <input type="password" placeholder="كلمة المرور">
-            
-            <div class="hidden-checkbox-group">
-                <input type="checkbox" id="l2-spam" checked>
-                <label for="l2-spam">أوافق على مشاركة بياناتي مع شركاء الطرف الثالث واستلام العروض.</label>
-            </div>
-
-            <button class="dark-pattern-btn-huge" onclick="checkL2(false)">إنشاء حساب واشتراك بالخدمة المدفوعة (9.99$)</button>
-            <span class="dark-pattern-link" onclick="checkL2(true)">إنشاء حساب مجاني فقط</span>
-        </div>
-    </div>
-
-    <div id="level-3" class="level-container fade-in">
-        <h2 class="level-header">المرحلة 3: الدفع النهائي</h2>
+    <div id="general-intro" class="hq-card">
+        <h1>محاكي النجاة الرقمي</h1>
+        <p>أنت على وشك مغادرة "مقر القيادة" والدخول إلى الإنترنت العشوائي.</p>
+        <p>الهدف: إنجاز المهام التي ستواجهك في المواقع المختلفة <b>بدون أن تترك خلفك أي بصمة رقمية</b>. المواقع ستحاول خداعك وسرقة بياناتك... كن يقظاً.</p>
         
-        <div class="browser-bar">
-            <span>🔒</span>
-            <input type="text" id="url-bar" class="url-input" value="http://www.peypal.com/checkout">
+        <div class="btn-group-hq">
+            <button class="start-btn" onclick="showLevelBriefing()">بدء المحاكاة</button>
+        </div>
+    </div>
+
+    <div id="mission-briefing" class="hq-card" style="display: none;">
+        <h1 id="hq-level-title">المهمة 1: بوابة البحث</h1>
+        <div id="hq-level-desc">
+            <p>مطلوب منك: البحث عن "موقع تحويل PDF مجاني".</p>
+            <p>لا تدع أحداً يسجل كلمات بحثك أو يجمع بياناتك.</p>
+        </div>
+        <div class="btn-group-hq">
+            <button class="start-btn" onclick="startCurrentLevel()">دخول الشبكة</button>
+        </div>
+    </div>
+
+    <div id="level-1-env" class="fake-web-theme">
+        <div class="browser-tabs">
+            <svg class="svg-icon" style="width: 16px; height: 16px; margin-right: 15px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            <div class="tab">Start page 
+                <svg class="tab-close" style="width: 12px; height: 12px; margin-left: 5px; cursor: pointer;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
+        </div>
+        <div class="browser-url-bar">
+            <svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>
+            <div class="url-input">
+                <div class="url-engine-selector" onclick="toggleDropdown()">
+                    <img id="current-engine-icon" src="https://s2.googleusercontent.com/s2/favicons?domain=google.com&sz=128" alt="Engine">
+                    <span style="font-size: 12px; margin-left: 5px;">▼</span>
+                    <div id="engine-dropdown" class="engine-dropdown">
+                        <div id="opt-google" class="engine-option selected" onclick="selectEngine('google', 'https://s2.googleusercontent.com/s2/favicons?domain=google.com&sz=128', event)">
+                            <div class="engine-left"><img src="https://s2.googleusercontent.com/s2/favicons?domain=google.com&sz=128"> Google</div>
+                            <svg class="engine-check" style="width: 16px; height: 16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                        </div>
+                        <div id="opt-startpage" class="engine-option" onclick="selectEngine('startpage', 'https://s2.googleusercontent.com/s2/favicons?domain=startpage.com&sz=128', event)">
+                            <div class="engine-left"><img src="https://s2.googleusercontent.com/s2/favicons?domain=startpage.com&sz=128"> Startpage</div>
+                            <svg class="engine-check" style="width: 16px; height: 16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                        </div>
+                        <div id="opt-duckduckgo" class="engine-option" onclick="selectEngine('duckduckgo', 'https://s2.googleusercontent.com/s2/favicons?domain=duckduckgo.com&sz=128', event)">
+                            <div class="engine-left"><img src="https://s2.googleusercontent.com/s2/favicons?domain=duckduckgo.com&sz=128"> DuckDuckGo</div>
+                            <svg class="engine-check" style="width: 16px; height: 16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                        </div>
+                        <div id="opt-bing" class="engine-option" onclick="selectEngine('bing', 'https://s2.googleusercontent.com/s2/favicons?domain=bing.com&sz=128', event)">
+                            <div class="engine-left"><img src="https://s2.googleusercontent.com/s2/favicons?domain=bing.com&sz=128"> Bing</div>
+                            <svg class="engine-check" style="width: 16px; height: 16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                        </div>
+                    </div>
+                </div>
+                <input type="text" id="top-search-input" class="top-search-input" placeholder="Search in Google..." onkeypress="checkEnter1(event)">
+            </div>
+        </div>
+
+        <div class="start-page-container">
+            <div class="shortcuts-grid">
+                <div class="shortcut" onclick="triggerSystemOverride(false, 'فخ التتبع (الشورتكات)', 'الشورتكات الجاهزة تتتبع عاداتك. ابحث عن الموقع بنفسك.')">
+                    <div class="shortcut-icon"><img src="https://s2.googleusercontent.com/s2/favicons?domain=youtube.com&sz=128"></div>
+                    <span class="shortcut-text">YouTube</span>
+                </div>
+                <div class="shortcut" onclick="triggerSystemOverride(false, 'فخ التتبع', 'حتى لو كان هذا هو الموقع المطلوب، الضغط عليه من هنا يسمح للمتصفح بتسجيل الزيارة.')">
+                    <div class="shortcut-icon"><img src="https://s2.googleusercontent.com/s2/favicons?domain=adobe.com&sz=128"></div>
+                    <span class="shortcut-text">موقع تحويل</span>
+                </div>
+            </div>
+            <div class="big-search-wrapper">
+                <button class="big-search-btn" onclick="performSearch()">بحث</button>
+                <input type="text" id="main-search-input" class="big-search-input" placeholder="ابحث هنا..." onkeypress="checkEnter1(event)">
+            </div>
+        </div>
+    </div>
+
+    <div id="level-2-env" class="level-2-theme">
+        <div class="browser-top-l2">
+            <svg class="svg-icon" style="width: 14px; height: 14px; margin-right: 5px; color: #555;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+            <span>https://www.pdf-fast-converter-free.com</span>
+        </div>
+        <div class="fake-site-container">
+            <h1>Free PDF Converter</h1>
+            <h3>أداة تحويل الملفات المجانية الأولى</h3>
+            <div class="download-area">
+                <h2 style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <svg style="width: 24px; height: 24px; color: #2e7d32;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                    ملفك جاهز للتحميل
+                </h2>
+                <p>تم تحويل "report.docx" إلى "report.pdf" بنجاح.</p>
+            </div>
+            <div class="auth-section">
+                <p style="color: #666; margin-bottom: 20px;">الرجاء تسجيل الدخول لتحميل الملف:</p>
+                <button class="btn-social btn-google" onclick="triggerSystemOverride(false, 'فخ الـ OAuth', 'لماذا تعطي موقعاً لتحويل الـ PDF صلاحية الوصول إلى حسابك في جوجل (اسمك، صورتك، إيميلك)؟ هذا هو فخ الراحة. اختر دائماً التسجيل المنفصل للمواقع غير المهمة.')">المتابعة باستخدام Google</button>
+                <button class="btn-social btn-fb" onclick="triggerSystemOverride(false, 'تسريب البيانات', 'التسجيل بفيسبوك هنا يعني أنك سمحت لفيسبوك بتتبع أنك تستخدم محول PDF، وسمحت للمحول بمعرفة ملفك الشخصي. لا تستخدم حساباتك الاجتماعية في مواقع عشوائية.')">المتابعة باستخدام Facebook</button>
+                <div class="email-separator">أو باستخدام البريد الإلكتروني</div>
+                <div class="email-form">
+                    <input type="email" id="email-input" placeholder="أدخل بريدك الإلكتروني هنا" onkeypress="checkEnter2(event)">
+                    <button onclick="checkEmail()">إرسال رابط التحميل</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="cookie-banner" class="cookie-banner">
+            <p>نحن نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتقديم إعلانات مخصصة.</p>
+            <div class="cookie-btns">
+                <button class="c-btn c-reject" onclick="document.getElementById('cookie-banner').style.display='none'">رفض</button>
+                <button class="c-btn c-accept" onclick="triggerSystemOverride(false, 'فخ الكوكيز', 'لقد ضغطت على الزر الأخضر البارز (قبول الكل) دون تفكير. لقد سمحت للموقع للتو ببيع بيانات تصفحك لشركات الإعلانات.')">قبول الكل</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="level-3-env" class="level-3-theme">
+        <div class="browser-top-l2">
+            <svg class="svg-icon" style="width: 14px; height: 14px; margin-right: 5px; color: #555;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+            <input type="text" id="url-bar-l3" value="http://www.peypal.com/checkout" style="background: #fff; padding: 5px 15px; border-radius: 15px; width: 100%; max-width: 600px; border: 1px solid #ccc; font-family: monospace; color: #333; outline: none;">
         </div>
 
         <div class="checkout-container">
-            <h2 style="text-align: center; color: #0070ba;">PayPal</h2>
-            <div class="input-group">
-                <label>البريد الإلكتروني</label>
-                <input type="text" placeholder="you@example.com">
-            </div>
+            <h2 style="text-align: center; color: #0070ba; margin-top: 0;">PayPal Checkout</h2>
+            <p style="text-align: center; color: #666; font-size: 14px;">رسوم خدمة التحميل: $1.99</p>
+            
             <div class="input-group">
                 <label>رقم البطاقة</label>
                 <input type="text" id="card-num" placeholder="0000 0000 0000 0000">
@@ -152,109 +446,233 @@
 
             <div class="dark-pattern-box">
                 <input type="checkbox" id="check-sub" checked>
-                <label for="check-sub">الموافقة على تجديد الاشتراك تلقائياً بسعر 49$ بعد 3 أيام.</label>
+                <label for="check-sub">الموافقة على تجديد الاشتراك في الخدمة المميزة تلقائياً بسعر 49$ شهرياً.</label>
             </div>
             <div class="dark-pattern-box">
                 <input type="checkbox" id="check-save" checked>
-                <label for="check-save">تذكر بيانات البطاقة لعمليات الشراء القادمة.</label>
+                <label for="check-save">تذكر بيانات البطاقة لتسريع عمليات الشراء القادمة.</label>
             </div>
 
-            <button class="pay-btn" onclick="checkL3()">دفع الآن</button>
+            <button class="pay-btn" onclick="checkL3()">تأكيد الدفع</button>
         </div>
 
-        <div id="cookie-popup" class="cookie-popup">
-            <div class="cookie-header">
-                <h4>إعدادات ملفات الارتباط</h4>
+        <div id="cookie-boss-popup" class="cookie-boss-popup">
+            <div class="cb-header">
+                <h4>إعدادات الخصوصية المتقدمة</h4>
             </div>
-            <div id="cookie-body" class="cookie-body">
-                <div class="option-row"><div class="option-info"><h5>الكوكيز الضرورية</h5><p>ضرورية لعمل الموقع بشكل أساسي ولا يمكن إغلاقها.</p></div><label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>تتبع الأداء</h5><p>يساعدنا في قياس سرعة وأخطاء الموقع.</p></div><label class="switch"><input type="checkbox" id="c2" class="c-toggle" checked><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>الإعلانات المخصصة</h5><p>تستخدم لعرض إعلانات تناسب اهتماماتك الشخصية.</p></div><label class="switch"><input type="checkbox" id="c3" class="c-toggle" checked><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>تحديد الموقع الجغرافي</h5><p>تتبع موقعك لتحسين الخدمات المحلية المقدمة لك.</p></div><label class="switch"><input type="checkbox" id="c4" class="c-toggle" checked><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>مشاركة بيانات الجهاز</h5><p>جمع معلومات عن نوع جهازك ومتصفحك الحالي.</p></div><label class="switch"><input type="checkbox" id="c5" class="c-toggle" checked><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>تحليل سلوك المستخدم</h5><p>مراقبة كيفية تفاعلك مع صفحاتنا المختلفة.</p></div><label class="switch"><input type="checkbox" id="c6" class="c-toggle" checked><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>تتبع الطرف الثالث</h5><p>السماح للشركاء الخارجيين بجمع بياناتك الخاصة.</p></div><label class="switch"><input type="checkbox" id="c7" class="c-toggle" checked><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>عدم بيع بياناتي الشخصية</h5><p>يمنع بيع بياناتك لأطراف خارجية بموجب قوانين الخصوصية.</p></div><label class="switch"><input type="checkbox" id="c-donotsell" checked><span class="slider"></span></label></div>
-                <div class="option-row"><div class="option-info"><h5>الاحتفاظ بالتفضيلات الموصى بها</h5><p>يضمن استقرار إعدادات الخصوصية الموصى بها لتجربة أفضل.</p></div><label class="switch"><input type="checkbox" id="c-trap-restore" checked onchange="handleRestoreTrap(this)"><span class="slider"></span></label></div>
+            <div id="cb-body" class="cb-body">
+                <div class="cb-row"><div class="cb-info"><h5>الكوكيز الضرورية</h5><p>أساسية لعمل صفحة الدفع.</p></div><label class="switch"><input type="checkbox" checked disabled><span class="slider"></span></label></div>
+                <div class="cb-row"><div class="cb-info"><h5>تتبع الأداء</h5><p>قياس سرعة الموقع.</p></div><label class="switch"><input type="checkbox" id="c2" class="c-toggle" checked><span class="slider"></span></label></div>
+                <div class="cb-row"><div class="cb-info"><h5>الإعلانات المخصصة</h5><p>عرض إعلانات تناسبك.</p></div><label class="switch"><input type="checkbox" id="c3" class="c-toggle" checked><span class="slider"></span></label></div>
+                <div class="cb-row"><div class="cb-info"><h5>تحديد الموقع الجغرافي</h5><p>تتبع موقعك للخدمات المحلية.</p></div><label class="switch"><input type="checkbox" id="c4" class="c-toggle" checked><span class="slider"></span></label></div>
+                <div class="cb-row"><div class="cb-info"><h5>مشاركة بيانات الجهاز</h5><p>جمع معلومات عن نوع جهازك.</p></div><label class="switch"><input type="checkbox" id="c5" class="c-toggle" checked><span class="slider"></span></label></div>
+                <div class="cb-row"><div class="cb-info"><h5>تتبع الطرف الثالث</h5><p>السماح للشركاء بجمع بياناتك.</p></div><label class="switch"><input type="checkbox" id="c6" class="c-toggle" checked><span class="slider"></span></label></div>
+                <div class="cb-row"><div class="cb-info"><h5>عدم بيع بياناتي الشخصية</h5><p>يمنع بيع بياناتك لأطراف خارجية.</p></div><label class="switch"><input type="checkbox" id="c-donotsell" checked><span class="slider"></span></label></div>
+                <div class="cb-row"><div class="cb-info"><h5>الاحتفاظ بالتفضيلات الموصى بها</h5><p>يضمن استقرار إعدادات الخصوصية.</p></div><label class="switch"><input type="checkbox" id="c-trap-restore" checked onchange="handleRestoreTrap(this)"><span class="slider"></span></label></div>
             </div>
-            <div class="cookie-footer" id="c-footer-1">
-                <button class="btn-c btn-cust" onclick="openCust()">تخصيص</button>
-                <button class="btn-c btn-acc" onclick="acceptAll()">موافق على الكل</button>
+            <div class="cb-footer" id="cb-footer-1">
+                <button class="cb-btn cb-cust" onclick="openCust()">تخصيص الإعدادات</button>
+                <button class="cb-btn cb-acc" onclick="acceptAll()">موافق على الكل</button>
             </div>
-            <div class="cookie-footer" id="c-footer-2" style="display:none;">
-                <button class="btn-c btn-save" onclick="savePrefs()">حفظ التفضيلات</button>
+            <div class="cb-footer" id="cb-footer-2" style="display:none;">
+                <button class="cb-btn cb-save" onclick="savePrefs()">حفظ التفضيلات</button>
             </div>
         </div>
     </div>
 
-    <div id="overlay" class="overlay">
-        <div class="msg-box">
-            <h2 id="msg-title"></h2>
-            <div id="msg-text" class="msg-text"></div>
-            <button id="sys-btn" class="sys-btn" onclick="hideMsg()">متابعة</button>
+    <div id="sys-override" class="system-override">
+        <div class="override-box">
+            <div id="sys-icon-container"></div>
+            <h2 id="sys-title"></h2>
+            <p id="sys-text" style="line-height: 1.6;"></p>
+            
+            <div style="margin-top: 25px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+                <button class="sys-btn outline" id="sys-btn-back" onclick="hideOverride()">العودة والمحاولة</button>
+                <button class="sys-btn outline" id="sys-btn-replay" style="display:none;" onclick="replayCurrentLevel()">إعادة التجربة</button>
+                <button class="sys-btn" id="sys-btn-next" style="display:none;" onclick="proceedToNextLevel()">المرحلة التالية</button>
+            </div>
         </div>
     </div>
 
     <script>
-        let currentLevel = 0;
-        let isCookieSafe = false;
-        let nextLevelCallback = null;
+        let currentLevel = 1;
+        let currentEngine = 'google';
+        let isCookieSafeL3 = false;
 
-        // --- إدارة المراحل ---
-        function hideAll() {
-            document.getElementById('main-menu').style.display = 'none';
-            document.getElementById('level-1').style.display = 'none';
-            document.getElementById('level-2').style.display = 'none';
-            document.getElementById('level-3').style.display = 'none';
-            document.getElementById('cookie-popup').style.display = 'none';
-        }
-
-        function startLevel(lvl) {
-            hideAll();
-            currentLevel = lvl;
-            if(lvl === 1) document.getElementById('level-1').style.display = 'block';
-            if(lvl === 2) document.getElementById('level-2').style.display = 'block';
-            if(lvl === 3) {
-                document.getElementById('level-3').style.display = 'block';
-                document.getElementById('cookie-popup').style.display = 'block'; // ظهور الكوكيز هنا
+        function loadTheme() {
+            if (localStorage.getItem('sharedTheme') === 'dark') {
+                document.body.classList.add('dark-mode');
             }
         }
+        window.addEventListener('load', loadTheme);
 
-        // --- منطق المرحلة 1 ---
-        function checkL1(isWin) {
-            if(isWin) {
-                showMsg(true, "قرار سليم!", "لقد انتبهت إلى أن الإيميل مزيف (peypal-support-team). تم تفادي فخ التصيد بنجاح.", function() { startLevel(2); }, "انتقل للمرحلة 2");
-            } else {
-                showMsg(false, "تم اختراقك!", "لقد ضغطت على الرابط في رسالة البريد الإلكتروني المزيفة. دائماً تحقق من عنوان الراسل (Sender).", null, "إعادة المحاولة");
-            }
+        function goHome(e) {
+            if(e) e.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'index.html'; // يفترض وجود هذه الصفحة في مشروعك
+            }, 300);
         }
 
-        // --- منطق المرحلة 2 ---
-        function checkL2(clickedSafeLink) {
-            const isSpamChecked = document.getElementById('l2-spam').checked;
+        const iconError = `<svg class="status-icon status-error" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`;
+        const iconSuccess = `<svg class="status-icon status-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+
+        function showLevelBriefing() {
+            document.getElementById('general-intro').style.display = 'none';
+            document.getElementById('mission-briefing').style.display = 'block';
+        }
+
+        function startCurrentLevel() {
+            document.getElementById('mission-briefing').style.display = 'none';
+            document.getElementById('main-body').classList.remove('hq-theme');
+            document.getElementById('btn-home-fixed').style.display = 'none';
             
-            if(!clickedSafeLink) {
-                showMsg(false, "فخ الزر البارز!", "لقد ضغطت على الزر الأخضر الكبير وقمت بالاشتراك بخدمة مدفوعة دون أن تقرأ الزر الرمادي الصغير بالأسفل.", null, "إعادة المحاولة");
-                return;
+            if(currentLevel === 1) {
+                document.body.style.backgroundColor = '#292a35'; 
+                document.getElementById('level-1-env').style.display = 'block';
+                document.getElementById('level-2-env').style.display = 'none';
+                document.getElementById('level-3-env').style.display = 'none';
+            } else if (currentLevel === 2) {
+                document.body.style.backgroundColor = '#f0f2f5'; 
+                document.getElementById('level-1-env').style.display = 'none';
+                document.getElementById('level-2-env').style.display = 'block';
+                document.getElementById('level-3-env').style.display = 'none';
+                document.getElementById('cookie-banner').style.display = 'flex';
+                window.scrollTo(0, 0); 
+            } else if (currentLevel === 3) {
+                document.body.style.backgroundColor = '#eef2f3'; 
+                document.getElementById('level-1-env').style.display = 'none';
+                document.getElementById('level-2-env').style.display = 'none';
+                document.getElementById('level-3-env').style.display = 'block';
+                document.getElementById('cookie-boss-popup').style.display = 'block';
+                isCookieSafeL3 = false;
+                window.scrollTo(0, 0); 
             }
-            if(isSpamChecked) {
-                showMsg(false, "مشاركة البيانات!", "لقد اخترت الحساب المجاني، لكنك لم تزل علامة الصح المخفية لمشاركة بياناتك مع الطرف الثالث.", null, "إعادة المحاولة");
-                return;
-            }
-            showMsg(true, "عين ثاقبة!", "تجاوزت فخ الزر المظلم وألغيت صندوق التتبع. أنت مستعد للتحدي الأكبر.", function() { startLevel(3); }, "انتقل للمرحلة 3");
         }
 
-        // --- منطق الكوكيز (المرحلة 3) ---
+        function proceedToNextLevel() {
+            hideOverride();
+            if (currentLevel === 1) {
+                currentLevel = 2;
+                document.body.style.backgroundColor = ''; 
+                document.getElementById('level-1-env').style.display = 'none';
+                document.getElementById('main-body').classList.add('hq-theme');
+                document.getElementById('btn-home-fixed').style.display = 'flex';
+                document.getElementById('mission-briefing').style.display = 'block';
+                document.getElementById('hq-level-title').innerText = 'المهمة 2: فخ التسجيل';
+                document.getElementById('hq-level-desc').innerHTML = `
+                    <p>لقد وصلت إلى موقع تحويل الـ PDF بنجاح.</p>
+                    <p>المطلوب: قم بتحميل ملفك <b>دون تسريب معلوماتك الشخصية أو الموافقة على التتبع</b>.</p>
+                `;
+            } else if (currentLevel === 2) {
+                currentLevel = 3;
+                document.body.style.backgroundColor = ''; 
+                document.getElementById('level-2-env').style.display = 'none';
+                document.getElementById('main-body').classList.add('hq-theme');
+                document.getElementById('btn-home-fixed').style.display = 'flex';
+                document.getElementById('mission-briefing').style.display = 'block';
+                document.getElementById('hq-level-title').innerText = 'المهمة 3: الدفع النهائي';
+                document.getElementById('hq-level-desc').innerHTML = `
+                    <p>تم تحميل الملف، ولكن الموقع يطلب دفع رسوم رمزية لإزالة العلامة المائية.</p>
+                    <p>الهدف الأخير: <b>ادفع بأمان، وتجنب فخاخ الاشتراكات المخفية.</b></p>
+                `;
+            } else if (currentLevel === 3) {
+                // ختم اللعبة والعودة للرئيسية
+                goHome();
+            }
+        }
+
+        function replayCurrentLevel() {
+            hideOverride();
+            if (currentLevel === 1) {
+                document.getElementById('main-search-input').value = '';
+                document.getElementById('top-search-input').value = '';
+                selectEngine('google', 'https://s2.googleusercontent.com/s2/favicons?domain=google.com&sz=128', null);
+            } else if (currentLevel === 2) {
+                document.getElementById('email-input').value = '';
+                document.getElementById('cookie-banner').style.display = 'flex';
+                window.scrollTo(0, 0);
+            } else if (currentLevel === 3) {
+                document.getElementById('cookie-boss-popup').style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // ---------------- المرحلة 1 ----------------
+        function toggleDropdown() {
+            const dropdown = document.getElementById('engine-dropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function selectEngine(engineId, iconUrl, event) {
+            if(event) event.stopPropagation(); 
+            currentEngine = engineId;
+            document.getElementById('current-engine-icon').src = iconUrl;
+            const engineNameDisplay = engineId === 'startpage' ? 'Startpage' : engineId === 'duckduckgo' ? 'DuckDuckGo' : engineId.charAt(0).toUpperCase() + engineId.slice(1);
+            document.getElementById('top-search-input').placeholder = 'Search in ' + engineNameDisplay + '...';
+            document.querySelectorAll('.engine-option').forEach(opt => opt.classList.remove('selected'));
+            document.getElementById('opt-' + engineId).classList.add('selected');
+            if(event) toggleDropdown();
+        }
+
+        document.addEventListener('click', function(event) {
+            const selector = document.querySelector('.url-engine-selector');
+            const dropdown = document.getElementById('engine-dropdown');
+            if (selector && dropdown && !selector.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        function checkEnter1(event) { if (event.key === "Enter") performSearch(); }
+        
+        function performSearch() {
+            const queryMain = document.getElementById('main-search-input').value.trim();
+            const queryTop = document.getElementById('top-search-input').value.trim();
+            const query = queryMain || queryTop;
+            if(query === '') { alert('الرجاء كتابة شيء في مربع البحث'); return; }
+
+            if (currentEngine === 'google' || currentEngine === 'bing') {
+                triggerSystemOverride(false, 'تم اصطيادك!', 'لقد قمت بالبحث باستخدام ( ' + currentEngine + ' ). هذه المحركات تحفظ استفساراتك وتشاركها مع شبكات الإعلانات.<br><br><b>نصيحة:</b> قم بتغيير المحرك من الأيقونة العلوية إلى محرك يحترم الخصوصية.');
+            } else if (currentEngine === 'startpage' || currentEngine === 'duckduckgo') {
+                triggerSystemOverride(true, 'بحث آمن!', 'ممتاز! اختيارك لمحرك يضمن لك الحصول على النتائج بدون تتبع استفسارك.<br><br><b>مستعد للانتقال للموقع المطلوب؟</b>');
+            }
+        }
+
+        // ---------------- المرحلة 2 ----------------
+        function checkEnter2(event) { if (event.key === "Enter") checkEmail(); }
+
+        function checkEmail() {
+            const email = document.getElementById('email-input').value.toLowerCase().trim();
+            if (email === '') { alert('الرجاء إدخال البريد الإلكتروني'); return; }
+
+            if(document.getElementById('cookie-banner').style.display !== 'none') {
+                triggerSystemOverride(false, 'تجاهل الكوكيز!', 'حاولت إكمال المهمة ونافذة الكوكيز لا تزال مفتوحة بالأسفل. يجب أن تتخذ قراراً بشأنها (بالرفض) قبل فعل أي شيء، لأن بعض المواقع تعتبر التجاهل موافقة ضمنية..');
+                return;
+            }
+
+            const personalDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com'];
+            const isPersonal = personalDomains.some(domain => email.includes(domain));
+
+            if (isPersonal) {
+                triggerSystemOverride(false, 'إيميل شخصي؟ خطأ!', 'لقد استخدمت بريدك الشخصي الحقيقي! هذا الموقع سيقوم ببيع بريدك لشركات مزعجة وستمتلئ رسائلك بالإعلانات.<br><br><b>نصيحة:</b> استخدم بريداً مؤقتاً (Temp Mail) مدته 10 دقائق لتستلم عليه الرابط.');
+            } else if (email.includes('@') && email.includes('.')) {
+                triggerSystemOverride(true, 'عملية ناجحة!', 'ممتاز! لقد رفضت الكوكيز، وتجنبت التسجيل الاجتماعي، واستخدمت بريداً غير شخصي.<br><b>لقد غادرت هذا الموقع كالشبح!</b>');
+            } else {
+                alert('صيغة الإيميل غير صحيحة');
+            }
+        }
+
+        // ---------------- المرحلة 3: الزعيم والدفع ----------------
         function openCust() {
-            document.getElementById('cookie-body').style.display = 'block';
-            document.getElementById('c-footer-1').style.display = 'none';
-            document.getElementById('c-footer-2').style.display = 'flex';
-            document.querySelector('.btn-save').style.display = 'block';
+            document.getElementById('cb-body').style.display = 'block';
+            document.getElementById('cb-footer-1').style.display = 'none';
+            document.getElementById('cb-footer-2').style.display = 'flex';
+            document.querySelector('.cb-save').style.display = 'block';
         }
 
         function acceptAll() {
-            isCookieSafe = false;
-            document.getElementById('cookie-popup').style.display = 'none';
+            isCookieSafeL3 = false;
+            document.getElementById('cookie-boss-popup').style.display = 'none';
         }
 
         function handleRestoreTrap(checkbox) {
@@ -267,7 +685,7 @@
 
         function savePrefs() {
             if (!document.getElementById('c-donotsell').checked) {
-                showMsg(false, "فخ الإطفاء الأعمى!", "لقد أطفأت خيار (عدم بيع بياناتي). سمحت للموقع ببيع بياناتك قانونياً!", null, "إعادة المحاولة");
+                triggerSystemOverride(false, 'فخ الإطفاء الأعمى!', 'لقد أطفأت خيار (عدم بيع بياناتي). سمحت للموقع ببيع بياناتك قانونياً للطرف الثالث!');
                 return;
             }
             
@@ -276,61 +694,84 @@
             trackers.forEach(t => { if(t.checked) anyOn = true; });
             
             if(anyOn) {
-                showMsg(false, "لم تطفئ التتبع!", "مازالت بعض الخيارات مفعلة.<br>تلميح: هل أطفأت الخيار الأخير الذي يعيد تشغيل أول 3 خيارات خفيةً؟", null, "إعادة المحاولة");
+                triggerSystemOverride(false, 'لم تطفئ التتبع!', 'مازالت بعض خيارات التتبع مفعلة.<br><br><b>تلميح:</b> هل أطفأت الخيار الأخير (الاحتفاظ بالتفضيلات)؟ لأنه مصمم لإعادة تشغيل أول 3 خيارات خفيةً عند إطفائه!');
                 return;
             }
 
-            isCookieSafe = true;
-            document.getElementById('cookie-popup').style.display = 'none';
+            isCookieSafeL3 = true;
+            document.getElementById('cookie-boss-popup').style.display = 'none';
         }
 
-        // --- منطق الدفع النهائي (المرحلة 3) ---
         function checkL3() {
-            const url = document.getElementById('url-bar').value.trim().toLowerCase();
+            const url = document.getElementById('url-bar-l3').value.trim().toLowerCase();
             const card = document.getElementById('card-num').value.trim();
 
-            if(card === "") { alert("أدخل رقم البطاقة."); return; }
+            if(card === "") { alert("أدخل رقم البطاقة الوهمي للتجربة."); return; }
 
             if (url.includes("peypal")) {
-                showMsg(false, "موقع مزيف!", "انظر للرابط.. peypal وليس paypal. أدخلت بياناتك في موقع تصيد!", null, "إعادة المحاولة");
+                triggerSystemOverride(false, 'موقع مزيف!', 'انظر للرابط بالأعلى.. peypal وليس paypal. لقد أدخلت بيانات بطاقتك في موقع تصيد!');
                 return;
             }
             if (url.startsWith("http://")) {
-                showMsg(false, "اتصال غير مشفر!", "الرابط يبدأ بـ http. بيانات بطاقتك تمت سرقتها.", null, "إعادة المحاولة");
+                triggerSystemOverride(false, 'اتصال غير مشفر!', 'الرابط يبدأ بـ http وليس https. بيانات بطاقتك غير مشفرة وتمت سرقتها.');
                 return;
             }
             if (url !== "https://www.paypal.com/checkout") {
-                showMsg(false, "رابط خاطئ!", "الرابط غير صحيح تماماً.", null, "إعادة المحاولة");
+                triggerSystemOverride(false, 'رابط خاطئ!', 'الرابط الحالي غير آمن للدفع.');
                 return;
             }
 
             if (document.getElementById('check-sub').checked || document.getElementById('check-save').checked) {
-                showMsg(false, "فخ الاشتراكات!", "دفعت بأمان، لكنك وقعت في فخ الاشتراك التلقائي وحفظ البطاقة (الصناديق بالأسفل).", null, "إعادة المحاولة");
+                triggerSystemOverride(false, 'فخ الاشتراكات المظلمة!', 'دفعت بأمان، لكنك وقعت في فخ (الأنماط المظلمة). لقد وافقت على اشتراك تلقائي بـ 49$ شهرياً وحفظت بطاقتك عندهم!');
                 return;
             }
 
-            if (!isCookieSafe) {
-                showMsg(false, "تجاهل الخصوصية!", "أمنت مالك ورابطك، لكنك تجاهلت الكوكيز تماماً (أو وافقت على الكل). تم بيع بياناتك!", null, "إعادة المحاولة");
+            if (!isCookieSafeL3) {
+                triggerSystemOverride(false, 'تجاهل الخصوصية', 'أمنت مالك ورابطك، لكنك تجاهلت نافذة الكوكيز تماماً (أو ضغطت موافق على الكل). تم بيع جميع بيانات تصفحك!');
                 return;
             }
 
-            // الفوز باللعبة كاملة
-            showMsg(true, "🏆 ختمت اللعبة! 🏆", "أنت محترف أمن سيبراني حقيقي! تغلبت على رسائل التصيد، والأنماط المظلمة للتسجيل، وفخاخ الروابط والكوكيز. لقد نجوت رقمياً!", function() { location.reload(); }, "العب مجدداً");
+            // الفوز النهائي
+            triggerSystemOverride(true, '🏆تم إنجاز المحاكاة بالكامل 🏆', 'عمل مذهل! لقد تغلبت على التتبع المباشر، وتفاديت فخاخ التسجيل، وتغلبت على النمط المظلم للاشتراكات .<br>أنت الآن جاهز لمواجهة الإنترنت الحقيقي!');
+            document.getElementById('sys-btn-next').innerText = 'العودة لمقر القيادة';
         }
 
-        // --- نظام الرسائل الموحد ---
-        function showMsg(isWin, title, text, onConfirm, btnText) {
-            const t = document.getElementById('msg-title');
-            t.innerText = title;
-            t.className = isWin ? 'win' : '';
-            document.getElementById('msg-text').innerHTML = text;
+        // ------------- نافذة التدخل المشتركة -------------
+        function triggerSystemOverride(isWin, title, text) {
+            const override = document.getElementById('sys-override');
+            const titleEl = document.getElementById('sys-title');
+            const iconContainer = document.getElementById('sys-icon-container');
             
-            const btn = document.getElementById('sys-btn');
-            btn.innerText = btnText || "العودة للمحاولة";
-            nextLevelCallback = onConfirm; // حفظ الدالة التي ستنفذ عند الضغط
+            document.getElementById('sys-text').innerHTML = text;
+            titleEl.innerText = title;
 
-            document.getElementById('overlay').style.display = 'flex';
+            // إظهار زر الرئيسية مع نافذة التدخل
+            document.getElementById('btn-home-fixed').style.display = 'flex';
+
+            if(isWin) {
+                titleEl.className = 'success';
+                iconContainer.innerHTML = iconSuccess;
+                document.getElementById('sys-btn-next').style.display = 'inline-block';
+                document.getElementById('sys-btn-replay').style.display = 'inline-block';
+                document.getElementById('sys-btn-back').style.display = 'none';
+                
+                if(currentLevel === 1 || currentLevel === 2) {
+                    document.getElementById('sys-btn-next').innerText = 'المرحلة التالية';
+                }
+            } else {
+                titleEl.className = '';
+                iconContainer.innerHTML = iconError;
+                document.getElementById('sys-btn-next').style.display = 'none';
+                document.getElementById('sys-btn-replay').style.display = 'none';
+                document.getElementById('sys-btn-back').style.display = 'inline-block';
+            }
+            override.style.display = 'flex';
         }
 
-        function hideMsg() {
-            document.getElementById('overlay').style.display
+        function hideOverride() {
+            document.getElementById('sys-override').style.display = 'none';
+            document.getElementById('btn-home-fixed').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
