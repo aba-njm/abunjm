@@ -9,130 +9,164 @@
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#f4f1ea">
+    <meta name="theme-color" content="#ffffff">
 
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <style>
         :root {
-            --bg-color: #f4f1ea;
-            --text-color: #2c2825;
-            --table-bg: #fdfdfa;
-            --th-bg: #e6e2d3;
-            --border-color: #8c7b68;
-            --border-dark: #2c2825;
-            --cell-focus: #ebe7d9;
-            --section-bg: #dcd7c6;
-            --btn-hover-bg: #2c2825;
-            --btn-hover-text: #f4f1ea;
-            --danger-color: #8b0000;
+            /* النمط الفاتح (Sharp Theme) */
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --table-bg: #ffffff;
+            --th-bg: #000000;
+            --th-text: #ffffff;
+            --border-color: #e0e0e0;
+            --border-dark: #000000;
+            --cell-focus: #f5f5f5;
+            --section-bg: #f0f0f0;
+            --btn-hover-bg: #000000;
+            --btn-hover-text: #ffffff;
+            --danger-color: #d32f2f;
             --danger-hover: #ffffff;
-            --action-color: #2980b9;
-            --fs-btn-bg: #e6dfcd;
-            --fs-btn-hover: #d4ccb6;
-            --color-btn-bg: #d35400;
+            --action-color: #1976d2;
+            --fs-btn-bg: #ffffff;
+            --color-btn-bg: #e65100;
         }
 
         body.dark-mode {
-            --bg-color: #1a1816;
-            --text-color: #dcd7c6;
-            --table-bg: #24221f;
-            --th-bg: #332f2a;
-            --border-color: #5c5346;
-            --border-dark: #8c7b68;
-            --cell-focus: #3a352f;
-            --section-bg: #3f3933;
-            --btn-hover-bg: #dcd7c6;
-            --btn-hover-text: #1a1816;
-            --danger-color: #cc3333;
-            --danger-hover: #1a1816;
-            --action-color: #5dade2;
-            --fs-btn-bg: #332f2b;
-            --fs-btn-hover: #443e39;
-            --color-btn-bg: #e67e22;
+            /* النمط الداكن (Sharp Theme) */
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --table-bg: #000000;
+            --th-bg: #ffffff;
+            --th-text: #000000;
+            --border-color: #333333;
+            --border-dark: #ffffff;
+            --cell-focus: #1a1a1a;
+            --section-bg: #111111;
+            --btn-hover-bg: #ffffff;
+            --btn-hover-text: #000000;
+            --danger-color: #ff5252;
+            --danger-hover: #000000;
+            --action-color: #64b5f6;
+            --fs-btn-bg: #000000;
+            --color-btn-bg: #ffb74d;
         }
 
         body {
-            background-color: var(--bg-color); color: var(--text-color); font-family: 'Amiri', serif;
-            margin: 0; padding: 20px; transition: background-color 0.3s, color 0.3s;
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            font-family: 'Cairo', sans-serif;
+            margin: 0; 
+            padding: 20px; 
+            transition: background-color 0.3s, color 0.3s;
+            
+            /* أنميشن الدخول */
+            animation: fadeInPage 0.4s ease-out forwards;
         }
 
-        .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px double var(--border-dark); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-        .main-title { margin: 0; font-size: 2.2em; font-family: 'Crimson Text', serif; text-align: right; }
+        /* ---------------------------------- */
+        /* أنميشن الانتقال بين الصفحات        */
+        /* ---------------------------------- */
+        @keyframes fadeInPage {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body.fade-out {
+            animation: fadeOutPage 0.3s ease-in forwards !important;
+        }
+
+        @keyframes fadeOutPage {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-15px); }
+        }
+
+        .main-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-dark); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .main-title { margin: 0; font-size: 2.2em; font-weight: 900; text-align: right; text-transform: uppercase; letter-spacing: 1px; }
         .corner-controls { display: flex; gap: 10px; }
         
         .sub-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; min-height: 38px; }
-        .bottom-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 2px dashed var(--border-color); }
+        .bottom-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 25px; padding-top: 20px; border-top: 2px dashed var(--border-dark); }
 
-        /* شريط التلوين الجديد (مخفي افتراضياً مع أنيميشن) */
         .color-toolbar-container {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
+            max-height: 0; opacity: 0; overflow: hidden;
             transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease;
         }
         .color-toolbar-container.show {
-            max-height: 150px;
-            opacity: 1;
-            margin-bottom: 20px;
+            max-height: 150px; opacity: 1; margin-bottom: 20px;
         }
         .color-toolbar {
-            display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; padding: 15px; background-color: var(--th-bg); border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px; padding: 15px; 
+            background-color: transparent; border: 1px solid var(--border-dark); border-radius: 0; /* إلغاء الدوران */
         }
         
         .color-input-wrapper { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 300px;}
-        #target-word { padding: 8px; border: 1px solid var(--border-dark); border-radius: 4px; font-family: 'Crimson Text', serif; font-size: 15px; width: 100%; background-color: var(--table-bg); color: var(--text-color); }
+        #target-word { 
+            padding: 8px; border: 1px solid var(--border-dark); border-radius: 0; 
+            font-family: 'Cairo', sans-serif; font-size: 15px; width: 100%; 
+            background-color: var(--bg-color); color: var(--text-color); 
+        }
         
-        .btn-apply-color { background-color: var(--color-btn-bg); color: white; border: none; padding: 8px 20px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; font-family: 'Amiri', serif; transition: 0.2s; }
-        .btn-apply-color:hover { filter: brightness(1.1); }
-        .btn-clear-colors { background-color: transparent; border: 1px dashed var(--danger-color); color: var(--danger-color); padding: 8px 12px; font-size: 14px; cursor: pointer; font-weight: bold; border-radius: 4px; }
-        .btn-clear-colors:hover { background-color: var(--danger-color); color: white; }
+        .btn-apply-color { background-color: var(--color-btn-bg); color: #000; border: 1px solid var(--border-dark); padding: 8px 20px; font-size: 15px; font-weight: bold; border-radius: 0; cursor: pointer; font-family: 'Cairo', sans-serif; transition: 0.2s; }
+        .btn-apply-color:hover { background-color: transparent; color: var(--color-btn-bg); border-color: var(--color-btn-bg); }
+        
+        .btn-clear-colors { background-color: transparent; border: 1px dashed var(--danger-color); color: var(--danger-color); padding: 8px 12px; font-size: 14px; cursor: pointer; font-weight: bold; border-radius: 0; }
+        .btn-clear-colors:hover { background-color: var(--danger-color); color: var(--danger-hover); }
 
-        .btn { background-color: transparent; border: 1px solid var(--text-color); color: var(--text-color); padding: 8px 12px; font-family: 'Amiri', serif; font-size: 15px; cursor: pointer; transition: all 0.2s; font-weight: bold; border-radius: 4px; }
-        .btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
+        /* الأزرار العامة - حواف حادة */
+        .btn { 
+            background-color: transparent; border: 1px solid var(--border-dark); color: var(--text-color); 
+            padding: 8px 12px; font-family: 'Cairo', sans-serif; font-size: 14px; 
+            cursor: pointer; transition: all 0.2s; font-weight: 700; border-radius: 0; 
+            text-transform: uppercase;
+        }
+        .btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); border-color: var(--text-color); }
         .back-btn { border-style: dashed; }
-        .back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
-        .fs-btn { background-color: var(--fs-btn-bg); border: 1px solid var(--border-color); font-family: 'Crimson Text', 'Amiri', serif; }
-        .fs-btn:hover { background-color: var(--fs-btn-hover); color: var(--text-color); }
+        .fs-btn { background-color: var(--fs-btn-bg); }
         .btn-section { border-width: 2px; }
+        
         .btn-data { border-color: var(--action-color); color: var(--action-color); }
         .btn-data:hover { background-color: var(--action-color); color: #fff; }
         .btn-clear { border-color: var(--danger-color); color: var(--danger-color); }
         .btn-clear:hover { background-color: var(--danger-color); color: var(--danger-hover); }
         .btn-toggle-colors { border-color: var(--color-btn-bg); color: var(--color-btn-bg); }
-        .btn-toggle-colors:hover { background-color: var(--color-btn-bg); color: #fff; }
+        .btn-toggle-colors:hover { background-color: var(--color-btn-bg); color: #000; border-color: var(--border-dark); }
         
         .auto-hide { max-width: 0; padding-left: 0; padding-right: 0; margin: 0; border-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .auto-hide.visible { max-width: 150px; padding-left: 12px; padding-right: 12px; border-width: 1px; opacity: 1; }
+        
         .history-btn { color: #8e44ad; border-color: #8e44ad; }
         .history-btn:hover { background-color: #8e44ad; color: #fff; }
 
         #pdf-content { width: 100%; background-color: var(--bg-color); }
 
-        table { width: 100%; table-layout: fixed; border-collapse: collapse; font-family: 'Crimson Text', serif; background-color: var(--table-bg); border: 2px solid var(--border-dark); transition: background-color 0.3s; }
+        /* تنسيق الجدول الحاد */
+        table { width: 100%; table-layout: fixed; border-collapse: collapse; font-family: 'Cairo', sans-serif; background-color: var(--table-bg); border: 2px solid var(--border-dark); transition: background-color 0.3s; }
         tr { page-break-inside: avoid !important; break-inside: avoid !important; }
-        th, td { border: 1px solid var(--border-color); padding: 10px 8px; vertical-align: middle; line-height: 1.4; font-size: 1.1em; word-wrap: break-word; overflow-wrap: break-word; }
-        th { background-color: var(--th-bg); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border-dark); text-align: center; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 8px; vertical-align: middle; line-height: 1.4; font-size: 1em; word-wrap: break-word; overflow-wrap: break-word; }
+        th { background-color: var(--th-bg); color: var(--th-text); font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border-dark); text-align: center; }
         
-        .section-header { background-color: var(--section-bg); font-weight: bold; text-align: center; font-size: 1.2em; letter-spacing: 1px; text-transform: uppercase; color: var(--text-color); border-top: 2px solid var(--border-dark); border-bottom: 2px solid var(--border-dark); }
+        .section-header { background-color: var(--section-bg); font-weight: 900; text-align: center; font-size: 1.1em; letter-spacing: 1px; text-transform: uppercase; color: var(--text-color); border-top: 2px solid var(--border-dark); border-bottom: 2px solid var(--border-dark); }
         td[contenteditable="true"] { outline: none; }
         td[contenteditable="true"]:focus { background-color: var(--cell-focus); }
         
         .action-column { text-align: center; vertical-align: middle; user-select: none; }
-        .action-btn { background: none; border: 1px solid var(--border-dark); color: var(--text-color); padding: 4px 6px; margin: 2px 1px; font-size: 12px; cursor: pointer; transition: 0.2s; display: inline-block; }
+        .action-btn { background: none; border: 1px solid var(--border-dark); color: var(--text-color); padding: 4px 6px; margin: 2px 1px; font-size: 12px; cursor: pointer; transition: 0.2s; display: inline-block; border-radius: 0; }
         .action-btn:hover { background-color: var(--btn-hover-bg); color: var(--btn-hover-text); }
         .btn-delete-row { border-color: var(--danger-color); color: var(--danger-color); }
         .btn-delete-row:hover { background-color: var(--danger-color); color: var(--danger-hover); }
 
-        .drag-handle { cursor: grab; font-size: 16px; font-weight: bold; padding: 2px 6px; border-style: dashed; touch-action: none;}
+        .drag-handle { cursor: grab; font-size: 14px; font-weight: bold; padding: 2px 6px; border-style: dashed; touch-action: none;}
         .drag-handle:active { cursor: grabbing; }
         .region-handle { background-color: var(--section-bg); }
 
         .sortable-ghost { opacity: 0.3; background-color: var(--cell-focus); }
-        .sortable-drag { background-color: var(--table-bg) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; opacity: 1 !important; cursor: grabbing !important; display: table !important; z-index: 9999 !important; }
+        .sortable-drag { background-color: var(--table-bg) !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; opacity: 1 !important; cursor: grabbing !important; display: table !important; z-index: 9999 !important; border: 2px solid var(--border-dark) !important; }
 
         @media screen and (max-width: 768px) {
             body { padding: 15px 5px; } 
@@ -143,13 +177,12 @@
             .sub-controls, .bottom-controls { justify-content: center; flex-wrap: wrap; gap: 8px; }
             .sub-controls button { flex: 1 1 45%; font-size: 13px; padding: 8px 4px; }
             .bottom-controls button { flex: 1 1 30%; font-size: 13px; padding: 10px 5px; }
-            th, td { padding: 4px 2px; font-size: 11px; line-height: 1.2; }
-            th { font-size: 9px; }
-            .section-header { font-size: 12px; }
-            .action-btn { padding: 2px 4px; font-size: 9px; display: block; width: 100%; box-sizing: border-box; }
+            th, td { padding: 4px 2px; font-size: 12px; line-height: 1.3; }
+            th { font-size: 10px; }
+            .section-header { font-size: 13px; }
+            .action-btn { padding: 2px 4px; font-size: 10px; display: block; width: 100%; box-sizing: border-box; }
             .drag-handle { display: block; width: 100%; margin-bottom: 2px;}
             
-            /* تعديلات شريط الألوان للموبايل */
             .color-toolbar { flex-direction: column; gap: 10px; padding: 10px; }
             .color-input-wrapper { width: 100%; max-width: none; justify-content: center; }
             #target-word { flex: 1; max-width: 100%; text-align: center; }
@@ -168,7 +201,7 @@
 
     <div class="main-header">
         <div class="corner-controls">
-            <button class="btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+            <button class="btn back-btn" onclick="goHome(event)">العودة للرئيسية</button>
             <button class="btn fs-btn" id="fs-btn" onclick="toggleFullScreen()" title="Toggle Full Screen">Full Screen</button>
         </div>
         <h2 class="main-title">Anatomy Muscles</h2>
@@ -178,8 +211,8 @@
         <button class="btn btn-section" onclick="addSection()">Add Region</button>
         <button class="btn" onclick="addRow()">Add Muscle</button>
         <button class="btn btn-toggle-colors" onclick="toggleColorToolbar()">أدوات التمييز</button>
-        <button class="btn auto-hide history-btn" id="undo-btn" onclick="undoData()">↶ تراجع</button>
-        <button class="btn auto-hide history-btn" id="redo-btn" onclick="redoData()">استعادة ↷</button>
+        <button class="btn auto-hide history-btn" id="undo-btn" onclick="undoData()">&#8617; تراجع</button>
+        <button class="btn auto-hide history-btn" id="redo-btn" onclick="redoData()">استعادة &#8618;</button>
         <button class="btn auto-hide btn-clear" id="clear-btn" onclick="clearData()" title="حذف جميع البيانات">Clear Data</button>
     </div>
 
@@ -205,7 +238,7 @@
                     <th class="action-column" style="width: 10%;">Control</th>
                 </tr>
             </thead>
-            </table>
+        </table>
     </div>
 
     <div class="bottom-controls">
@@ -221,6 +254,15 @@
         let historyIndex = -1;
         let isHistoryAction = false; 
 
+        // دالة العودة للرئيسية مع الأنميشن
+        function goHome(e) {
+            e.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 300);
+        }
+
         function toggleFullScreen() {
             if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(err => {});
             else if (document.exitFullscreen) document.exitFullscreen();
@@ -234,7 +276,9 @@
         function loadTheme() {
             if (localStorage.getItem('sharedTheme') === 'dark') {
                 document.body.classList.add('dark-mode');
-                document.querySelector("meta[name=theme-color]").setAttribute("content", "#1a1816");
+                document.querySelector("meta[name=theme-color]").setAttribute("content", "#000000");
+            } else {
+                document.querySelector("meta[name=theme-color]").setAttribute("content", "#ffffff");
             }
         }
 
@@ -248,13 +292,14 @@
                     const sectionHeader = row.querySelector('.section-header');
                     if (sectionHeader) {
                         if (currentTbodyHtml !== '') newHtml += `<tbody>${currentTbodyHtml}</tbody>`;
-                        currentTbodyHtml = `<tr><td colspan="5" class="section-header" contenteditable="true">${sectionHeader.innerText}</td><td class="action-column"><span class="action-btn drag-handle region-handle" title="Drag entire Region">☰</span><button class="action-btn btn-delete-row" onclick="deleteRegion(this)" title="Delete Region">X</button></td></tr>`;
+                        // استبدال الإيموجيات في البيانات القديمة بأكواد
+                        currentTbodyHtml = `<tr><td colspan="5" class="section-header" contenteditable="true">${sectionHeader.innerText}</td><td class="action-column"><span class="action-btn drag-handle region-handle" title="Drag entire Region">&#9776;</span><button class="action-btn btn-delete-row" onclick="deleteRegion(this)" title="Delete Region">&#10005;</button></td></tr>`;
                     } else {
                         let cells = row.querySelectorAll('td');
                         if (cells.length >= 5 && !row.querySelector('.section-header')) {
                             let rowHtml = `<tr class="muscle-row">`;
                             for(let i = 0; i < 5; i++) rowHtml += `<td contenteditable="true">${cells[i] ? cells[i].innerHTML : ''}</td>`;
-                            rowHtml += `<td class="action-column"><span class="action-btn drag-handle row-handle" title="Drag Muscle">☰</span><button class="action-btn btn-delete-row" onclick="deleteRow(this)" title="Delete Muscle">X</button></td></tr>`;
+                            rowHtml += `<td class="action-column"><span class="action-btn drag-handle row-handle" title="Drag Muscle">&#9776;</span><button class="action-btn btn-delete-row" onclick="deleteRow(this)" title="Delete Muscle">&#10005;</button></td></tr>`;
                             currentTbodyHtml += rowHtml;
                         }
                     }
@@ -340,7 +385,6 @@
             }
         }
 
-        // ================= نظام التلوين الذكي التلقائي =================
         function toggleColorToolbar() {
             const toolbar = document.getElementById('color-toolbar');
             toolbar.classList.toggle('show');
@@ -350,7 +394,6 @@
             return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
 
-        // دالة لتوليد لون فاتح (Pastel) عشوائي لضمان وضوح النص الأسود عليه
         function getRandomLightColor() {
             const hue = Math.floor(Math.random() * 360);
             return `hsl(${hue}, 80%, 85%)`;
@@ -365,9 +408,7 @@
                 return;
             }
 
-            const bgColor = getRandomLightColor(); // سحب لون عشوائي تلقائي
-
-            // استخدام Regex يمنع استبدال النصوص داخل الأوسمة (HTML Tags) لتجنب تخريب الجدول
+            const bgColor = getRandomLightColor(); 
             const regex = new RegExp("(?![^<]*>)(" + escapeRegExp(word) + ")", "gi");
             const rows = document.querySelectorAll('#anatomyTable tbody tr.muscle-row');
             
@@ -375,19 +416,17 @@
 
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                // اللف على (Origin, Insertion, Action, Nerve) ونتجاهل اسم العضلة (cells[0])
                 for(let i=1; i<=4; i++) {
                     if(cells[i] && regex.test(cells[i].innerHTML)) {
                         matchFound = true;
-                        // إعادة تهيئة الـ regex لأن .test تغير الـ index
-                        cells[i].innerHTML = cells[i].innerHTML.replace(regex, `<span class="smart-hl" style="background-color: ${bgColor}; color: #000; padding: 0 4px; border-radius: 4px; font-weight: bold;">$1</span>`);
+                        cells[i].innerHTML = cells[i].innerHTML.replace(regex, `<span class="smart-hl" style="background-color: ${bgColor}; color: #000; padding: 0 4px; font-weight: bold;">$1</span>`);
                     }
                 }
             });
             
             if (matchFound) {
-                saveData(false); // حفظ التعديل
-                wordInput.value = ''; // تفريغ المربع بعد التمييز الناجح لتسهيل كتابة الكلمة التالية
+                saveData(false); 
+                wordInput.value = ''; 
             } else {
                 alert("لم يتم العثور على الكلمة في الجدول! تأكد من الإملاء.");
             }
@@ -401,16 +440,13 @@
                 const cells = row.querySelectorAll('td');
                 for(let i=1; i<=4; i++) {
                     if(cells[i]) {
-                        // إزالة كود الـ span وإرجاع النص لحالته الطبيعية
                         cells[i].innerHTML = cells[i].innerHTML.replace(/<span class="smart-hl"[^>]*>(.*?)<\/span>/gi, "$1");
-                        // تكرارها مرة ثانية للاحتياط إذا كان فيه ألوان متداخلة
                         cells[i].innerHTML = cells[i].innerHTML.replace(/<span class="smart-hl"[^>]*>(.*?)<\/span>/gi, "$1");
                     }
                 }
             });
             saveData(false);
         }
-        // =============================================================
 
         function fixTableLayout(evt) { Array.from(evt.item.querySelectorAll('td')).forEach(td => td.style.width = window.getComputedStyle(td).width); }
         function resetTableLayout(evt) { Array.from(evt.item.querySelectorAll('td')).forEach(td => td.style.width = ''); saveData(); }
@@ -429,7 +465,8 @@
             const newTbody = document.createElement('tbody'); const newRow = document.createElement('tr');
             let cell = document.createElement('td'); cell.colSpan = 5; cell.contentEditable = "true"; cell.className = "section-header"; cell.innerText = defaultText;
             let controlCell = document.createElement('td'); controlCell.className = "action-column";
-            controlCell.innerHTML = `<span class="action-btn drag-handle region-handle" title="Drag entire Region">☰</span><button class="action-btn btn-delete-row" onclick="deleteRegion(this)" title="Delete Region">X</button>`;
+            // استخدام أكواد HTML بدلا من الإيموجيات
+            controlCell.innerHTML = `<span class="action-btn drag-handle region-handle" title="Drag entire Region">&#9776;</span><button class="action-btn btn-delete-row" onclick="deleteRegion(this)" title="Delete Region">&#10005;</button>`;
             newRow.appendChild(cell); newRow.appendChild(controlCell); newTbody.appendChild(newRow); table.appendChild(newTbody);
             initSortables(); if(!skipSave) saveData();
         }
@@ -442,7 +479,8 @@
             const newRow = document.createElement('tr'); newRow.className = "muscle-row";
             for (let i = 0; i < 5; i++) { let cell = document.createElement('td'); cell.contentEditable = "true"; newRow.appendChild(cell); }
             let controlCell = document.createElement('td'); controlCell.className = "action-column";
-            controlCell.innerHTML = `<span class="action-btn drag-handle row-handle" title="Drag Muscle">☰</span><button class="action-btn btn-delete-row" onclick="deleteRow(this)" title="Delete Muscle">X</button>`;
+            // استخدام أكواد HTML بدلا من الإيموجيات
+            controlCell.innerHTML = `<span class="action-btn drag-handle row-handle" title="Drag Muscle">&#9776;</span><button class="action-btn btn-delete-row" onclick="deleteRow(this)" title="Delete Muscle">&#10005;</button>`;
             
             newRow.appendChild(controlCell); lastTbody.appendChild(newRow);
             initSortables(); if(!skipSave) saveData();
