@@ -7,193 +7,250 @@
     
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#f4f1ea">
+    <meta name="theme-color" content="#000000">
 
     <link rel="icon" type="image/png" sizes="192x192" href="https://image2url.com/r2/default/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg">
-    <link rel="icon" type="image/png" sizes="512x512" href="https://image2url.com/r2/default/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg">
-    <link rel="apple-touch-icon" href="https://image2url.com/r2/defa""ult/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg">
-    <link rel="shortcut icon" href="https://image2url.com/r2/default/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg">
 
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-color: #f4f1ea;
-            --text-color: #2c2825;
-            --card-bg: #fdfdfa;
-            --border-color: #8c7b68;
-            --border-dark: #2c2825;
-            --btn-hover-bg: #2c2825;
-            --btn-hover-text: #f4f1ea;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --profile-border: #8c7b68;
+            /* النمط الفاتح */
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --border-color: #e0e0e0;
+            --hover-bg: #000000;
+            --hover-text: #ffffff;
+            --star-color: #000000;
         }
 
         body.dark-mode {
-            --bg-color: #1a1816;
-            --text-color: #dcd7c6;
-            --card-bg: #24221f;
-            --border-color: #8c7b68;
-            --border-dark: #8c7b68;
-            --btn-hover-bg: #dcd7c6;
-            --btn-hover-text: #1a1816;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            --profile-border: #8c7b68;
+            /* النمط الداكن */
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --border-color: #333333;
+            --hover-bg: #ffffff;
+            --hover-text: #000000;
+            --star-color: #ffffff;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Amiri', serif;
+            font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 60px 20px 40px 20px;
             transition: background-color 0.3s, color 0.3s;
             position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+            z-index: 1; 
+            
+            /* تأثير الدخول */
+            animation: fadeInPage 0.4s ease-out forwards;
         }
 
+        /* ---------------------------------- */
+        /* أنميشن الانتقال بين الصفحات        */
+        /* ---------------------------------- */
+        @keyframes fadeInPage {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body.fade-out {
+            animation: fadeOutPage 0.3s ease-in forwards !important;
+        }
+
+        @keyframes fadeOutPage {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-15px); }
+        }
+
+        /* ---------------------------------- */
+        /* نظام النجوم (نقاط) بحركة مائلة     */
+        /* ---------------------------------- */
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none;
+        }
+
+        .stars, .stars-2 {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.6;
+            /* الحركة مائلة لليمين و للاسفل */
+            animation: moveStarsDiagonal 100s linear infinite, starsTwinkle 4s ease-in-out infinite;
+        }
+
+        .stars {
+            background-image: 
+                radial-gradient(1.5px 1.5px at 25px 25px, var(--star-color), transparent),
+                radial-gradient(2px 2px at 150px 80px, var(--star-color), transparent),
+                radial-gradient(1.5px 1.5px at 80px 160px, var(--star-color), transparent),
+                radial-gradient(2.5px 2.5px at 190px 10px, var(--star-color), transparent),
+                radial-gradient(1px 1px at 110px 110px, var(--star-color), transparent);
+            background-size: 250px 250px;
+        }
+
+        .stars-2 {
+            background-image: 
+                radial-gradient(2px 2px at 50px 50px, var(--star-color), transparent),
+                radial-gradient(1.5px 1.5px at 200px 120px, var(--star-color), transparent),
+                radial-gradient(2px 2px at 140px 220px, var(--star-color), transparent);
+            background-size: 350px 350px;
+            opacity: 0.3;
+            animation: moveStarsDiagonal 150s linear infinite reverse, starsTwinkle 6s ease-in-out infinite reverse;
+        }
+
+        /* أنميشن الحركة المائلة للأسفل ولليمين */
+        @keyframes moveStarsDiagonal {
+            from { background-position: 0 0; }
+            to { background-position: 500px 1000px; }
+        }
+
+        @keyframes starsTwinkle {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.2; }
+        }
+
+        /* ---------------------------------- */
+        /* التنسيقات الحادة                   */
+        /* ---------------------------------- */
         .top-controls {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            direction: ltr;
+            top: 20px; right: 20px;
+            display: flex; gap: 10px; direction: ltr;
         }
 
         .control-btn {
             background-color: transparent;
-            border: 1px solid var(--text-color);
+            border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 6px 12px;
-            font-family: 'Amiri', serif;
-            font-size: 14px;
+            padding: 5px 15px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
+            border-radius: 0;
             transition: all 0.2s;
+            text-transform: uppercase;
         }
 
         .control-btn:hover {
-            background-color: var(--btn-hover-bg);
-            color: var(--btn-hover-text);
+            background-color: var(--hover-bg);
+            color: var(--hover-text);
+            border-color: var(--text-color);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px double var(--border-dark);
-            padding-bottom: 20px;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
             max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-left: auto; margin-right: auto;
+            background-color: transparent; 
         }
 
         .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 120px; height: 120px;
             object-fit: cover;
-            border: 3px solid var(--profile-border);
-            margin-bottom: 15px;
-            box-shadow: var(--shadow);
+            border: 2px solid var(--text-color);
+            margin-bottom: 20px;
+            border-radius: 0;
+            transition: transform 0.3s;
         }
 
         h1 {
-            font-family: 'Crimson Text', 'Amiri', serif;
-            font-size: 2.5em;
-            margin: 0 0 10px 0;
-            letter-spacing: 1px;
+            font-size: 3em; margin: 0 0 5px 0;
+            font-weight: 900; letter-spacing: -1px;
+            text-shadow: 0 0 10px var(--bg-color), 0 0 20px var(--bg-color);
         }
 
-        p.subtitle {
-            font-size: 1.2em;
-            margin: 0;
-            color: var(--border-color);
+        .subtitle {
+            font-size: 1.2em; margin: 5px 0;
+            font-weight: 400; opacity: 0.8;
+            text-shadow: 0 0 5px var(--bg-color);
         }
 
         .apps-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
-            max-width: 900px;
-            margin: 0 auto;
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 30px; max-width: 1000px; margin: 0 auto;
         }
 
         .card {
-            background-color: var(--card-bg);
+            background-color: transparent; 
             border: 1px solid var(--border-color);
-            padding: 25px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex: 1 1 280px;
-            max-width: 300px;
+            padding: 30px 25px; text-align: center;
+            border-radius: 0;
+            display: flex; flex-direction: column; justify-content: space-between;
+            flex: 1 1 280px; max-width: 320px;
+            transition: border-color 0.3s, transform 0.3s;
         }
 
         .card:hover {
+            border-color: var(--text-color);
             transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
         .card h3 {
-            font-family: 'Crimson Text', 'Amiri', serif;
-            font-size: 1.5em;
-            margin: 0 0 15px 0;
-            border-bottom: 1px dashed var(--border-color);
-            padding-bottom: 10px;
+            font-size: 1.5em; margin: 0 0 15px 0; font-weight: 900;
         }
 
         .card p {
-            font-size: 1.1em;
-            margin: 0 0 20px 0;
-            line-height: 1.5;
-            flex-grow: 1;
+            font-size: 1.1em; margin: 0 0 25px 0; line-height: 1.6; flex-grow: 1;
         }
 
         .open-btn {
-            display: inline-block;
-            text-decoration: none;
-            background-color: transparent;
-            border: 2px solid var(--text-color);
-            color: var(--text-color);
-            padding: 8px 20px;
-            font-family: 'Amiri', serif;
-            font-size: 16px;
-            font-weight: bold;
+            display: inline-block; text-decoration: none;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            padding: 10px 25px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px; font-weight: 700;
+            border-radius: 0;
+            border: 1px solid var(--text-color);
             transition: all 0.2s;
-            cursor: pointer;
         }
 
         .open-btn:hover {
-            background-color: var(--btn-hover-bg);
-            color: var(--btn-hover-text);
+            background-color: transparent;
+            color: var(--text-color);
         }
 
         .footer-contact {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px dashed var(--border-color);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            text-align: center; margin-top: 60px; padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            max-width: 600px; margin-left: auto; margin-right: auto;
+            background-color: transparent;
         }
 
         .contact-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 20px; margin-top: 20px;
+        }
+
+        .contact-buttons .open-btn {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-buttons .open-btn:hover {
+            background-color: var(--hover-bg);
+            color: var(--hover-text);
+            border-color: var(--text-color);
         }
 
     </style>
 </head>
-<body>
+<body class="dark-mode">
+
+    <div class="stars-container">
+        <div class="stars"></div>
+        <div class="stars-2"></div>
+    </div>
 
     <div class="top-controls">
         <button class="control-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">Fullscreen</button>
@@ -204,8 +261,8 @@
         <img src="https://image2url.com/r2/default/images/1774579668410-55391703-7184-4252-858c-3690c84902bc.jpeg" alt="Profile Picture" class="profile-pic">
         
         <h1>مقر القيادة</h1>
-        <p class="subtitle"></p>
-        <p class="subtitle"></p>
+        <p class="subtitle">شخص يعاني من تراكم شديد</p>
+        <p class="subtitle">هذه بعض المواقع التي صممتها لمساعدتي</p>
     </div>
 
     <div class="apps-grid">
@@ -229,10 +286,10 @@
     </div>
 
     <div class="footer-contact">
-        <p style="margin-bottom: 15px; font-size: 1.1em;">للتواصل أو إرسال الاقتراحات والتحديثات:</p>
+        <p class="subtitle">للتواصل أو إرسال الاقتراحات والتحديثات:</p>
         <div class="contact-buttons">
-            <a href="https://t.me/AL_RAWL" target="_blank" class="open-btn" style="border-radius: 20px;">التيليجرام</a>
-            <a href="https://forms.gle/B1BMor2tf6f3fWVj9" class="open-btn" style="border-radius: 20px;">إرسال اقتراح</a>
+            <a href="https://t.me/Al_rawl" target="_blank" class="open-btn">التيليجرام</a>
+            <a href="https://forms.gle/B1BMor2tf6f3fWVj9" class="open-btn" target="_blank">إرسال اقتراح</a>
         </div>
     </div>
 
@@ -247,27 +304,46 @@
             }
         }
 
-        // تم توحيد المفتاح إلى sharedTheme
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
             localStorage.setItem('sharedTheme', isDark ? 'dark' : 'light');
             
             const metaThemeColor = document.querySelector("meta[name=theme-color]");
-            metaThemeColor.setAttribute("content", isDark ? "#1a1816" : "#f4f1ea");
+            metaThemeColor.setAttribute("content", isDark ? "#000000" : "#ffffff");
         }
 
-        // تم توحيد المفتاح إلى sharedTheme
         function loadTheme() {
-            if (localStorage.getItem('sharedTheme') === 'dark') {
+            const savedTheme = localStorage.getItem('sharedTheme');
+            if (savedTheme === 'light') {
+                document.body.classList.remove('dark-mode');
+                document.querySelector("meta[name=theme-color]").setAttribute("content", "#ffffff");
+            } else {
                 document.body.classList.add('dark-mode');
-                document.querySelector("meta[name=theme-color]").setAttribute("content", "#1a1816");
+                document.querySelector("meta[name=theme-color]").setAttribute("content", "#000000");
             }
         }
 
-        window.onload = () => {
+        document.addEventListener("DOMContentLoaded", () => {
             loadTheme();
-        };
+
+            const links = document.querySelectorAll('a.open-btn');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.target === '_blank') return; 
+                    
+                    e.preventDefault(); 
+                    const targetUrl = this.href;
+                    
+                    document.body.classList.add('fade-out');
+                    
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 300); 
+                });
+            });
+        });
     </script>
 
 </body>
