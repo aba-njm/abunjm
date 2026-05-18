@@ -5,51 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حساب الميل</title>
     
-    <meta name="theme-color" content="#f4f1ea">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#ffffff" id="meta-theme-color">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
-            --bg-color: #f4f1ea;
-            --text-color: #2c2825;
-            --card-bg: #fdfdfa;
-            --border-color: #8c7b68;
-            --border-dark: #2c2825;
-            --btn-hover-bg: #2c2825;
-            --btn-hover-text: #f4f1ea;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            /* النمط الفاتح (Sharp Theme) */
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #ffffff;
+            --border-color: #000000;
+            --border-light: #e0e0e0;
+            --border-dark: #000000;
+            --btn-hover-bg: #000000;
+            --btn-hover-text: #ffffff;
+            --shadow: none;
             
-            --chart-grid: #e3decb;
-            --chart-highlight: #2c2825; 
-            --chart-normal: #8c7b68;   
+            --chart-grid: #e0e0e0;
+            --chart-highlight: #d32f2f; 
+            --chart-normal: #000000;   
             
             --math-font: 'Cambria Math', 'Times New Roman', Times, serif;
 
-            --fs-btn-bg: #e6dfcd;
-            --fs-btn-hover: #d4ccb6;
+            --fs-btn-bg: transparent;
+            --fs-btn-hover: #000000;
         }
 
         body.dark-mode {
-            --bg-color: #1a1816;
-            --text-color: #dcd7c6;
-            --card-bg: #24221f;
-            --border-color: #5c5346;
-            --border-dark: #8c7b68;
-            --btn-hover-bg: #dcd7c6;
-            --btn-hover-text: #1a1816;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            /* النمط الداكن (Sharp Theme) */
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --card-bg: #000000;
+            --border-color: #ffffff;
+            --border-light: #333333;
+            --border-dark: #ffffff;
+            --btn-hover-bg: #ffffff;
+            --btn-hover-text: #000000;
+            --shadow: none;
             
-            --chart-grid: #332f2b;
-            --chart-highlight: #dcd7c6; 
-            --chart-normal: #8c7b68;   
+            --chart-grid: #333333;
+            --chart-highlight: #ff5252; 
+            --chart-normal: #ffffff;   
 
-            --fs-btn-bg: #332f2b;
-            --fs-btn-hover: #443e39;
+            --fs-btn-bg: transparent;
+            --fs-btn-hover: #ffffff;
         }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: 'Amiri', serif;
+            font-family: 'Cairo', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
@@ -57,7 +63,23 @@
             align-items: center;
             padding: 20px 10px;
             margin: 0;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            animation: fadeInPage 0.4s ease-out forwards;
+        }
+
+        /* أنميشن الانتقال بين الصفحات */
+        @keyframes fadeInPage {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body.fade-out {
+            animation: fadeOutPage 0.3s ease-in forwards !important;
+        }
+
+        @keyframes fadeOutPage {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-15px); }
         }
 
         .top-controls {
@@ -68,18 +90,20 @@
             margin-bottom: 20px;
             gap: 10px;
             padding: 0 10px;
-            box-sizing: border-box;
         }
 
         .control-btn {
-            background-color: transparent;
-            border: 1px solid var(--text-color);
+            background-color: var(--btn-bg, transparent);
+            border: 1px solid var(--border-color);
             color: var(--text-color);
             padding: 6px 12px;
-            font-family: 'Amiri', serif;
+            font-family: 'Cairo', sans-serif;
             font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
             cursor: pointer;
             transition: all 0.2s;
+            border-radius: 0;
         }
 
         .control-btn:hover {
@@ -89,40 +113,32 @@
 
         .back-btn {
             border-style: dashed;
-            font-weight: bold;
         }
 
         .fs-btn {
-            background-color: var(--fs-btn-bg) !important;
-            border-color: var(--border-color) !important;
-            font-family: 'Crimson Text', 'Amiri', serif;
-            font-weight: bold;
-        }
-        .fs-btn:hover {
-            background-color: var(--fs-btn-hover) !important;
-            color: var(--text-color) !important;
+            font-weight: 900;
         }
 
         .container {
             background-color: var(--card-bg);
             padding: 30px 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
+            border: 2px solid var(--border-color);
             text-align: center;
             width: 95%; 
             max-width: 1400px; 
-            transition: background-color 0.3s, box-shadow 0.3s;
-            box-sizing: border-box;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         h2 {
-            font-family: 'Crimson Text', serif;
-            font-size: 2.2em;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 2em;
             color: var(--text-color);
             margin: 0 0 25px 0;
-            border-bottom: 2px double var(--border-dark);
+            border-bottom: 2px dashed var(--border-light);
             padding-bottom: 15px;
             display: inline-block;
+            text-transform: uppercase;
         }
 
         .table-responsive {
@@ -134,35 +150,41 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 18px;
+            font-size: 16px;
             min-width: 300px;
+            font-weight: 700;
         }
 
         th, td {
             padding: 12px 10px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-light);
         }
 
         th { 
             background-color: var(--bg-color); 
             color: var(--text-color);
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 900;
         }
 
         input[type="number"] {
             width: 80px;
             padding: 8px;
-            border: 1px solid var(--border-color);
-            background-color: transparent;
+            border: 1px solid var(--border-light);
+            background-color: var(--card-bg);
             color: var(--text-color);
             text-align: center;
             font-family: var(--math-font);
             font-size: 18px;
-            box-sizing: border-box;
+            font-weight: bold;
+            border-radius: 0;
+            outline: none;
+            transition: border-color 0.2s, border-width 0.2s;
         }
 
         input[type="number"]:focus {
-            outline: none;
             border-color: var(--text-color);
+            border-width: 2px;
         }
 
         .btn-group {
@@ -177,14 +199,16 @@
         .open-btn {
             display: inline-block;
             background-color: transparent;
-            border: 2px solid var(--text-color);
+            border: 2px solid var(--border-color);
             color: var(--text-color);
             padding: 8px 20px;
-            font-family: 'Amiri', serif;
-            font-size: 16px;
-            font-weight: bold;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            font-weight: 900;
             transition: all 0.2s;
             cursor: pointer;
+            border-radius: 0;
+            text-transform: uppercase;
         }
 
         .open-btn:hover {
@@ -195,6 +219,7 @@
         select.open-btn {
             padding: 8px 10px;
             cursor: pointer;
+            outline: none;
         }
         
         select.open-btn option {
@@ -203,38 +228,41 @@
         }
 
         .btn-danger { 
-            color: var(--text-color);
+            color: #d32f2f;
             border: none;
             background: transparent;
             font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
+            transition: color 0.2s;
         }
-        .btn-danger:hover { color: #d9534f; }
+        body.dark-mode .btn-danger { color: #ff5252; }
+        .btn-danger:hover { color: var(--text-color); }
         
         #result {
             margin-top: 20px;
-            font-size: 20px;
+            font-size: 18px;
             color: var(--text-color);
             background: var(--bg-color);
-            border: 1px dashed var(--border-color);
+            border: 1px solid var(--border-color);
             padding: 20px;
             display: none;
             text-align: right;
             line-height: 1.8;
             word-wrap: break-word;
+            font-weight: 700;
         }
 
         .intercepts-box {
             background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+            border: 1px dashed var(--border-light);
             padding: 10px 15px;
             margin-top: 15px;
             margin-bottom: 15px;
-            border-radius: 4px;
         }
         
-        .math-text { font-family: var(--math-font); direction: ltr; display: inline-block; }
-        .highlight { color: var(--text-color); font-weight: bold; border-bottom: 1px solid var(--border-color); }
+        .math-text { font-family: var(--math-font); direction: ltr; display: inline-block; font-weight: bold; }
+        .highlight { color: var(--text-color); font-weight: 900; border-bottom: 2px solid var(--border-color); padding-bottom: 2px;}
         
         .chart-container {
             margin-top: 40px;
@@ -243,17 +271,16 @@
             min-height: 500px;
             width: 100%;
             display: block;
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--border-color);
             padding: 10px;
             background: var(--card-bg);
-            box-sizing: border-box;
         }
 
         #equationBox {
             margin-top: 30px;
             padding: 25px 10px;
             background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--border-color);
             font-size: 24px;
             display: none;
             direction: ltr; 
@@ -279,9 +306,9 @@
         }
 
         @media (max-width: 768px) {
-            .container { padding: 15px 10px; width: 100%; }
-            h2 { font-size: 1.8em; margin-bottom: 15px; }
-            table { font-size: 15px; }
+            .container { padding: 15px 10px; width: 100%; border-width: 1px;}
+            h2 { font-size: 1.5em; margin-bottom: 15px; }
+            table { font-size: 14px; }
             th, td { padding: 8px 4px; }
             input[type="number"] { width: 60px; font-size: 16px; padding: 6px; }
             .btn-group { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -296,7 +323,7 @@
 
     <div class="top-controls">
         <button class="control-btn fs-btn" onclick="toggleFullScreen()" title="Toggle Fullscreen">Fullscreen</button>
-        <button class="control-btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+        <button class="control-btn back-btn" onclick="goHome(event)">العودة للرئيسية</button>
     </div>
 
     <div class="container">
@@ -317,25 +344,25 @@
                         <td>1</td>
                         <td><input type="number" class="x-val" placeholder="x" step="any"></td>
                         <td><input type="number" class="y-val" placeholder="y" step="any"></td>
-                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">&#10005;</button></td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td><input type="number" class="x-val" placeholder="x" step="any"></td>
                         <td><input type="number" class="y-val" placeholder="y" step="any"></td>
-                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">&#10005;</button></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td><input type="number" class="x-val" placeholder="x" step="any"></td>
                         <td><input type="number" class="y-val" placeholder="y" step="any"></td>
-                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">&#10005;</button></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td><input type="number" class="x-val" placeholder="x" step="any"></td>
                         <td><input type="number" class="y-val" placeholder="y" step="any"></td>
-                        <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                        <td><button class="btn-danger" onclick="removeRow(this)">&#10005;</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -346,7 +373,7 @@
             
             <select id="calcMode" class="open-btn">
                 <option value="origin">يمر بنقطة الأصل</option>
-				                <option value="bestfit">حر</option>
+                <option value="bestfit">حر</option>
             </select>
 
             <button class="open-btn" style="background-color: var(--text-color); color: var(--bg-color);" onclick="processData()">احسب واستخرج</button>
@@ -365,6 +392,15 @@
     <script>
         let myChart = null;
 
+        // دالة العودة مع الأنميشن
+        function goHome(e) {
+            e.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 300);
+        }
+
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -380,7 +416,9 @@
         function loadTheme() {
             if (localStorage.getItem('sharedTheme') === 'dark') {
                 document.body.classList.add('dark-mode');
-                document.querySelector("meta[name=theme-color]").setAttribute("content", "#1a1816");
+                document.getElementById('meta-theme-color').setAttribute("content", "#000000");
+            } else {
+                document.getElementById('meta-theme-color').setAttribute("content", "#ffffff");
             }
         }
 
@@ -415,7 +453,7 @@
                 <td>${rowCount}</td>
                 <td><input type="number" class="x-val" placeholder="x" step="any"></td>
                 <td><input type="number" class="y-val" placeholder="y" step="any"></td>
-                <td><button class="btn-danger" onclick="removeRow(this)">✕</button></td>
+                <td><button class="btn-danger" onclick="removeRow(this)">&#10005;</button></td>
             `;
             tbody.appendChild(tr);
             updateRowNumbers();
@@ -468,7 +506,6 @@
             let minX = Math.min(...points.map(p => p.x));
             let maxX = Math.max(...points.map(p => p.x));
             
-            // حساب مسافة معقولة لتمديد الخط يميناً ويساراً بدون تخريب أبعاد الرسم
             let rangeX = maxX - minX;
             if (rangeX === 0) rangeX = 1; 
             let startX = minX - (rangeX * 0.1); 
@@ -512,7 +549,6 @@
                         p.distance = Math.abs(m * p.x - p.y + b) / distDenom;
                     });
 
-                    // حساب التقاطع بدقة 4 منازل عشرية كحد أدنى كما طلبت (استخدام Number يزيل الأصفار الزائدة)
                     let yInterceptText = `(0, ${Number(b.toFixed(4))})`;
                     let xInterceptText = "";
                     
@@ -656,16 +692,16 @@
             img.style.maxWidth = '100%';
             img.style.maxHeight = '70%';
             img.style.border = '2px solid var(--bg-color)';
-            img.style.borderRadius = '4px';
+            img.style.borderRadius = '0';
 
             const hint = document.createElement('p');
             hint.innerHTML = '<b>اضغط مطولاً على الصورة</b> لاختيار "حفظ الصورة"<br><br> انقر في أي مكان فارغ لإغلاق النافذة';
-            hint.style.color = '#f4f1ea';
+            hint.style.color = '#ffffff';
             hint.style.fontSize = '18px';
             hint.style.textAlign = 'center';
             hint.style.lineHeight = '1.6';
             hint.style.marginTop = '20px';
-            hint.style.fontFamily = 'var(--arabic-font)';
+            hint.style.fontFamily = "'Cairo', sans-serif";
 
             modal.appendChild(img);
             modal.appendChild(hint);
