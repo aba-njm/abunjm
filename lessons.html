@@ -3,62 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f4f1ea" id="meta-theme-color">
+    <meta name="theme-color" content="#ffffff" id="meta-theme-color">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>تنظيم الدروس</title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c2825'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23f4f1ea' font-family='serif'>D</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000000'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23ffffff' font-family='sans-serif'>D</text></svg>">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <style>
         :root {
-            --bg-color: #f4f1ea;
-            --text-color: #2c2825;
-            --border-color: #d3cbb8;
-            --card-bg: #faf8f5;
-            --btn-bg: #e6dfcd;
-            --btn-hover: #d4ccb6;
+            /* النمط الفاتح (Sharp Theme) */
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --border-color: #000000;
+            --border-light: #e0e0e0;
+            --card-bg: #ffffff;
+            --btn-bg: transparent;
+            --btn-hover: #000000;
+            --btn-hover-text: #ffffff;
             --input-bg: #ffffff;
             
-            --color-high: #ffe3e3;
-            --color-medium: #fff4e3;
-            --color-low: #e3ffe6;
-            --color-border-high: #cc8e8e;
-            --color-border-medium: #ccb08e;
-            --color-border-low: #8ecc9b;
+            /* ألوان الأولويات معدلة للثيم الفاتح */
+            --color-high: #fff5f5;
+            --color-medium: #fffbf0;
+            --color-low: #f0fff0;
+            --color-border-high: #d32f2f;
+            --color-border-medium: #f57f17;
+            --color-border-low: #2e7d32;
         }
 
         [data-theme="dark"] {
-            --bg-color: #1a1816;
-            --text-color: #dcd7c6;
-            --border-color: #3b3732;
-            --card-bg: #24211e;
-            --btn-bg: #332f2b;
-            --btn-hover: #443e39;
-            --input-bg: #141210;
+            /* النمط الداكن (Sharp Theme) */
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --border-color: #ffffff;
+            --border-light: #333333;
+            --card-bg: #000000;
+            --btn-bg: transparent;
+            --btn-hover: #ffffff;
+            --btn-hover-text: #000000;
+            --input-bg: #000000;
 
-            --color-high: #3d2222;
-            --color-medium: #3d3122;
-            --color-low: #223d26;
-            --color-border-high: #6b3e3e;
-            --color-border-medium: #6b583e;
-            --color-border-low: #3e6b47;
+            /* ألوان الأولويات معدلة للثيم الداكن */
+            --color-high: #1a0505;
+            --color-medium: #1a1600;
+            --color-low: #051a05;
+            --color-border-high: #ff5252;
+            --color-border-medium: #ffd54f;
+            --color-border-low: #81c784;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Amiri', serif;
+            font-family: 'Cairo', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
+            /* أنميشن الدخول */
+            animation: fadeInPage 0.4s ease-out forwards;
+        }
+
+        /* أنميشن الانتقال بين الصفحات */
+        @keyframes fadeInPage {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        body.fade-out {
+            animation: fadeOutPage 0.3s ease-in forwards !important;
+        }
+
+        @keyframes fadeOutPage {
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-15px); }
         }
 
         #app-wrapper {
@@ -66,7 +91,7 @@
             background-color: var(--bg-color);
         }
 
-        h1, h2, h3 { font-family: 'Crimson Text', 'Amiri', serif; font-weight: 700; }
+        h1, h2, h3 { font-family: 'Cairo', sans-serif; font-weight: 900; text-transform: uppercase; }
 
         .main-header {
             display: flex; justify-content: space-between; align-items: center;
@@ -74,44 +99,44 @@
             padding-bottom: 15px; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;
         }
 
-        .main-header h1 { font-size: 24px; margin: 0; }
+        .main-header h1 { font-size: 24px; margin: 0; letter-spacing: 1px; }
         .corner-controls { display: flex; gap: 10px; }
 
         .sub-controls { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; align-items: center; }
         
-        /* تنسيق الأزرار السفلية (الآن تحت الجداول مباشرة) */
         .bottom-controls {
             display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; 
             padding-top: 20px; border-top: 2px dashed var(--border-color);
             justify-content: center;
         }
 
+        /* الأزرار بحواف حادة */
         button {
-            font-family: 'Amiri', serif; background-color: var(--btn-bg); color: var(--text-color);
+            font-family: 'Cairo', sans-serif; background-color: var(--btn-bg); color: var(--text-color);
             border: 1px solid var(--border-color); padding: 8px 16px; cursor: pointer;
-            font-size: 16px; font-weight: bold; border-radius: 4px; transition: background-color 0.2s, color 0.2s;
+            font-size: 15px; font-weight: 700; border-radius: 0; transition: all 0.2s; text-transform: uppercase;
         }
-        button:hover { background-color: var(--btn-hover); }
+        button:hover { background-color: var(--btn-hover); color: var(--btn-hover-text); }
 
-        .top-btn { font-family: 'Crimson Text', 'Amiri', serif; }
+        .top-btn { font-weight: 900; }
         .back-btn { background-color: transparent; border-style: dashed; font-size: 14px; }
         .back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
 
-        /* زر حذف الكل المخصص */
         .btn-danger {
-            background-color: #b04040 !important;
-            color: #ffffff !important;
-            border-color: #8c3333 !important;
+            border-color: #d32f2f !important;
+            color: #d32f2f !important;
         }
-        .btn-danger:hover { background-color: #8c3333 !important; }
+        .btn-danger:hover { background-color: #d32f2f !important; color: #ffffff !important; }
 
         .form-group { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
 
         input[type="text"], select {
-            font-family: 'Amiri', serif; flex: 1; padding: 10px;
+            font-family: 'Cairo', sans-serif; flex: 1; padding: 10px;
             background-color: var(--input-bg); color: var(--text-color);
-            border: 1px solid var(--border-color); font-size: 16px; border-radius: 4px;
+            border: 1px solid var(--border-color); font-size: 15px; border-radius: 0; font-weight: bold;
+            outline: none; transition: border-width 0.2s;
         }
+        input[type="text"]:focus, select:focus { border-width: 2px; }
 
         .subjects-container {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -119,32 +144,37 @@
         }
 
         .subject-card {
-            background-color: var(--card-bg); border: 1px solid var(--border-color);
-            padding: 15px; display: flex; flex-direction: column; border-radius: 8px;
-            position: relative;
+            background-color: var(--card-bg); border: 2px solid var(--border-color);
+            padding: 15px; display: flex; flex-direction: column; border-radius: 0;
+            position: relative; transition: border-color 0.3s;
         }
 
         .subject-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px; border-bottom: 1px dashed var(--border-color);
+            margin-bottom: 15px; border-bottom: 1px dashed var(--border-light);
             padding-bottom: 5px; flex-wrap: wrap; gap: 10px;
         }
 
-        .subject-title { font-size: 20px; flex: 1; display: flex; align-items: center; }
+        .subject-title { font-size: 18px; font-weight: 900; flex: 1; display: flex; align-items: center; }
         
         .delete-btn, .edit-btn { background: transparent; padding: 4px 8px; font-size: 14px; }
-        .delete-btn { color: #b04040; border-color: #b04040; }
-        .delete-btn:hover { background-color: #b04040; color: #fff; }
-        .edit-btn { color: #a88d3e; border-color: #a88d3e; }
-        .edit-btn:hover { background-color: #a88d3e; color: #fff; }
+        .delete-btn { color: #d32f2f; border-color: #d32f2f; }
+        .delete-btn:hover { background-color: #d32f2f; color: #fff; }
+        .edit-btn { color: #1976d2; border-color: #1976d2; }
+        .edit-btn:hover { background-color: #1976d2; color: #fff; }
+
+        [data-theme="dark"] .edit-btn { color: #64b5f6; border-color: #64b5f6; }
+        [data-theme="dark"] .edit-btn:hover { background-color: #64b5f6; color: #000; }
+        [data-theme="dark"] .delete-btn { color: #ff5252; border-color: #ff5252; }
+        [data-theme="dark"] .delete-btn:hover { background-color: #ff5252; color: #000; }
 
         .lesson-list { list-style: none; margin-bottom: 15px; min-height: 10px; position: relative; }
 
         .lesson-item {
             display: flex; justify-content: space-between; align-items: center; 
             padding: 10px; margin-bottom: 8px; background-color: var(--input-bg);
-            border: 1px solid var(--border-color); border-right-width: 5px; border-right-style: solid;
-            gap: 10px; border-radius: 4px; position: relative;
+            border: 1px solid var(--border-light); border-right-width: 6px; border-right-style: solid;
+            gap: 10px; border-radius: 0; position: relative; font-weight: 700;
         }
 
         .priority-high { background-color: var(--color-high); border-right-color: var(--color-border-high); }
@@ -152,9 +182,9 @@
         .priority-low { background-color: var(--color-low); border-right-color: var(--color-border-low); }
 
         .lesson-text { flex: 1; word-wrap: break-word; transition: opacity 0.3s, text-decoration 0.3s; }
-        .lesson-text.completed { text-decoration: line-through; opacity: 0.5; }
+        .lesson-text.completed { text-decoration: line-through; opacity: 0.4; }
         .lesson-actions { display: flex; gap: 5px; align-items: center; }
-        input[type="checkbox"] { transform: scale(1.3); cursor: pointer; accent-color: #2c2825; flex-shrink: 0; }
+        input[type="checkbox"] { transform: scale(1.3); cursor: pointer; accent-color: var(--text-color); flex-shrink: 0; }
 
         /* ========= إعدادات الأنميشن الصحيحة لأزرار وعناصر التعديل ========= */
         .admin-action, .drag-handle, .subject-drag-handle, .edit-mode-btn {
@@ -169,7 +199,6 @@
             white-space: nowrap;
         }
 
-        /* حالة التفعيل للأزرار العلوية (التراجع، الاعادة، حذف الكل) */
         body.edit-mode-active .edit-mode-btn {
             max-width: 150px; 
             opacity: 1;
@@ -178,7 +207,6 @@
             transform: scale(1);
         }
 
-        /* حالة التفعيل لعناصر التعديل داخل البطاقات */
         body.edit-mode-active .admin-action {
             max-width: 100px; 
             opacity: 1;
@@ -188,19 +216,18 @@
         }
         body.edit-mode-active select.admin-action { padding: 2px 5px; } 
 
-        /* حالة التفعيل لمقابض السحب */
         body.edit-mode-active .drag-handle { max-width: 20px; opacity: 1; margin-left: 8px; transform: scale(1); cursor: grab; color: #888; user-select: none; }
-        body.edit-mode-active .subject-drag-handle { max-width: 30px; opacity: 1; margin-left: 10px; font-size: 22px; transform: scale(1); cursor: grab; color: #888; user-select: none; }
+        body.edit-mode-active .subject-drag-handle { max-width: 30px; opacity: 1; margin-left: 10px; font-size: 18px; transform: scale(1); cursor: grab; color: #888; user-select: none; }
 
         .sortable-ghost { opacity: 0.3; }
-        .sortable-drag { z-index: 9999 !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; transform: scale(1.02); opacity: 1 !important; cursor: grabbing; }
+        .sortable-drag { z-index: 9999 !important; box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important; transform: scale(1.02); opacity: 1 !important; cursor: grabbing; border-color: var(--border-color) !important;}
 
         @media print {
             @page { margin: 0; size: A4; }
             body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; background-color: var(--bg-color) !important; margin: 0 !important; padding: 20px !important; }
             #app-wrapper { max-width: 100% !important; margin: 0; padding: 0; }
             .main-header, .sub-controls, .bottom-controls, .form-group, .admin-action, .drag-handle, .subject-drag-handle { display: none !important; }
-            .subject-card { break-inside: avoid; margin-bottom: 20px; }
+            .subject-card { break-inside: avoid; margin-bottom: 20px; border-color: #000; }
         }
 
         @media (max-width: 600px) {
@@ -209,14 +236,14 @@
             .corner-controls { justify-content: center; }
             .corner-controls button { flex: 1; }
             .sub-controls, .bottom-controls { justify-content: center; }
-            .sub-controls button, .bottom-controls button { flex: 1 1 40%; font-size: 14px; padding: 8px 4px; }
+            .sub-controls button, .bottom-controls button { flex: 1 1 40%; font-size: 13px; padding: 8px 4px; }
             #mainFormGroup { flex-direction: column; gap: 10px; }
             #mainFormGroup input, #mainFormGroup button { width: 100%; }
             .subjects-container { grid-template-columns: 1fr; }
             .subject-card .form-group { flex-direction: column; gap: 8px; }
             .subject-card .form-group input, .subject-card .form-group select, .subject-card .form-group button { width: 100%; flex: none; }
             .lesson-item { flex-wrap: wrap; }
-            .lesson-actions { width: 100%; justify-content: space-between; margin-top: 10px; border-top: 1px dashed var(--border-color); padding-top: 5px; }
+            .lesson-actions { width: 100%; justify-content: space-between; margin-top: 10px; border-top: 1px dashed var(--border-light); padding-top: 5px; }
         }
     </style>
 </head>
@@ -227,14 +254,14 @@
         <h1>سجل المواد</h1>
         <div class="corner-controls">
             <button id="fsToggle" class="top-btn">ملء الشاشة</button>
-            <button class="top-btn back-btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+            <button class="top-btn back-btn" onclick="goHome(event)">العودة للرئيسية</button>
         </div>
     </div>
 
     <div class="sub-controls">
         <button id="toggleEditModeBtn">التعديل</button>
-        <button id="undoBtn" class="edit-mode-btn" title="تراجع خطوة">تراجع ↩</button>
-        <button id="redoBtn" class="edit-mode-btn" title="إعادة خطوة">إعادة ↪</button>
+        <button id="undoBtn" class="edit-mode-btn" title="تراجع خطوة">تراجع &#8617;</button>
+        <button id="redoBtn" class="edit-mode-btn" title="إعادة خطوة">إعادة &#8618;</button>
         <button id="deleteAllBtn" class="edit-mode-btn btn-danger" title="حذف كل المواد">حذف الكل</button>
     </div>
 
@@ -261,11 +288,20 @@
     function applyTheme(theme) {
         if (theme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
-            metaThemeColor.setAttribute('content', '#1a1816');
+            metaThemeColor.setAttribute('content', '#000000');
         } else {
             document.documentElement.removeAttribute('data-theme');
-            metaThemeColor.setAttribute('content', '#f4f1ea');
+            metaThemeColor.setAttribute('content', '#ffffff');
         }
+    }
+
+    // دالة العودة مع الأنميشن
+    function goHome(e) {
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 300);
     }
 
     const fsToggleBtn = document.getElementById('fsToggle');
@@ -310,14 +346,13 @@
         } else { alert("لا توجد إجراءات لإعادتها."); }
     });
 
-    // برمجة زر حذف الكل
     document.getElementById('deleteAllBtn').addEventListener('click', () => {
         if (subjectsData.length === 0) {
             alert("لا توجد مواد لحذفها.");
             return;
         }
         if (confirm("تحذير: هل أنت متأكد من حذف جميع المواد والدروس بالكامل؟")) {
-            saveState(); // يحفظ الحالة للتمكن من التراجع في حال الخطأ
+            saveState(); 
             subjectsData = [];
             saveData();
             renderUI();
@@ -479,14 +514,14 @@
 
             const header = document.createElement('div'); header.className = 'subject-header';
             const titleWrapper = document.createElement('div'); titleWrapper.className = 'subject-title';
-            const dragHandleSub = document.createElement('span'); dragHandleSub.className = 'subject-drag-handle'; dragHandleSub.innerHTML = '☰';
+            const dragHandleSub = document.createElement('span'); dragHandleSub.className = 'subject-drag-handle'; dragHandleSub.innerHTML = '&#9776;';
             const titleText = document.createElement('span'); titleText.textContent = subject.title;
 
             titleWrapper.append(dragHandleSub, titleText);
 
             const headerActions = document.createElement('div'); headerActions.style.display = 'flex'; headerActions.style.gap = '5px';
-            const editSubBtn = document.createElement('button'); editSubBtn.className = 'edit-btn admin-action'; editSubBtn.textContent = '✏️'; editSubBtn.onclick = () => editSubjectTitle(subject.id);
-            const delSubBtn = document.createElement('button'); delSubBtn.className = 'delete-btn admin-action'; delSubBtn.textContent = 'حذف'; delSubBtn.onclick = () => deleteSubject(subject.id);
+            const editSubBtn = document.createElement('button'); editSubBtn.className = 'edit-btn admin-action'; editSubBtn.innerHTML = '&#9998;'; editSubBtn.onclick = () => editSubjectTitle(subject.id);
+            const delSubBtn = document.createElement('button'); delSubBtn.className = 'delete-btn admin-action'; delSubBtn.innerHTML = '&#10005;'; delSubBtn.onclick = () => deleteSubject(subject.id);
 
             headerActions.append(editSubBtn, delSubBtn);
             header.append(titleWrapper, headerActions);
@@ -500,7 +535,7 @@
                 li.className = `lesson-item priority-${lesson.priority}`;
                 li.dataset.lessonId = lesson.id;
 
-                const dragHandleLess = document.createElement('span'); dragHandleLess.className = 'drag-handle'; dragHandleLess.innerHTML = '☰';
+                const dragHandleLess = document.createElement('span'); dragHandleLess.className = 'drag-handle'; dragHandleLess.innerHTML = '&#9776;';
 
                 const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = lesson.completed || false;
                 checkbox.onchange = () => toggleLessonAnimated(subject.id, lesson.id);
@@ -510,7 +545,7 @@
                 textSpan.textContent = lesson.text;
 
                 const actionsDiv = document.createElement('div'); actionsDiv.className = 'lesson-actions';
-                const editLessonBtn = document.createElement('button'); editLessonBtn.className = 'edit-btn admin-action'; editLessonBtn.textContent = '✏️'; editLessonBtn.onclick = () => editLessonText(subject.id, lesson.id);
+                const editLessonBtn = document.createElement('button'); editLessonBtn.className = 'edit-btn admin-action'; editLessonBtn.innerHTML = '&#9998;'; editLessonBtn.onclick = () => editLessonText(subject.id, lesson.id);
 
                 const prioritySelect = document.createElement('select'); prioritySelect.className = 'edit-priority admin-action';
                 const pHigh = document.createElement('option'); pHigh.value = 'high'; pHigh.textContent = 'قصوى';
@@ -519,7 +554,7 @@
                 prioritySelect.append(pHigh, pMed, pLow); prioritySelect.value = lesson.priority;
                 prioritySelect.onchange = (e) => updatePriority(subject.id, lesson.id, e.target.value);
 
-                const delLessonBtn = document.createElement('button'); delLessonBtn.className = 'delete-btn admin-action'; delLessonBtn.textContent = 'x'; delLessonBtn.onclick = () => deleteLesson(subject.id, lesson.id);
+                const delLessonBtn = document.createElement('button'); delLessonBtn.className = 'delete-btn admin-action'; delLessonBtn.innerHTML = '&#10005;'; delLessonBtn.onclick = () => deleteLesson(subject.id, lesson.id);
 
                 actionsDiv.append(editLessonBtn, prioritySelect, delLessonBtn);
                 li.append(dragHandleLess, checkbox, textSpan, actionsDiv);
