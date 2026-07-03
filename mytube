@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة المحتوى النقي</title>
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 { color: #ff0000; }
+        .video-container {
+            position: relative;
+            width: 640px;
+            height: 360px;
+            background: #000;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover { background-color: #cc0000; }
+    </style>
+</head>
+<body>
+
+    <h1>مقطع يوتيوب بدون موسيقى 🎧</h1>
+    
+    <!-- مكان مشغل اليوتيوب -->
+    <div class="video-container" id="player"></div>
+
+    <!-- زر التحكم بالمزامنة -->
+    <div class="controls">
+        <button id="playBtn">تشغيل الفيديو بالصوت النقي</button>
+    </div>
+
+    <!-- ملف الصوت البديل (بدون موسيقى) -->
+    <!-- استبدل رابط ملف الصوت برابط ملفك النقي لاحقاً -->
+    <audio id="cleanAudio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <script>
+        // 1. تحميل مكتبة اليوتيوب البرمجية
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var audio = document.getElementById('cleanAudio');
+        var playBtn = document.getElementById('playBtn');
+
+        // 2. إنشاء مشغل اليوتيوب وتحديد الفيديو
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '360',
+                width: '640',
+                videoId: 'dQw4w9WgXcQ', // استبدل هذا بـ ID الفيديو اللي تبغاه
+                playerVars: {
+                    'controls': 0, // إخفاء أزرار اليوتيوب الأصلية لمنع اللخبطة
+                    'disablekb': 1
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // كتم صوت اليوتيوب الأصلي إجبارياً
+            player.mute(); 
+        }
+
+        // 3. التحكم بالتشغيل المتزامن عند الضغط على الزر
+        playBtn.addEventListener('click', function() {
+            if (player.getPlayerState() == 1) { // إذا كان يشتغل، أوقفه
+                player.pauseVideo();
+                audio.pause();
+                playBtn.innerText = "تشغيل الفيديو بالصوت النقي";
+            } else { // إذا كان متوقف، شغله مع الصوت
+                player.playVideo();
+                audio.play();
+                playBtn.innerText = "إيقاف مؤقت";
+                
+                // مزامنة مستمرة كل ثانية للتأكد أن الصوت متناسق مع الصورة
+                setInterval(function() {
+                    if (Math.abs(audio.currentTime - player.getCurrentTime()) > 0.5) {
+                        audio.currentTime = player.getCurrentTime();
+                    }
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
