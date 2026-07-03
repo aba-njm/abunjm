@@ -2,80 +2,93 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الفيديو النقي</title>
+    <title>mytube</title>
     <style>
-        body { background-color: #0f0f0f; color: white; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        h1 { color: #ff0000; margin-bottom: 20px; }
-        .video-container { width: 640px; height: 360px; background: #000; border-radius: 8px; overflow: hidden; box-shadow: 0px 4px 20px rgba(0,0,0,0.5); }
-        #player { width: 100%; height: 100%; }
-        .controls { margin-top: 20px; }
-        button { background-color: #ff0000; color: white; border: none; padding: 12px 24px; font-size: 16px; cursor: pointer; border-radius: 5px; font-weight: bold; }
-        button:hover { background-color: #cc0000; }
-        /* إخفاء مشغل الصوت الافتراضي ليبقى التحكم عبر الزر فقط */
-        #cleanAudio { display: none; }
+        body { background-color: #0f0f0f; color: white; font-family: Roboto, Arial; margin: 0; }
+        header { padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #333; }
+        #searchBox { padding: 8px; width: 60%; background: #222; border: 1px solid #444; color: white; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
+        .card { cursor: pointer; }
+        .card img { width: 100%; border-radius: 12px; }
+        #player-view { display: none; padding: 20px; }
     </style>
 </head>
 <body>
 
-    <h1>مقطع يوتيوب بالصوت النقي 🎧</h1>
+<header id="header">
+    <h2>mytube</h2>
+    <input type="text" id="searchBox" placeholder="البحث في مكتبتي..." onkeyup="filterVideos()">
+</header>
+
+<div id="home-view" class="grid"></div>
+
+<div id="player-view">
+    <button onclick="goHome()">⬅️ رجوع</button>
+    <div id="player"></div>
+    <audio id="cleanAudio"></audio>
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    // 1. قاعدة بيانات الفيديوهات الخاصة بك
+    const videos = [
+        { id: 'hoIUpcCrfu8', title: 'الوثائقي الأول', thumb: 'https://img.youtube.com/vi/hoIUpcCrfu8/0.jpg', audio: 'vocals.mp3' },
+        // أضف فيديوهاتك هنا
+    ];
+
+    // 2. دوال التنقل
+    function renderHome() {
+        const grid = document.getElementById('home-view');
+        grid.innerHTML = videos.map(v => `
+            <div class="card" onclick="openPlayer('${v.id}', '${v.audio}')">
+                <img src="${v.thumb}">
+                <p>${v.title}</p>
+            </div>
+        `).join('');
+    }
+
+    function openPlayer(vid, audioUrl) {
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('header').style.display = 'none';
+        document.getElementById('player-view').style.display = 'block';
+        
+        // تشغيل الفيديو
+        player.loadVideoById(vid);
+        document.getElementById('cleanAudio').src = audioUrl;
+    }
+
+    function goHome() {
+        document.getElementById('player-view').style.display = 'none';
+        document.getElementById('header').style.display = 'flex';
+        document.getElementById('home-view').style.display = 'grid';
+        player.stopVideo();
+        document.getElementById('cleanAudio').pause();
+    }
+
+    // 3. كود المزامنة المحترف (الاعتماد على أحداث مشغل اليوتيوب)
+    let player;
+    const audio = document.getElementById('cleanAudio');
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', { height: '360', width: '640', events: { 'onStateChange': onStateChange } });
+    }
+
+    function onStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+            audio.play();
+            // تصحيح فوري عند التشغيل
+            audio.currentTime = player.getCurrentTime();
+        } else if (event.data == YT.PlayerState.PAUSED) {
+            audio.pause();
+        } else if (event.data == YT.PlayerState.BUFFERING) {
+            audio.pause();
+        }
+    }
+
+    // تحديث المزامنة فقط عند حدوث تغيير كبير (seek)
+    player?.addEventListener('onStateChange', onStateChange);
     
-    <div class="video-container">
-        <div id="player"></div>
-    </div>
-
-    <div class="controls">
-        <button id="playBtn">تشغيل المحتوى النقي</button>
-    </div>
-
-    <audio id="cleanAudio" src="https://github.com/aba-njm/abunjm/releases/download/Mp3s/vocals.mp3"></audio>
-
-    <script>
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        var audio = document.getElementById('cleanAudio');
-        var playBtn = document.getElementById('playBtn');
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '360',
-                width: '640',
-                videoId: 'hoIUpcCrfu8',
-                playerVars: { 'controls': 0, 'rel': 0 },
-                events: { 'onReady': onPlayerReady }
-            });
-        }
-
-        function onPlayerReady(event) {
-            player.mute(); 
-        }
-
-        playBtn.addEventListener('click', function() {
-            if (player.getPlayerState() == 1) {
-                player.pauseVideo();
-                audio.pause();
-                playBtn.innerText = "تشغيل المحتوى النقي";
-            } else {
-                player.playVideo();
-                audio.play();
-                playBtn.innerText = "إيقاف مؤقت";
-                
-                // مزامنة دقيقة
-                var syncInterval = setInterval(function() {
-                    if (player.getPlayerState() !== 1) {
-                        clearInterval(syncInterval);
-                        return;
-                    }
-                    if (Math.abs(audio.currentTime - player.getCurrentTime()) > 0.3) {
-                        audio.currentTime = player.getCurrentTime();
-                    }
-                }, 500);
-            }
-        });
-    </script>
+    renderHome();
+</script>
 </body>
 </html>
